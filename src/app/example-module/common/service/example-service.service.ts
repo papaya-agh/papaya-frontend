@@ -8,9 +8,11 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class ExampleServiceService {
-  
+
   private baseUrl = environment.baseUrl;
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {
+  }
 
   getEmployees(): Observable<Employee[]> {
     return this.http.get<Employee[]>(this.baseUrl + 'employees');

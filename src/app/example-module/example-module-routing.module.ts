@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', component: ExampleComponentComponent, pathMatch: 'full' },
   { path: 'example', component: ExampleComponentComponent },
   { path: 'another', component: AnotherComponentComponent }
-]
+];
 
 @NgModule({
   imports: [
@@ -19,4 +19,5 @@ const routes: Routes = [
   ],
   exports: [ RouterModule, CardModule ]
 })
-export class ExampleModuleRoutingModule { }
+export class ExampleModuleRoutingModule {
+}
