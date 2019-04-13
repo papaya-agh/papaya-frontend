@@ -16,6 +16,16 @@ uruchomienie
 
 Po uruchomieniu daemon nasłuchuje zmian, więc zmodyfikowanie dowolnego pliku i jego zapisanie spowoduje kompilację i przeładowanie strony.
 
+# generacja api
+
+za pierwszym razem - `git submodule init`
+
+żeby zaktualizować api - `git submodule update`
+
+Domyślnie zostanie pobrany master z `papaya-interface`. Aby zmienić branch z którego generowane będzie api, wystarczy przejść do folderu `papaya-interface` i zmienić branch (jak w zwykłym repozytorium git).
+
+modele zostaną wygenerowane po kliknięciu na "play" przy generate.declarations w pliku `package.json`
+ewentualnie poprzez polecenie `npm run generate.declarations`
 # Struktura projektu
 W `src/app` jest root projektu - tam znajdują się moduły (rozumiane u nas jako WIDOKI - każdy z trzech widoków będzie osobnym modułem).
 
