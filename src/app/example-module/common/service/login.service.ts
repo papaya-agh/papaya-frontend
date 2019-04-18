@@ -10,12 +10,12 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
 
-    private baseUrl = environment.baseUrl;
+  private baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) {
-    }
+  constructor(private http: HttpClient) {
+  }
 
-    requestLogin(loginRequest: LoginRequest): Observable<LoginResult> {
-        return this.http.post<LoginResult>(`api/login`, loginRequest);
-    }
+  requestLogin(loginRequest: LoginRequest): Observable<LoginResult> {
+    return this.http.post<LoginResult>(`api/login`, loginRequest);
+  }
 }
