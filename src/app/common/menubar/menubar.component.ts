@@ -18,23 +18,23 @@ export class MenubarComponent implements OnInit {
       {
         label: 'Papaya',
         // icon: 'papaya-icon',
-        routerLink: [ '/' ]
+        routerLink: [ '/projects' ]
       },
       {
         label: 'Dostępność',
         icon: 'pi pi-fw pi-user',
-        routerLink: [ '/example/availability' ]
+        routerLink: [ '/availability' ]
       },
       {
         label: 'Excel',
         icon: 'pi pi-fw pi-table',
-        routerLink: [ '/example/excel' ]
+        routerLink: [ '/excel' ]
       },
       { separator: true },
       {
         label: '',
         icon: 'pi pi-fw pi-cog',
-        routerLink: [ '/example/settings' ]
+        routerLink: [ '/settings' ]
       }
     ];
   }
