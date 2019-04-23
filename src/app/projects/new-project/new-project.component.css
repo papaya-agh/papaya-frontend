@@ -1,0 +1,6 @@
+#confirm-box {
+    border: solid orange;
+    background-color: lightyellow;
+    margin: 10px 0 10px 0;
+    min-height: 100px;
+}

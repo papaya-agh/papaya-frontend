@@ -1,0 +1,43 @@
+<div class="ui-g" id="projects-table">
+  <div class="ui-g-9">
+    <h5>Dostępne projekty</h5>
+    <p-table>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Lp</th>
+          <th>Nazwa</th>
+          <th>Admin</th>
+          <th>Link</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>awesome</td>
+          <td>nope</td>
+          <td>"GET /projects/{{id}"</td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+    <hr>
+    <p>W tabeli docelowo znajdzie się efekt zapytania "GET /projects"</p>
+  </div>
+
+  <div class="ui-g-3">
+    <h5>Nowy projekt</h5>
+
+    <p>Nazwa:</p>
+    <input type="text" pInputText [(ngModel)]="newName"/>
+
+    <p class="first">Współczynnik początkowy: {{newCoef}}</p>
+    <p-slider [(ngModel)]="newCoef" [style]="{'width':'15em'}"
+              [min]="1" [max]="3" [step]="0.05"></p-slider>
+
+    <p></p>
+    <p-button label="Stwórz" icon="pi pi-plus"
+              styleClass="ui-button-warning" (onClick)="handleClick()"
+              [routerLink]="['/projects/new']">
+    </p-button>
+    <hr>
+    <p>Kliknięcie przycisku -> "POST /projects"</p>
+  </div>
+</div>
