@@ -1,6 +1,6 @@
 #projects-table {
-    border: solid orange;
-    background-color: lightyellow;
+    border: solid lightgrey;
+    background-color: whitesmoke;
     margin: 10px 0 10px 0;
     min-height: 300px;
 }

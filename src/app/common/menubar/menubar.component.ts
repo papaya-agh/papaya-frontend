@@ -21,7 +21,7 @@ export class MenubarComponent implements OnInit {
         routerLink: [ '/projects' ]
       },
       {
-        label: 'Dostępność',
+        label: 'Availability',
         icon: 'pi pi-fw pi-user',
         routerLink: [ '/availability' ]
       },
@@ -32,9 +32,9 @@ export class MenubarComponent implements OnInit {
       },
       { separator: true },
       {
-        label: '',
-        icon: 'pi pi-fw pi-cog',
-        routerLink: [ '/settings' ]
+        label: 'New sprint',
+        icon: 'pi pi-fw pi-plus',
+        routerLink: [ '/new-sprint' ]
       }
     ];
   }
