@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [ProjectsTableComponent, NewProjectComponent],
+  declarations: [ ProjectsTableComponent, NewProjectComponent ],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
@@ -21,4 +21,5 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
   ]
 })
-export class ProjectsModule { }
+export class ProjectsModule {
+}
