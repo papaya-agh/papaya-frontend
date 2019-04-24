@@ -1,0 +1,66 @@
+﻿<div>
+  <div class="ui-g" id="availability-table">
+    <div class="ui-g-12">
+        <h3>Podawanie dostępności - {{sprint.sprint}}</h3>
+    </div>
+  </div>
+  <div id="startDate">
+    <div class="ui-g">
+      <div class="ui-g-4">
+        <h5>Data rozpoczęcia:</h5>
+      </div>
+      <div class="ui-g-4">
+          <span>{{sprint.startDate}}</span>
+      </div>
+    </div>
+  </div>
+  <div id="endDate">
+    <div class="ui-g">
+      <div class="ui-g-4">
+        <h5>Data zakończenia:</h5>
+      </div>
+      <div class="ui-g-4">
+        <span>{{sprint.endDate}}</span>
+      </div>
+    </div>
+  </div>
+  <div id="declaredTime">
+    <div class="ui-g">
+      <div class="ui-g-4">
+        <h5>Podaj łączną liczbę godzin jakie przepracuejesz w tym sprincie:</h5>
+      </div>
+      <div class="ui-g-4">
+        <input type="number" [(ngModel)]="declaredHours" placeholder="Deklarowane"/>
+      </div>
+    </div>
+  </div>
+  <div id="remainingTime">
+    <div class="ui-g">
+      <div class="ui-g-4">
+        <h5>Liczba godzin w pozostałych zadaniach:</h5>
+      </div>
+      <div class="ui-g-4">
+        <input type="number" [(ngModel)]="remainingHours" placeholder="Pozostałe"/>
+      </div>
+    </div>
+  </div>
+  <div id="comment">
+    <div class="ui-g">
+      <div class="ui-g-4">
+        <h5>Uwagi:</h5>
+      </div>
+      <div class="ui-g-4">
+        <input [(ngModel)]="comment" placeholder="Uwagi"/>
+      </div>
+    </div>
+  </div>
+  <div class="ui-g">
+      <p-button label="Zatwierdz" 
+                (click)="confirm()">
+      </p-button>
+  </div>
+
+  <p-button label="Powrót" icon="pi pi-arrow-circle-left"
+            (click)="goBack()">
+  </p-button>
+</div>
