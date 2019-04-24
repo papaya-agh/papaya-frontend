@@ -12,7 +12,7 @@ const basePath = '/api';
 app.use(express.json());
 {{#serviceOperations}}
 app['{{operationMethod}}'.toLocaleLowerCase()]({{operationName}}Path.replace(/{/g, ':').replace(/}/, ''), (req, res) => {
-    return res.send(impl.{{operationName}}(req.body, req.query));
+    return res.send(impl.{{operationName}}(req.body, req.query, req.headers));
 });
 
 {{/serviceOperations}}
