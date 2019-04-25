@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProjectsService } from '../projects.service';
+import { ProjectDto } from '../../declarations/models/project-dto';
 
 @Component({
   selector: 'app-projects-table',
@@ -9,38 +11,26 @@ export class ProjectsTableComponent implements OnInit {
 
   newCoef = 1.55;
   newName: string;
-  projects: Project[];
+  projects: ProjectDto[];
+  id: number;
 
-  constructor() {
+  constructor(private projectService: ProjectsService) {
   }
 
   ngOnInit() {
-    this.projects = [
-      { id: 1, name: 'awesome', admin: false, link: '/example' },
-      { id: 2, name: 'qwerty', admin: true, link: 'b' },
-      { id: 3, name: 'opaque', admin: false, link: '/example' }
-    ];
+    this.projectService.getProjects().subscribe(response => this.projects = response);
   }
 
   handleClick() {
-    // read project name from input text
-    // read coefficient from slider
-    // send POST /projects
-
-    // mock
-    this.projects.push(
+    this.projectService.addProject(
       {
-        id: this.projects.length + 1,
+        id: null,
         name: this.newName,
-        admin: true,
-        link: 'xd'
-      });
-  }
-}
+        description: 'sample',
+        initialCoefficient: this.newCoef,
+      }
+    ).subscribe(response => this.id = response.id);
 
-interface Project {
-  id: number,
-  name: string,
-  admin: boolean,
-  link: string,
+    this.projectService.getProjects().subscribe(response => this.projects = response);
+  }
 }

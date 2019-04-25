@@ -8,7 +8,8 @@
         <tr>
           <th>Lp</th>
           <th>Nazwa</th>
-          <th>Admin</th>
+          <th>Opis</th>
+          <th>Wsp. początkowy</th>
           <th>Link</th>
         </tr>
       </ng-template>
@@ -16,15 +17,14 @@
         <tr>
           <td>{{project.id}}</td>
           <td>{{project.name}}</td>
-          <td>{{project.admin}}</td>
+          <td>{{project.description}}</td>
+          <td>{{project.initialCoefficient}}</td>
           <td>
             <p-button icon="pi pi-arrow-right" [routerLink]="['/example']"></p-button>
           </td>
         </tr>
       </ng-template>
     </p-table>
-    <hr>
-    <p>W tabeli docelowo znajdzie się efekt zapytania "GET /projects"</p>
   </div>
 
   <div class="ui-g-3">
@@ -46,8 +46,6 @@
       <p-button label="Stwórz" icon="pi pi-plus"
                 (onClick)="handleClick()">
       </p-button>
-      <hr>
-      <p>Kliknięcie przycisku <br>-> "POST /projects"</p>
     </div>
   </div>
 </div>
