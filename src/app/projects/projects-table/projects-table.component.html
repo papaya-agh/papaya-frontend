@@ -3,7 +3,7 @@
 <div class="ui-g" id="projects-table">
   <div class="ui-g-9">
     <h5>Dostępne projekty</h5>
-    <p-table>
+    <p-table [value]="projects">
       <ng-template pTemplate="header">
         <tr>
           <th>Lp</th>
@@ -11,14 +11,17 @@
           <th>Admin</th>
           <th>Link</th>
         </tr>
-        <tr *ngFor="let project of projects">
+      </ng-template>
+      <ng-template pTemplate="body" let-project>
+        <tr>
           <td>{{project.id}}</td>
           <td>{{project.name}}</td>
           <td>{{project.admin}}</td>
-          <td><p-button label="" icon="pi pi-arrow-right" [routerLink]="['/example']"></p-button></td>
+          <td>
+            <p-button icon="pi pi-arrow-right" [routerLink]="['/example']"></p-button>
+          </td>
         </tr>
       </ng-template>
-
     </p-table>
     <hr>
     <p>W tabeli docelowo znajdzie się efekt zapytania "GET /projects"</p>
@@ -27,18 +30,24 @@
   <div class="ui-g-3">
     <h5>Nowy projekt</h5>
 
-    <p>Nazwa:</p>
-    <input type="text" pInputText [(ngModel)]="newName"/>
+    <div class="ui-g-12">
+      <p>Nazwa:</p>
+      <input type="text" pInputText [(ngModel)]="newName"/>
+    </div>
 
-    <p class="first">Współczynnik początkowy: {{newCoef}}</p>
-    <p-slider [(ngModel)]="newCoef" [style]="{'width':'15em'}"
-              [min]="1" [max]="3" [step]="0.05"></p-slider>
+    <div class="ui-g-12">
+      <p class="first">Współczynnik początkowy: {{newCoef}}</p>
+      <p-slider [(ngModel)]="newCoef" [style]="{'width':'15em'}"
+                [min]="1" [max]="3" [step]="0.05">
+      </p-slider>
+    </div>
 
-    <p></p>
-    <p-button label="Stwórz" icon="pi pi-plus"
-              (onClick)="handleClick()">
-    </p-button>
-    <hr>
-    <p>Kliknięcie przycisku -> "POST /projects"</p>
+    <div class="ui-g-12">
+      <p-button label="Stwórz" icon="pi pi-plus"
+                (onClick)="handleClick()">
+      </p-button>
+      <hr>
+      <p>Kliknięcie przycisku <br>-> "POST /projects"</p>
+    </div>
   </div>
 </div>

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MenubarModule } from 'primeng/menubar';
+import { ButtonModule } from 'primeng/button';
 
-import { PCommonRoutingModule } from './p-common-routing.module';
 import { MenubarComponent } from './menubar/menubar.component';
 
 @NgModule({
@@ -11,7 +12,8 @@ import { MenubarComponent } from './menubar/menubar.component';
   ],
   imports: [
     CommonModule,
-    PCommonRoutingModule
+    MenubarModule,
+    ButtonModule,
   ]
 })
 export class PCommonModule {

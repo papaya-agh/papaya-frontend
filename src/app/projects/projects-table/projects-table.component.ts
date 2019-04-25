@@ -9,22 +9,22 @@ export class ProjectsTableComponent implements OnInit {
 
   newCoef = 1.55;
   newName: string;
-
-  projects = [
-    { id: 1, name: 'awesome', admin: false, link: '/example' },
-    { id: 2, name: 'qwerty', admin: true, link: 'b' },
-    { id: 3, name: 'opaque', admin: false, link: '/example' }
-  ];
+  projects: Project[];
 
   constructor() {
   }
 
   ngOnInit() {
+    this.projects = [
+      { id: 1, name: 'awesome', admin: false, link: '/example' },
+      { id: 2, name: 'qwerty', admin: true, link: 'b' },
+      { id: 3, name: 'opaque', admin: false, link: '/example' }
+    ];
   }
 
   handleClick() {
     // read project name from input text
-    // read coefficient
+    // read coefficient from slider
     // send POST /projects
 
     // mock
@@ -36,4 +36,11 @@ export class ProjectsTableComponent implements OnInit {
         link: 'xd'
       });
   }
+}
+
+interface Project {
+  id: number,
+  name: string,
+  admin: boolean,
+  link: string,
 }
