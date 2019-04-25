@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'projects', canActivate: [ AuthGuard ], loadChildren: './projects/projects.module#ProjectsModule' },
   { path: 'sprints', canActivate: [ AuthGuard ], loadChildren: './sprints/sprints.module#SprintsModule' },
   { path: 'availability', canActivate: [ AuthGuard ], loadChildren: './availability/availability.module#AvailabilityModule' },
+  { path: 'excel', canActivate: [AuthGuard], loadChildren: './excel/excel.module#ExcelModule' }
 ];
 
 @NgModule({
