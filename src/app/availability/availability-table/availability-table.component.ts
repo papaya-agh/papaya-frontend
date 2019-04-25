@@ -11,14 +11,16 @@ export class AvailabilityTableComponent implements OnInit {
   
   ngOnInit() {
   }
-  
-  actualRate = 2;
-  hoursSum = 123;
-  workers = [
-    { id: 1, name: "Robert Kubica", declaredHours: 3 },
-    { id: 2, name: "Adam Małysz", declaredHours: 15 },
-    { id: 3, name: "Krzysztof Krawczyk", declaredHours: 63 }
-  ];
-  sprint = "sprint 3";
+
+  sprint = 3;
+  startDate = "10/11/2012";
+  endDate = "13/11/2013";
+
+  comment: string;
+  remainingTime: string;
+  declaredTime: string;
+
+  confirm() {
+  }
 
 }
