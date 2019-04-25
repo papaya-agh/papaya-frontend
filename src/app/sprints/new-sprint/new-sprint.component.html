@@ -1,0 +1,45 @@
+<app-menubar></app-menubar>
+
+<div class="ui-g" id="new-sprint-form">
+  <div class="ui-g-12" id="title">
+    <h5>Tworzenie nowego sprintu</h5>
+  </div>
+
+  <div class="ui-g-3">
+    <p>Data otwarcia:</p>
+    <p-calendar [(ngModel)]="openDate"
+                dateFormat="dd.mm.yy" showTime="true"
+                showSeconds="true" hourFormat="24">
+    </p-calendar>
+  </div>
+
+  <div class="ui-g-3">
+    <p>Data zamknięcia:</p>
+    <p-calendar [(ngModel)]="closeDate" [minDate]="openDate"
+                dateFormat="dd.mm.yy" showTime="true"
+                showSeconds="true" hourFormat="24">
+    </p-calendar>
+  </div>
+
+  <div class="ui-g-3">
+    <p>Data rozpoczęcia zapisów:</p>
+    <p-calendar [(ngModel)]="enrollStartDate"
+                dateFormat="dd.mm.yy" showTime="true"
+                showSeconds="true" hourFormat="24">
+    </p-calendar>
+  </div>
+
+  <div class="ui-g-3">
+    <p>Data zakończenia zapisów:</p>
+    <p-calendar [(ngModel)]="enrollEndDate" [maxDate]="openDate"
+                dateFormat="dd.mm.yy" showTime="true"
+                showSeconds="true" hourFormat="24">
+    </p-calendar>
+  </div>
+
+  <div class="ui-g-12">
+    <p-button label="Stwórz" icon="pi pi-plus"
+              (onClick)="handleClick()">
+    </p-button>
+  </div>
+</div>
