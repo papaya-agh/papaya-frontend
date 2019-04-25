@@ -16,12 +16,12 @@ export class MenubarComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Papaya',
-        // icon: 'papaya-icon',
+        label: 'Projekty',
+        icon: 'pi pi-fw pi-list',
         routerLink: [ '/projects' ]
       },
       {
-        label: 'Availability',
+        label: 'Dostępność',
         icon: 'pi pi-fw pi-user',
         routerLink: [ '/availability' ]
       },
@@ -32,7 +32,7 @@ export class MenubarComponent implements OnInit {
       },
       { separator: true },
       {
-        label: 'New sprint',
+        label: 'Nowy sprint',
         icon: 'pi pi-fw pi-plus',
         routerLink: [ '/new-sprint' ]
       }

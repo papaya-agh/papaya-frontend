@@ -1,3 +1,5 @@
+<app-menubar></app-menubar>
+
 <div class="ui-g" id="projects-table">
   <div class="ui-g-9">
     <h5>Dostępne projekty</h5>
@@ -9,11 +11,11 @@
           <th>Admin</th>
           <th>Link</th>
         </tr>
-        <tr>
-          <td>1</td>
-          <td>awesome</td>
-          <td>nope</td>
-          <td>"GET /projects/{{id}"</td>
+        <tr *ngFor="let project of projects">
+          <td>{{project.id}}</td>
+          <td>{{project.name}}</td>
+          <td>{{project.admin}}</td>
+          <td><p-button label="" icon="pi pi-arrow-right" [routerLink]="['/example']"></p-button></td>
         </tr>
       </ng-template>
 
@@ -34,8 +36,7 @@
 
     <p></p>
     <p-button label="Stwórz" icon="pi pi-plus"
-              (onClick)="handleClick()"
-              [routerLink]="['/projects/new']">
+              (onClick)="handleClick()">
     </p-button>
     <hr>
     <p>Kliknięcie przycisku -> "POST /projects"</p>
