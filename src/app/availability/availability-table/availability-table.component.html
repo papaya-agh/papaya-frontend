@@ -27,7 +27,7 @@
     <div id="declaredTime">
         <div class="ui-g">
             <div class="ui-g-4">
-                <h5>Podaj łączną liczbę godzin jakie przepracuejesz w tym sprincie:</h5>
+                <h5>Podaj łączną liczbę godzin jakie przepracujesz w tym sprincie:</h5>
             </div>
             <div class="ui-g-4">
                 <input [(ngModel)]="declaredTime" placeholder="Deklarowane" />
@@ -54,11 +54,9 @@
             </div>
         </div>
     </div>
-    <div class="ui-g">
-        <input type="button" value="Zatwierdz" (click)="confirm()">
-    </div>
+    <p-button label="Zatwierdz" (click)="confirm()"></p-button>
 
     <p-button label="Powrót" icon="pi pi-arrow-circle-left"
-              [routerLink]="['/']">
+              (click)="goBack()">
     </p-button>
 </div>

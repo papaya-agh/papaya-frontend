@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-availability-table',
@@ -7,7 +8,7 @@
 })
 export class AvailabilityTableComponent implements OnInit {
   
-  constructor() {}
+  constructor(private location: Location) {}
   
   ngOnInit() {
   }
@@ -23,4 +24,7 @@ export class AvailabilityTableComponent implements OnInit {
   confirm() {
   }
 
+  goBack() {
+    this.location.back();
+  }
 }
