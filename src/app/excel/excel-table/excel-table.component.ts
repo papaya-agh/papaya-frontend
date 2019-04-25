@@ -21,4 +21,7 @@ export class ExcelTableComponent implements OnInit {
   ];
   sprint = "sprint 3";
 
+  closeSprint() {
+
+  }
 }
