@@ -1,0 +1,46 @@
+﻿<div>
+    <div class="ui-g" id="availability-table">
+        <div class="ui-g-8">
+            <h5>Dostępność - {{sprint}}</h5>
+            <p-table>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Lp</th>
+                        <th>Osoba</th>
+                        <th>Ilość zadeklarowanych godzin</th>
+                    </tr>
+                    <tr *ngFor="let worker of workers">
+                        <td>{{worker.id}}</td>
+                        <td>{{worker.name}}</td>
+                        <td>{{worker.declaredHours}}</td>
+                    </tr>
+                </ng-template>
+
+            </p-table>
+            <hr>
+            <p>W tabeli docelowo znajdzie się efekt zapytania "GET /availability"</p>
+        </div>
+    </div>
+    <div id="availability-summary">
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <h5>Suma godzin wszystkich osób</h5>
+            </div>
+            <div class="ui-g-1">
+                <span>{{hoursSum}}</span>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <h5>Aktualny współczynnik</h5>
+            </div>
+            <div class="ui-g-1">
+                <span>{{actualRate}}</span>
+            </div>
+        </div>
+    </div>
+
+    <p-button label="Powrót" icon="pi pi-arrow-circle-left"
+              [routerLink]="['/']">
+    </p-button>
+</div>

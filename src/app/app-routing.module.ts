@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent, canActivate: [ AuthGuard ] },
   { path: 'example', canActivate: [ AuthGuard ], loadChildren: './example-module/example-module.module#ExampleModuleModule' },
   { path: 'projects', canActivate: [ AuthGuard ], loadChildren: './projects/projects.module#ProjectsModule' },
-  { path: 'availability', canActivate: [AuthGuard], loadChildren: './availability/availability.module#AvailabilityModule' }
+  { path: 'availability', canActivate: [AuthGuard], loadChildren: './availability/availability.module#AvailabilityModule' },
+  { path: 'excel', canActivate: [AuthGuard], loadChildren: './excel/excel.module#ExcelModule' },
 ];
 
 @NgModule({
