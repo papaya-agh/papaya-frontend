@@ -1,0 +1,25 @@
+<app-menubar></app-menubar>
+
+<div class="ui-g" id="close-sprint-form">
+  <div class="ui-g-12" id="title">
+    <h5>Zamknięcie sprintu</h5>
+    <p>Dane: id, daty, etc.</p>
+  </div>
+
+  <div class="ui-g-4">
+    <p>Licba godzin zaplanowanych:</p>
+    <input type="text" pInputText [(ngModel)]="plannedHours"/>
+  </div>
+
+  <div class="ui-g-4">
+    <p>Liczba godzin przepracowanych:</p>
+    <input type="text" pInputText [(ngModel)]="burnedHours"/>
+  </div>
+
+  <div class="ui-g-10">
+    <p-button label="Zamknij" icon="pi pi-check-circle"
+              (onClick)="handleClick()">
+    </p-button>
+  </div>
+</div>
+
