@@ -86,6 +86,60 @@ module.exports = {
     userAvailability.notes = body.notes;
     return body;
   },
+
+  getUsersFromProject: function (params, body, query, headers) {
+    const projectId = params.projectId;
+    const usersInProject = projectsMembers[projectId];
+
+    const result = [];
+    for (const member of usersInProject) {
+      const user = usersById[member.userId];
+      result.push({
+        role: member.role,
+        userDetails: user,
+        userId: member.userId,
+      });
+    }
+
+    return result;
+  },
+
+  setUserRole: function (params, body, query, headers) {
+    const projectId = params.projectId;
+    const userId = params.userId;
+    const user = projectsMembers[projectId].find(m => m.userId == userId);
+
+    user.role = body.role;
+  },
+
+  removeUserFromProject: function (params, body, query, headers) {
+    const projectId = params.projectId;
+    const userId = params.userId;
+
+    const project = projectsMembers[projectId];
+    const user = project.find(m => m.userId == userId);
+    const userIndex = project.indexOf(user);
+    project.splice(userIndex);
+  },
+
+  addUserToProject: function (params, body, query, headers) {
+    const projectId = params.projectId;
+    const email = body.email;
+
+    for (const userId of Object.keys(usersById)) {
+      if (usersById[userId].email === email) {
+        projectsMembers[projectId].push({
+          userId: userId,
+          role: 'member'
+        });
+        return {
+          role: 'member',
+          userDetails: usersById[userId],
+          userId: userId,
+        };
+      }
+    }
+  },
 };
 
 function mockDeclarableSprint(sprintId) {
