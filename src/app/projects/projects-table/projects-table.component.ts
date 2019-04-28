@@ -9,28 +9,14 @@ import { ProjectDto } from '../../declarations/models/project-dto';
 })
 export class ProjectsTableComponent implements OnInit {
 
-  newCoef = 1.55;
-  newName: string;
   projects: ProjectDto[];
-  id: number;
 
   constructor(private projectService: ProjectsService) {
   }
 
   ngOnInit() {
-    this.projectService.getProjects().subscribe(response => this.projects = response);
+    this.projectService.getProjects()
+      .subscribe(response => this.projects = response);
   }
 
-  handleClick() {
-    this.projectService.addProject(
-      {
-        id: null,
-        name: this.newName,
-        description: 'sample',
-        initialCoefficient: this.newCoef,
-      }
-    ).subscribe(response => this.id = response.id);
-
-    this.projectService.getProjects().subscribe(response => this.projects = response);
-  }
 }

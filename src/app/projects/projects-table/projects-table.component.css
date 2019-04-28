@@ -3,4 +3,13 @@
     background-color: whitesmoke;
     margin: 10px 0 10px 0;
     min-height: 300px;
+    position: relative;
+}
+
+#new-project-button {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }

@@ -1,15 +1,13 @@
-<app-menubar></app-menubar>
-
-<div class="ui-g" id="projects-table">
-  <div class="ui-g-9">
+  <div class="ui-g" id="projects-table">
+  <div class="ui-g-10">
     <h5>Dostępne projekty</h5>
     <p-table [value]="projects">
       <ng-template pTemplate="header">
         <tr>
-          <th>Lp</th>
+          <th>Id</th>
           <th>Nazwa</th>
           <th>Opis</th>
-          <th>Wsp. początkowy</th>
+          <th>Współczynnik początkowy</th>
           <th>Link</th>
         </tr>
       </ng-template>
@@ -27,25 +25,9 @@
     </p-table>
   </div>
 
-  <div class="ui-g-3">
-    <h5>Nowy projekt</h5>
-
-    <div class="ui-g-12">
-      <p>Nazwa:</p>
-      <input type="text" pInputText [(ngModel)]="newName"/>
-    </div>
-
-    <div class="ui-g-12">
-      <p class="first">Współczynnik początkowy: {{newCoef}}</p>
-      <p-slider [(ngModel)]="newCoef" [style]="{'width':'15em'}"
-                [min]="1" [max]="3" [step]="0.05">
-      </p-slider>
-    </div>
-
-    <div class="ui-g-12">
-      <p-button label="Stwórz" icon="pi pi-plus"
-                (onClick)="handleClick()">
-      </p-button>
-    </div>
+  <div class="ui-g-2">
+    <p-button id="new-project-button" label="Nowy projekt"
+              icon="pi pi-plus" [routerLink]="['/projects/new-project']">
+    </p-button>
   </div>
 </div>
