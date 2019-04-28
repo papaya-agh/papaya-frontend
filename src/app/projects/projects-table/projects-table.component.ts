@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from '../projects.service';
 import { ProjectDto } from '../../declarations/models/project-dto';
 import { Router } from '@angular/router';
+import { StoreService } from '../../p-common/store.service';
 
 @Component({
   selector: 'app-projects-table',
@@ -13,16 +14,17 @@ export class ProjectsTableComponent implements OnInit {
   projects: ProjectDto[];
 
   constructor(private router: Router,
-              private projectService: ProjectsService) {
+              private projectsService: ProjectsService,
+              private storeService: StoreService) {
   }
 
   ngOnInit() {
-    this.projectService.getProjects()
+    this.projectsService.getProjects()
       .subscribe(response => this.projects = response);
   }
 
-  chooseProject(name) {
-    localStorage.setItem('papaya-project', name);
+  handleClick(project) {
+    this.storeService.setCurrentProject(project);
     this.router.navigateByUrl('/example');
   }
 

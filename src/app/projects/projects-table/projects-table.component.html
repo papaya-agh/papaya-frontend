@@ -4,7 +4,6 @@
     <p-table [value]="projects">
       <ng-template pTemplate="header">
         <tr>
-          <th>Id</th>
           <th>Nazwa</th>
           <th>Opis</th>
           <th>Współczynnik początkowy</th>
@@ -13,13 +12,12 @@
       </ng-template>
       <ng-template pTemplate="body" let-project>
         <tr>
-          <td>{{project.id}}</td>
           <td>{{project.name}}</td>
           <td>{{project.description}}</td>
           <td>{{project.initialCoefficient}}</td>
           <td>
             <p-button icon="pi pi-arrow-right"
-                      (onClick)="chooseProject(project.name)">
+                      (onClick)="handleClick(project)">
             </p-button>
           </td>
         </tr>

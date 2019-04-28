@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectsService } from '../projects.service';
+import { ProjectDto } from '../../declarations/models/project-dto';
 
 @Component({
   selector: 'app-new-project',
@@ -9,36 +10,35 @@ import { ProjectsService } from '../projects.service';
 })
 export class NewProjectComponent implements OnInit {
 
-  id: number;
-  projectName: string;
-  description: string;
-  coefficient = 1.55;
-  error: string;
+  project: ProjectDto;
+  errorMessage = 'Podaj nazwę i opis projektu.';
+  showError: boolean;
 
   constructor(private router: Router,
-              private projectService: ProjectsService) {
+              private projectsService: ProjectsService) {
+    this.project = {
+      id: undefined,
+      name: '',
+      description: '',
+      initialCoefficient: 1.55
+    };
   }
 
   ngOnInit() {
   }
 
   handleClick() {
-    if (this.projectName == null || this.description == null) {
-      this.error = 'Podaj nazwę i opis projektu.';
+    if (!this.project.name || !this.project.description) {
+      this.showError = true;
       return;
     } else {
-      this.error = '';
+      this.showError = false;
     }
 
-    this.projectService.addProject(
-      {
-        id: null,
-        name: this.projectName,
-        description: this.description,
-        initialCoefficient: this.coefficient,
-      }
-    ).subscribe(response => this.id = response.id);
-
-    this.router.navigateByUrl('/projects');
+    this.projectsService.addProject(this.project)
+      .subscribe(response => {
+        this.project = response;
+        this.router.navigateByUrl('/projects');
+      });
   }
 }

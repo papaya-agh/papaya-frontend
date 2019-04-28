@@ -4,19 +4,19 @@
 
     <div class="ui-g-6">
       <p>Nazwa:</p>
-      <input type="text" pInputText [(ngModel)]="projectName"/>
+      <input type="text" pInputText [(ngModel)]="project.name"/>
     </div>
 
     <div class="ui-g-6">
-      <p class="first">Współczynnik początkowy: {{coefficient}}</p>
-      <p-slider [(ngModel)]="coefficient" [style]="{'width':'15em'}"
+      <p class="first">Współczynnik początkowy: {{project.initialCoefficient}}</p>
+      <p-slider [(ngModel)]="project.initialCoefficient" [style]="{'width':'15em'}"
                 [min]="1" [max]="3" [step]="0.05">
       </p-slider>
     </div>
 
     <div class="ui-g-12">
       <p>Opis:</p>
-      <textarea [rows]="2" [cols]="50" pInputTextarea [(ngModel)]="description"></textarea>
+      <textarea [rows]="2" [cols]="50" pInputTextarea [(ngModel)]="project.description"></textarea>
     </div>
 
     <div class="ui-g-12">
@@ -26,7 +26,7 @@
       <p-button label="Stwórz" icon="pi pi-plus"
                 (onClick)="handleClick()">
       </p-button>
-      <span id="error-span">{{error}}</span>
+      <span *ngIf="showError" id="error-span">{{errorMessage}}</span>
     </div>
   </div>
   <div class="ui-g-offset-1">
