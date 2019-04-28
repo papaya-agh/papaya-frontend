@@ -1,0 +1,13 @@
+#menu {
+    position: relative;
+}
+
+#logo {
+    margin: 0;
+    position: absolute;
+    left: 5px;
+}
+
+#logo-img {
+    height: 32px;
+}

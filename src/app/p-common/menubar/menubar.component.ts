@@ -9,16 +9,21 @@ import { MenuItem } from 'primeng/api';
 export class MenubarComponent implements OnInit {
 
   items: MenuItem[];
+  currentProject: string;
 
   constructor() {
+    this.currentProject = localStorage.getItem('papaya-project');
   }
 
   ngOnInit() {
     this.items = [
       {
-        label: 'Projekty',
-        icon: 'pi pi-fw pi-list',
+        icon: 'pi',
         routerLink: [ '/projects' ]
+      },
+      {
+        label: this.currentProject,
+        routerLink: [ '/example' ]
       },
       {
         label: 'Dostępność',

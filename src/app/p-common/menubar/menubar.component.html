@@ -1,4 +1,10 @@
 <p-menubar [model]="items" id="menu">
-  <p-button label="Wyloguj się" icon="pi pi-sign-out" [routerLink]="['/logout']"></p-button>
-  <p-button icon="pi pi-cog" [routerLink]="['/manage-team']"></p-button>
+  <a id="logo" href="/projects">
+    <img id="logo-img" src="../../../assets/papaya-logo.png"/>
+  </a>
+  <p-button label="Wyloguj się" icon="pi pi-sign-out"
+            [routerLink]="['/logout']" class="mr-2">
+  </p-button>
+  <p-button icon="pi pi-cog" [routerLink]="['/manage-team']">
+  </p-button>
 </p-menubar>

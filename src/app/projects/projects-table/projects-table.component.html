@@ -18,7 +18,9 @@
           <td>{{project.description}}</td>
           <td>{{project.initialCoefficient}}</td>
           <td>
-            <p-button icon="pi pi-arrow-right" [routerLink]="['/example']"></p-button>
+            <p-button icon="pi pi-arrow-right"
+                      (onClick)="chooseProject(project.name)">
+            </p-button>
           </td>
         </tr>
       </ng-template>
