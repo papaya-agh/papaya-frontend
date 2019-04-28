@@ -19,6 +19,11 @@ export class MenubarComponent implements OnInit {
     this.items = [
       {
         icon: 'pi',
+        style: {
+          'background-image': 'url("../../../assets/papaya-logo-32-32.png")',
+          'background-repeat': 'no-repeat',
+          'background-position': 'center'
+        },
         routerLink: [ '/projects' ]
       },
       {
