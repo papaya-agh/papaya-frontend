@@ -7,16 +7,19 @@ const app = express();
 const basePath = '/api';
 
 {{#services}}
-{{#serviceOperations}}const {{operationName}}Path = basePath + '{{{operationPath}}}';{{/serviceOperations}}
+{{#serviceOperations}}const {{operationName}}Path = basePath + '{{{operationPath}}}';
+{{/serviceOperations}}
+{{/services}}
 
 app.use(express.json());
+{{#services}}
 {{#serviceOperations}}
-app['{{operationMethod}}'.toLocaleLowerCase()]({{operationName}}Path.replace(/{/g, ':').replace(/}/, ''), (req, res) => {
-    return res.send(impl.{{operationName}}(req.body, req.query, req.headers));
+app['{{operationMethod}}'.toLocaleLowerCase()]({{operationName}}Path.replace(/{/g, ':').replace(/}/g, ''), (req, res) => {
+    return res.send(impl.{{operationName}}(req.params, req.body, req.query, req.headers));
 });
 
 {{/serviceOperations}}
 {{/services}}
 app.listen(8080, () =>
-    console.log(`Listening on port 8080`),
+  console.log(`Listening on port 8080`),
 );
