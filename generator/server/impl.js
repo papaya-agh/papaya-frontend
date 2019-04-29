@@ -6,7 +6,7 @@ const projects = [
 ];
 
 module.exports = {
-  requestLogin: function (body, query, headers) {
+  requestLogin: function (params, body, query, headers) {
     const token = crypto.randomBytes(32).toString('hex');
     if (body.username === 'a') {
       return {
@@ -21,12 +21,12 @@ module.exports = {
     }
   },
 
-  getProjects: function (body, query, headers) {
+  getProjects: function (params, body, query, headers) {
     return projects;
   },
 
-  addProject: function (body, query, headers) {
-    body.id = projects.length + 1
+  addProject: function (params, body, query, headers) {
+    body.id = projects.length + 1;
     projects.push(body);
     return body;
   }
