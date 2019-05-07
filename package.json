@@ -8,6 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "preinstall": "npm install -g http-server",
+    "heroku-postbuild": "npm run generate.declarations && ng build && mv dist/frontend/* .",
     "mock.server": "node ./generator/server/server.js",
     "generate.declarations": "node ./generator/generate.js"
   },
