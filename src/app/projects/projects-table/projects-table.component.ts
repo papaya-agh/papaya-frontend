@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from '../projects.service';
 import { ProjectDto } from '../../declarations/models/project-dto';
+import { Router } from '@angular/router';
+import { StoreService } from '../../p-common/store.service';
 
 @Component({
   selector: 'app-projects-table',
@@ -9,28 +11,21 @@ import { ProjectDto } from '../../declarations/models/project-dto';
 })
 export class ProjectsTableComponent implements OnInit {
 
-  newCoef = 1.55;
-  newName: string;
   projects: ProjectDto[];
-  id: number;
 
-  constructor(private projectService: ProjectsService) {
+  constructor(private router: Router,
+              private projectsService: ProjectsService,
+              private storeService: StoreService) {
   }
 
   ngOnInit() {
-    this.projectService.getProjects().subscribe(response => this.projects = response);
+    this.projectsService.getProjects()
+      .subscribe(response => this.projects = response);
   }
 
-  handleClick() {
-    this.projectService.addProject(
-      {
-        id: null,
-        name: this.newName,
-        description: 'sample',
-        initialCoefficient: this.newCoef,
-      }
-    ).subscribe(response => this.id = response.id);
-
-    this.projectService.getProjects().subscribe(response => this.projects = response);
+  handleClick(project) {
+    this.storeService.setCurrentProject(project);
+    this.router.navigateByUrl('/example');
   }
+
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { StoreService } from '../store.service';
 
 @Component({
   selector: 'app-menubar',
@@ -9,16 +10,27 @@ import { MenuItem } from 'primeng/api';
 export class MenubarComponent implements OnInit {
 
   items: MenuItem[];
+  currentProjectName: string;
 
-  constructor() {
+  constructor(private storeService: StoreService) {
+    this.currentProjectName = this.storeService.getCurrentProjectName();
   }
 
   ngOnInit() {
     this.items = [
       {
-        label: 'Projekty',
-        icon: 'pi pi-fw pi-list',
+        icon: 'pi',
+        style: {
+          'background-image': 'url("../../../assets/papaya-logo-32-32.png")',
+          'background-repeat': 'no-repeat',
+          'background-position': 'center',
+          'margin-left': '5px',
+        },
         routerLink: [ '/projects' ]
+      },
+      {
+        label: this.currentProjectName,
+        routerLink: [ '/example' ]
       },
       {
         label: 'Dostępność',
@@ -31,11 +43,6 @@ export class MenubarComponent implements OnInit {
         routerLink: [ '/excel' ]
       },
       { separator: true },
-      {
-        label: 'Nowy sprint',
-        icon: 'pi pi-fw pi-plus',
-        routerLink: [ '/new-sprint' ]
-      }
     ];
   }
 

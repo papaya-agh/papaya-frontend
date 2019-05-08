@@ -1,0 +1,37 @@
+<div class="ui-g" id="papaya-box">
+  <div class="ui-g-6 ui-g-nopad">
+    <h5>Nowy projekt</h5>
+
+    <div class="ui-g-6">
+      <p>Nazwa:</p>
+      <input type="text" pInputText [(ngModel)]="project.name"/>
+    </div>
+
+    <div class="ui-g-6">
+      <p class="first">Współczynnik początkowy: {{project.initialCoefficient}}</p>
+      <p-slider [(ngModel)]="project.initialCoefficient" [style]="{'width':'15em'}"
+                [min]="1" [max]="3" [step]="0.05">
+      </p-slider>
+    </div>
+
+    <div class="ui-g-12">
+      <p>Opis:</p>
+      <textarea [rows]="2" [cols]="50" pInputTextarea [(ngModel)]="project.description"></textarea>
+    </div>
+
+    <div class="ui-g-12">
+      <p-button label="Anuluj" icon="pi pi-arrow-left"
+                [routerLink]="['/projects']" class="mr-2">
+      </p-button>
+      <p-button label="Stwórz" icon="pi pi-plus"
+                (onClick)="handleClick()">
+      </p-button>
+      <span *ngIf="showError" id="error-span">{{errorMessage}}</span>
+    </div>
+  </div>
+  <div class="ui-g-offset-1">
+    <div style="display: flex; justify-content: center">
+      <img src="../../../assets/papaya-logo.png" alt="papaya-logo">
+    </div>
+  </div>
+</div>

@@ -8,10 +8,11 @@ import { ButtonModule } from 'primeng/button';
 import { SliderModule } from 'primeng/slider';
 import { FormsModule } from '@angular/forms';
 import { PCommonModule } from '../p-common/p-common.module';
+import { NewProjectComponent } from './new-project/new-project.component';
 
 
 @NgModule({
-  declarations: [ ProjectsTableComponent ],
+  declarations: [ ProjectsTableComponent, NewProjectComponent ],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

@@ -6,7 +6,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'example', pathMatch: 'full' },
+  { path: '', redirectTo: 'projects', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent, canActivate: [ AuthGuard ] },
   { path: 'example', canActivate: [ AuthGuard ], loadChildren: './example-module/example-module.module#ExampleModuleModule' },
