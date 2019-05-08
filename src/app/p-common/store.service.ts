@@ -18,4 +18,8 @@ export class StoreService {
   getCurrentProjectName(): string {
     return this.currentProject.name;
   }
+
+  getCurrentProjectId(): number {
+    return this.currentProject.id;
+  }
 }

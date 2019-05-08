@@ -6,7 +6,9 @@ import { SprintsRoutingModule } from './sprints-routing.module';
 import { NewSprintComponent } from './new-sprint/new-sprint.component';
 import { PCommonModule } from '../p-common/p-common.module';
 import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/primeng';
+import { CalendarModule, InputTextModule } from 'primeng/primeng';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [ NewSprintComponent ],
@@ -18,6 +20,9 @@ import { CalendarModule } from 'primeng/primeng';
     PCommonModule,
     ButtonModule,
     CalendarModule,
+    TableModule,
+    InputTextModule,
+    ToastModule,
   ]
 })
 export class SprintsModule {
