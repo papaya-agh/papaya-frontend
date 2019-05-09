@@ -76,6 +76,13 @@ module.exports = {
     return body;
   },
 
+  modifySprint: function (params, body, query, headers) {
+    sprints[body.id].timeBurned = body.timeBurned;
+    sprints[body.id].timePlanned = body.timePlanned;
+    sprints[body.id].sprintState = 'CLOSED';
+    return body;
+  },
+
   getUserAvailability: function (params, body, query, headers) {
     return Object.assign({}, userAvailability, {userId: null});
   },

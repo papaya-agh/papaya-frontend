@@ -1,25 +1,29 @@
+<p-toast position="top-center"></p-toast>
 <app-menubar></app-menubar>
-
-<div class="ui-g" id="close-sprint-form">
-  <div class="ui-g-12" id="title">
+<div class="ui-g" id="papaya-box">
+  <div class="ui-g-8 ui-g-nopad">
     <h5>Zamknięcie sprintu</h5>
-    <p>Dane: id, daty, etc.</p>
-  </div>
 
-  <div class="ui-g-4">
-    <p>Licba godzin zaplanowanych:</p>
-    <input type="text" pInputText [(ngModel)]="plannedHours"/>
-  </div>
+    <div class="ui-g-12">
+      <p>Od: {{sprint.durationPeriod.start}}</p>
+      <p>Do: {{sprint.durationPeriod.end}}</p>
+    </div>
 
-  <div class="ui-g-4">
-    <p>Liczba godzin przepracowanych:</p>
-    <input type="text" pInputText [(ngModel)]="burnedHours"/>
-  </div>
+    <div class="ui-g-6">
+      <p>Licba godzin zaplanowanych:</p>
+      <input type="text" pInputText [(ngModel)]="sprint.timePlanned"/>
+    </div>
 
-  <div class="ui-g-10">
-    <p-button label="Zamknij" icon="pi pi-check-circle"
-              (onClick)="handleClick()">
-    </p-button>
+    <div class="ui-g-6">
+      <p>Liczba godzin przepracowanych:</p>
+      <input type="text" pInputText [(ngModel)]="sprint.timeBurned"/>
+    </div>
+
+    <div class="ui-g-12">
+      <p-button label="Zamknij" icon="pi pi-check-circle"
+                (onClick)="handleClick()">
+      </p-button>
+    </div>
   </div>
 </div>
 

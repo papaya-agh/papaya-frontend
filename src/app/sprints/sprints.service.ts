@@ -25,4 +25,8 @@ export class SprintsService {
   addSprint(projectId: number, sprint: SprintDto): Observable<SprintDto> {
     return this.http.post<SprintDto>('api/projects/' + projectId + '/sprints', sprint);
   }
+
+  modifySprint(projectId: number, sprint: SprintDto): Observable<SprintDto> {
+    return this.http.patch<SprintDto>('api/projects/' + projectId + '/sprints/' + sprint.id, sprint);
+  }
 }
