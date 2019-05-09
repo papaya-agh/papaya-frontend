@@ -1,0 +1,11 @@
+#papaya-box {
+    border: solid lightgrey;
+    background-color: whitesmoke;
+    margin: 10px 0 10px 0;
+    padding: 10px;
+    min-height: 300px;
+}
+
+#create-sprint-button-box {
+    margin-top: 37px;
+}

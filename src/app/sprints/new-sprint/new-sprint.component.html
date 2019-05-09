@@ -1,0 +1,75 @@
+<p-toast position="top-center"></p-toast>
+<app-menubar></app-menubar>
+<div class="ui-g" id="papaya-box">
+  <div class="ui-g-8 ui-g-nopad">
+    <h5>Nowy sprint</h5>
+
+    <div class="ui-g-6">
+      <p class="text-secondary">Data rozpoczęcia zapisów:</p>
+      <p-calendar [(ngModel)]="enrollmentPeriodStartDate"
+                  [maxDate]="enrollmentPeriodEndDate" [showIcon]="true"
+                  dateFormat="dd.mm.yy" showTime="true"
+                  showSeconds="true" hourFormat="24">
+      </p-calendar>
+    </div>
+
+    <div class="ui-g-6">
+      <p class="text-secondary">Data zakończenia zapisów:</p>
+      <p-calendar [(ngModel)]="enrollmentPeriodEndDate"
+                  [minDate]="enrollmentPeriodStartDate"
+                  [maxDate]="durationPeriodStartDate" [showIcon]="true"
+                  dateFormat="dd.mm.yy" showTime="true"
+                  showSeconds="true" hourFormat="24">
+      </p-calendar>
+    </div>
+
+    <div class="ui-g-6">
+      <p class="text-primary">Data otwarcia:</p>
+      <p-calendar [(ngModel)]="durationPeriodStartDate"
+                  [minDate]="enrollmentPeriodEndDate"
+                  [maxDate]="durationPeriodEndDate" [showIcon]="true"
+                  dateFormat="dd.mm.yy" showTime="true"
+                  showSeconds="true" hourFormat="24">
+      </p-calendar>
+    </div>
+
+    <div class="ui-g-6">
+      <p class="text-primary">Data zamknięcia:</p>
+      <p-calendar [(ngModel)]="durationPeriodEndDate"
+                  [minDate]="durationPeriodStartDate" [showIcon]="true"
+                  dateFormat="dd.mm.yy" showTime="true"
+                  showSeconds="true" hourFormat="24">
+      </p-calendar>
+    </div>
+
+    <div class="ui-g-6">
+      <p class="text-primary">Planowana liczba godzin:</p>
+      <input type="text" pInputText [(ngModel)]="sprint.timePlanned"/>
+    </div>
+
+    <div class="ui-g-6" id="create-sprint-button-box">
+      <p-button label="Stwórz" icon="pi pi-plus"
+                (onClick)="handleClick()">
+      </p-button>
+    </div>
+  </div>
+  <div class="ui-g-4 ui-g-nopad">
+    <h5>Sprinty w projekcie</h5>
+    <p-table [value]="sprints">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Od</th>
+          <th>Do</th>
+          <th>Stan</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-sprint>
+        <tr>
+          <td>{{sprint.durationPeriod.start | date: 'dd-MM-yyyy'}}</td>
+          <td>{{sprint.durationPeriod.end | date: 'dd-MM-yyyy'}}</td>
+          <td>{{sprint.sprintState}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
