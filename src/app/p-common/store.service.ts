@@ -15,6 +15,10 @@ export class StoreService {
     this.currentProject = project;
   }
 
+  getCurrentProject(): ProjectDto {
+    return this.currentProject;
+  }
+
   getCurrentProjectName(): string {
     return this.currentProject.name;
   }
