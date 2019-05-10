@@ -1,5 +1,29 @@
 <p-toast position="top-center"></p-toast>
 <app-menubar></app-menubar>
-<p-card>
-  Widok ogólny projektu
-</p-card>
+<div class="ui-g" id="papaya-box">
+  <div class="ui-g-8 ui-g-nopad">
+    <h5>Bieżący projekt</h5>
+
+    <div class="ui-g-12">
+      <p>Nazwa: {{project.name}}</p>
+    </div>
+
+    <div class="ui-g-12">
+      <p>Współczynnik początkowy: {{project.initialCoefficient}}</p>
+    </div>
+
+    <div class="ui-g-12">
+      <p>Opis: {{project.description}}</p>
+    </div>
+
+    <div class="ui-g-12">
+      <p>Twoja rola: {{project.userRole}}</p>
+    </div>
+
+  </div>
+  <div class="ui-g-4 ui-g-nopad">
+    <div style="display: flex; justify-content: center">
+      <img src="../../../assets/papaya-logo.png" alt="papaya-logo">
+    </div>
+  </div>
+</div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { ProjectDto } from '../../declarations/models/project-dto';
+import { StoreService } from '../../p-common/store.service';
 
 
 @Component({
@@ -9,10 +11,14 @@ import { MessageService } from 'primeng/api';
 })
 export class ExampleComponentComponent implements OnInit {
 
-  constructor(private messageService: MessageService) {
+  project: ProjectDto;
+
+  constructor(private storeService: StoreService,
+              private messageService: MessageService) {
   }
 
   ngOnInit() {
+    this.project = this.storeService.getCurrentProject();
   }
 
 }
