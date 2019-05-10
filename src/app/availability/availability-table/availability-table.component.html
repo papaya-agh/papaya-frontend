@@ -1,0 +1,78 @@
+﻿<p-toast></p-toast>
+<app-menubar></app-menubar>
+
+<p-card header="Podawanie dostępności">
+  <ng-template [ngIf]="declarableSprint">
+
+    <div *ngIf="availability">
+      <div class="ui-g">
+        <div class="ui-g-4">
+          <h5>Data rozpoczęcia:</h5>
+        </div>
+        <div class="ui-g-4">
+          <span>{{ declarableSprint.durationPeriod.start | date: 'dd-MM-yyyy HH:mm' }}</span>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-4">
+          <h5>Data zakończenia:</h5>
+        </div>
+        <div class="ui-g-4">
+          <span>{{ declarableSprint.durationPeriod.end | date: 'dd-MM-yyyy HH:mm' }}</span>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-4" style="font-style: italic">
+          <h6>
+            <div>Możliwość deklaracji dostępności mija</div>
+            <div>{{ declarableSprint.enrollmentPeriod.end | date: 'dd-MM-yyyy HH:mm' }}</div>
+          </h6>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-4">
+          <h5>Podaj łączną liczbę godzin, jakie przepracujesz w tym sprincie:</h5>
+        </div>
+        <div class="ui-g-4">
+          <p-spinner size="30" [(ngModel)]="spinnersTime.timeAvailableHours" [min]=0 placeholder="Deklarowane"></p-spinner> h
+        </div>
+        <div class="ui-g-4">
+          <p-spinner size="30" [(ngModel)]="spinnersTime.timeAvailableMinutes" [min]=0 [max]=59 placeholder="Deklarowane"></p-spinner> min
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-4">
+          <h5>Liczba godzin w pozostałych zadaniach:</h5>
+        </div>
+        <div class="ui-g-4">
+          <p-spinner size="30" [(ngModel)]="spinnersTime.timeRemainingHours" [min]=0 placeholder="Pozostałe"></p-spinner> h
+        </div>
+        <div class="ui-g-4">
+          <p-spinner size="30" [(ngModel)]="spinnersTime.timeRemainingMinutes" [min]=0 [max]=59
+                     placeholder="placeholder"></p-spinner>
+          min
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-4">
+          <h5>Uwagi:</h5>
+        </div>
+        <div class="ui-g-4">
+          <textarea pInputTextarea [(ngModel)]="availability.notes" [rows]="5" [cols]="35"
+                    placeholder="Uwagi"></textarea>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="!declarableSprint">
+    <div>
+      Obecnie nie ma żadnego sprintu, dla którego możesz podać swoją dostępność
+    </div>
+  </ng-template>
+  <p-footer>
+    <div class="controls">
+      <p-button label="Powrót" icon="pi pi-arrow-circle-left" (click)="goBack()"></p-button>
+      <p-button *ngIf="declarableSprint" label="Zatwierdź" (click)="confirm()"></p-button>
+    </div>
+  </p-footer>
+</p-card>

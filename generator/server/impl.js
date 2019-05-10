@@ -1,15 +1,32 @@
 const crypto = require('crypto');
 const projects = [
-  { id: 1, name: 'awesome', description: 'asfasgdfhe', initialCoefficient: 1.54 },
-  { id: 2, name: 'qwerty', description: 'ytritjghhe', initialCoefficient: 1.34 },
-  { id: 3, name: 'ooooo', description: 'avbngdfhe', initialCoefficient: 2.65 }
+  {id: 1, name: 'awesome', description: 'asfasgdfhe', initialCoefficient: 1.54},
+  {id: 2, name: 'qwerty', description: 'ytritjghhe', initialCoefficient: 1.34},
+  {id: 3, name: 'ooooo', description: 'avbngdfhe', initialCoefficient: 2.65}
 ];
 
 const sprints = [
-  { id: 1, enrollmentPeriod: {start: '2019-02-04', end: '2019-02-11'},
-    durationPeriod: {start:'2019-02-12', end: '2019-02-19'},
-    dateClosed: '', timeBurned: 0, timePlanned: 0, sprintState: 'closed'}
+  {
+    id: 1, enrollmentPeriod: {start: '2019-02-04', end: '2019-02-11'},
+    durationPeriod: {start: '2019-02-12', end: '2019-02-19'},
+    dateClosed: '', timeBurned: 0, timePlanned: 0, sprintState: 'closed'
+  }
 ];
+
+const projectSprints = {
+  1: {
+    mockDeclarable: true,
+  },
+  2: {
+    mockDeclarable: false,
+  },
+};
+
+const userAvailability = {
+  timeAvailable: 0,
+  timeRemaining: 0,
+  notes: '',
+};
 
 module.exports = {
   requestLogin: function (params, body, query, headers) {
@@ -38,7 +55,19 @@ module.exports = {
   },
 
   getSprints: function (params, body, query, headers) {
-    return sprints;
+    const projectId = params.projectId;
+    const sprintStates = query.sprintStates;
+
+    if (!Array.isArray(sprintStates)) {
+      if (sprintStates == 'DECLARABLE') {
+        if (projectSprints[projectId].mockDeclarable) {
+          return [mockDeclarableSprint(1337)];
+        } else {
+          return [];
+        }
+
+      }
+    }
   },
 
   addSprint: function (params, body, query, headers) {
@@ -46,4 +75,35 @@ module.exports = {
     sprints.push(body);
     return body;
   },
+
+  getUserAvailability: function (params, body, query, headers) {
+    return Object.assign({}, userAvailability, {userId: null});
+  },
+
+  updateUserAvailability: function (params, body, query, headers) {
+    userAvailability.timeRemaining = body.timeRemaining;
+    userAvailability.timeAvailable = body.timeAvailable;
+    userAvailability.notes = body.notes;
+    return body;
+  },
 };
+
+function mockDeclarableSprint(sprintId) {
+  const now = new Date();
+  const enrollmentStart = new Date().setDate(now.getDate() - 2);
+  const enrollmentEnd = new Date().setDate(now.getDate() + 2);
+  const durationStart = new Date().setDate(now.getDate() + 3);
+  const durationEnd = new Date().setDate(now.getDate() + 10);
+
+  return {
+    id: sprintId,
+    enrollmentPeriod: {
+      start: enrollmentStart,
+      end: enrollmentEnd,
+    },
+    durationPeriod: {
+      start: durationStart,
+      end: durationEnd,
+    }
+  }
+}
