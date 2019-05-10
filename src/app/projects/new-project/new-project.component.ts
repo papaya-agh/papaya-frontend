@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectsService } from '../projects.service';
 import { ProjectDto } from '../../declarations/models/project-dto';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-new-project',
@@ -11,16 +12,18 @@ import { ProjectDto } from '../../declarations/models/project-dto';
 export class NewProjectComponent implements OnInit {
 
   project: ProjectDto;
-  errorMessage = 'Podaj nazwę i opis projektu.';
-  showError: boolean;
 
   constructor(private router: Router,
-              private projectsService: ProjectsService) {
+              private projectsService: ProjectsService,
+              private messageService: MessageService) {
     this.project = {
       id: undefined,
       name: '',
       description: '',
-      initialCoefficient: 1.55
+      initialCoefficient: 1.55,
+      webhookUrl: '',
+      channelName: '',
+      userRole: undefined
     };
   }
 
@@ -28,16 +31,15 @@ export class NewProjectComponent implements OnInit {
   }
 
   handleClick() {
-    if (!this.project.name || !this.project.description) {
-      this.showError = true;
+    if (!this.project.name) {
+      this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Podaj nazwę projektu!' });
       return;
-    } else {
-      this.showError = false;
     }
 
     this.projectsService.addProject(this.project)
       .subscribe(response => {
         this.project = response;
+        setTimeout(() => this.messageService.add({ severity: 'success', summary: 'Sukces', detail: 'Projekt utworzony!' }));
         this.router.navigateByUrl('/projects');
       });
   }

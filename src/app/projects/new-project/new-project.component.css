@@ -7,7 +7,12 @@
     position: relative;
 }
 
-#error-span {
-    margin-left: 10px;
-    color: orangered;
+.papaya-input {
+    width: 80%;
+}
+
+.webhook-icon {
+    margin-right: 4px;
+    width: 22px;
+    height: 22px;
 }
