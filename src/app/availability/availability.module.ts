@@ -6,6 +6,10 @@ import { AvailabilityTableComponent } from './availability-table/availability-ta
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+import { CardModule } from 'primeng/card';
+import { PCommonModule } from '../p-common/p-common.module';
+import { ToastModule } from 'primeng/toast';
+import { SpinnerModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [ AvailabilityTableComponent ],
@@ -15,6 +19,10 @@ import { FormsModule } from '@angular/forms';
     TableModule,
     ButtonModule,
     FormsModule,
+    CardModule,
+    PCommonModule,
+    ToastModule,
+    SpinnerModule,
   ]
 })
 export class AvailabilityModule {
