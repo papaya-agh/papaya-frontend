@@ -1,0 +1,7 @@
+.controls {
+    margin: 10px 0;
+}
+
+.controls > p-button {
+    padding-right: 2px;
+}

@@ -15,6 +15,7 @@ import { AuthErrorHandler } from './auth/auth-error-handler';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PCommonModule } from './p-common/p-common.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     InputTextModule,
     ToastModule,
     BrowserAnimationsModule,
+    PCommonModule,
   ],
   providers: [
     MessageService,
