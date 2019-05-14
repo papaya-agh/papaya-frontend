@@ -6,11 +6,6 @@ install:
   - npm ci
   - npm i -g @angular/cli
 
-branches:
-  only:
-    - master
-    - /^IO2019TEAM-.*$/
-
 script:
   - npm run generate.declarations
   - npm run build
