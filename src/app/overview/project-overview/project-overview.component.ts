@@ -6,10 +6,10 @@ import { StoreService } from '../../p-common/store.service';
 
 @Component({
   selector: 'app-example-component',
-  templateUrl: './example-component.component.html',
-  styleUrls: [ './example-component.component.css' ]
+  templateUrl: './project-overview.component.html',
+  styleUrls: [ './project-overview.component.css' ]
 })
-export class ExampleComponentComponent implements OnInit {
+export class ProjectOverviewComponent implements OnInit {
 
   project: ProjectDto;
 
