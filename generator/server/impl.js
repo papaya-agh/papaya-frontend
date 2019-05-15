@@ -8,7 +8,7 @@ const projects = [
 const sprints = [
   {
     id: 1, enrollmentPeriod: {start: '2019-02-04', end: '2019-02-11'},
-    durationPeriod: {start: '2019-02-12', end: '2019-02-19'},
+    durationPeriod: {start: '2019-05-12', end: '2019-05-19'},
     dateClosed: '', timeBurned: 0, timePlanned: 0, sprintState: 'closed'
   }
 ];
@@ -57,6 +57,7 @@ module.exports = {
   getSprints: function (params, body, query, headers) {
     const projectId = params.projectId;
     const sprintStates = query.sprintStates;
+    return sprints;
 
     if (!Array.isArray(sprintStates)) {
       if (sprintStates == 'DECLARABLE') {
@@ -65,7 +66,6 @@ module.exports = {
         } else {
           return [];
         }
-
       }
     }
   },
