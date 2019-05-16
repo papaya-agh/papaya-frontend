@@ -30,7 +30,7 @@ export class MenubarComponent implements OnInit {
       },
       {
         label: this.currentProjectName,
-        routerLink: [ '/example' ]
+        routerLink: [ '/overview' ]
       },
       {
         label: 'Dostępność',

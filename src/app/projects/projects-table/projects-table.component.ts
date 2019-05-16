@@ -27,7 +27,7 @@ export class ProjectsTableComponent implements OnInit {
 
   handleClick(project) {
     this.storeService.setCurrentProject(project);
-    this.router.navigateByUrl('/example');
+    this.router.navigateByUrl('/overview');
   }
 
 }

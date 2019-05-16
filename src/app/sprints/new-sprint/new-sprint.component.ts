@@ -65,7 +65,7 @@ export class NewSprintComponent implements OnInit {
         response => {
           this.sprint = response;
           setTimeout(() => this.messageService.add({ severity: 'success', summary: 'Sukces', detail: 'Sprint utworzony!' }));
-          this.router.navigateByUrl('/example');
+          this.router.navigateByUrl('/overview');
         },
         error => {
           this.messageService.add({ severity: 'error', summary: 'Błąd', detail: error.error.message });

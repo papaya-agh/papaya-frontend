@@ -5,11 +5,10 @@ import { CardModule } from 'primeng/card';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 
-import { ExampleComponentComponent } from './example-component/example-component.component';
+import { ProjectOverviewComponent } from './project-overview/project-overview.component';
 
 const routes: Routes = [
-  { path: '', component: ExampleComponentComponent, pathMatch: 'full' },
-  { path: 'example', component: ExampleComponentComponent },
+  { path: '', component: ProjectOverviewComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -22,5 +21,5 @@ const routes: Routes = [
   ],
   exports: [ RouterModule, CardModule, MenubarModule, ButtonModule ]
 })
-export class ExampleModuleRoutingModule {
+export class OverviewRoutingModule {
 }
