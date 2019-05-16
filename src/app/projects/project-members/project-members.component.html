@@ -25,14 +25,17 @@
         <td>{{ member.user.firstName }} {{ member.user.lastName }} ({{ member.user.email }})</td>
         <td>
           <ng-template [ngIf]="editMode">
-            <p-dropdown [options]="memberTypes" [(ngModel)]="member.role" [hideTransitionOptions]="'0ms'"></p-dropdown>
+            <p-dropdown [disabled]="currentUserId == member.user.id" [options]="memberTypes" [(ngModel)]="member.role"
+                        [hideTransitionOptions]="'0ms'"></p-dropdown>
           </ng-template>
           <ng-template [ngIf]="!editMode">
             {{ memberTypeToNameMapping[member.role] }}
           </ng-template>
         </td>
         <td>
-          <p-button label="Usuń" (onClick)="onRemove(member)" [disabled]="editMode"></p-button>
+          <ng-template [ngIf]="currentUserId != member.user.id">
+            <p-button label="Usuń" (onClick)="onRemove(member)" [disabled]="editMode"></p-button>
+          </ng-template>
         </td>
       </tr>
     </ng-template>

@@ -8,6 +8,8 @@ export class StoreService {
 
   currentProject: ProjectDto;
 
+  currentUserId: number;
+
   constructor() {
   }
 
