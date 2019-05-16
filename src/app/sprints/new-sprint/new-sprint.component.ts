@@ -4,6 +4,7 @@ import { SprintsService } from '../sprints.service';
 import { StoreService } from '../../p-common/store.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { SprintStateDto } from '../../declarations/models/sprint-state-dto';
 
 @Component({
   selector: 'app-new-sprint-form',
@@ -21,6 +22,7 @@ export class NewSprintComponent implements OnInit {
   previousSprint: SprintDto;
   previousSprintDuration: number;
   projectId: number;
+  // sprintStateMap: Map<SprintStateDto, String>;
 
   constructor(private router: Router,
               private sprintsService: SprintsService,
@@ -36,6 +38,13 @@ export class NewSprintComponent implements OnInit {
       sprintState: 'UPCOMING'
     };
     this.projectId = this.storeService.getCurrentProjectId();
+    // this.sprintStateMap = new Map<SprintStateDto, String>();
+    // this.sprintStateMap.set("UPCOMING", "nadchodzący");
+    // this.sprintStateMap.set("DECLARABLE", "zapisy");
+    // this.sprintStateMap.set("PADDING", "padding");
+    // this.sprintStateMap.set("IN_PROGRESS", "w trakcie");
+    // this.sprintStateMap.set("FINISHED", "zakończony");
+    // this.sprintStateMap.set("CLOSED", "zamknięty");
   }
 
   ngOnInit() {
@@ -56,6 +65,11 @@ export class NewSprintComponent implements OnInit {
             this.durationPeriodStartDate = new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);
             this.durationPeriodEndDate = new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000);
           }
+
+          this.sprints = this.sprints.reverse().filter(value => value.sprintState !== 'CLOSED').slice(0, 10);
+          // for (let sprint of this.sprints) {
+          //   sprint.sprintState = this.sprintStateMap.get(sprint.sprintState);
+          // }
         }
       );
   }
