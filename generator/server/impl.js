@@ -5,13 +5,14 @@ const projects = [
   {id: 3, name: 'ooooo', description: 'avbngdfhe', initialCoefficient: 2.65}
 ];
 
-const sprints = [
-  {
-    id: 1, enrollmentPeriod: {start: '2019-02-04', end: '2019-02-11'},
-    durationPeriod: {start: '2019-05-12', end: '2019-05-19'},
-    dateClosed: '', timeBurned: 0, timePlanned: 0, sprintState: 'closed'
-  }
-];
+// const sprints = [
+//   {
+//     id: 1, enrollmentPeriod: {start: '2019-02-04', end: '2019-02-11'},
+//     durationPeriod: {start: '2019-05-12', end: '2019-05-19'},
+//     dateClosed: '', timeBurned: 0, timePlanned: 0, sprintState: 'closed'
+//   }
+// ];
+const sprints = [];
 
 const projectSprints = {
   1: {

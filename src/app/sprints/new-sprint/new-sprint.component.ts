@@ -31,8 +31,8 @@ export class NewSprintComponent implements OnInit {
       enrollmentPeriod: { start: '', end: '' },
       durationPeriod: { start: '', end: '' },
       dateClosed: '',
-      timeBurned: undefined,
-      timePlanned: undefined,
+      timeBurned: 0,
+      timePlanned: 0,
       sprintState: 'UPCOMING'
     };
     this.projectId = this.storeService.getCurrentProjectId();
@@ -42,13 +42,20 @@ export class NewSprintComponent implements OnInit {
     this.sprintsService.getSprints(this.projectId)
       .subscribe(response => {
           this.sprints = response;
-          this.previousSprint = this.sprints.reverse()[0];
-          this.durationPeriodStartDate = new Date(this.previousSprint.durationPeriod.end);
-          this.durationPeriodEndDate = new Date(this.previousSprint.durationPeriod.start);
-          this.previousSprintDuration = this.durationPeriodStartDate.getTime() - this.durationPeriodEndDate.getTime();
-          this.durationPeriodEndDate = new Date(this.durationPeriodStartDate.getTime() + this.previousSprintDuration);
-          this.enrollmentPeriodEndDate = new Date(this.durationPeriodStartDate.getTime() - 24 * 60 * 60 * 1000);
-          this.enrollmentPeriodStartDate = new Date(this.durationPeriodStartDate.getTime() - 3 * 24 * 60 * 60 * 1000);
+          if (this.sprints.length !== 0) {
+            this.previousSprint = this.sprints.reverse()[0];
+            this.durationPeriodStartDate = new Date(this.previousSprint.durationPeriod.end);
+            this.durationPeriodEndDate = new Date(this.previousSprint.durationPeriod.start);
+            this.previousSprintDuration = this.durationPeriodStartDate.getTime() - this.durationPeriodEndDate.getTime();
+            this.durationPeriodEndDate = new Date(this.durationPeriodStartDate.getTime() + this.previousSprintDuration);
+            this.enrollmentPeriodEndDate = new Date(this.durationPeriodStartDate.getTime() - 24 * 60 * 60 * 1000);
+            this.enrollmentPeriodStartDate = new Date(this.durationPeriodStartDate.getTime() - 3 * 24 * 60 * 60 * 1000);
+          } else {
+            this.enrollmentPeriodStartDate = new Date(new Date().getTime());
+            this.enrollmentPeriodEndDate = new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000);
+            this.durationPeriodStartDate = new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);
+            this.durationPeriodEndDate = new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000);
+          }
         }
       );
   }
