@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/ng-openapi-gen/ng-openapi-gen-schema.json",
+  "input": "papaya-interface/src/main/resources/api.yaml",
+  "output": "generator/out",
+  "ignoreUnusedModels": false,
+  "modelIndex": false,
+  "enumModule": false,
+  "generateExamples": false,
+  "camelCase": false,
+  "templates": "./generator/config/templates",
+  "enumStyle": "alias"
+}
