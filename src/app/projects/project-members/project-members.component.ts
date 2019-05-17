@@ -16,6 +16,7 @@ export class ProjectMembersComponent implements OnInit {
   membersSnapshot: ProjectMemberDto[] = [];
   members: ProjectMemberDto[] = [];
   editMode = false;
+  currentUserId: number;
   addMemberForm: FormGroup;
   submitted = false;
   loading = false;
@@ -35,6 +36,7 @@ export class ProjectMembersComponent implements OnInit {
               private formBuilder: FormBuilder,
               private messageService: MessageService,
               private router: Router) {
+    this.currentUserId = store.currentUserId;
   }
 
   ngOnInit() {
@@ -72,11 +74,24 @@ export class ProjectMembersComponent implements OnInit {
     this.loading = true;
     this.projectsService.addMember({ email: this.f.memberEmail.value }, this.store.currentProject.id)
       .subscribe(response => {
-        this.members.push(response);
-        this.submitted = false;
-        this.addMemberForm.reset();
-        this.loading = false;
-      });
+          this.members.push(response);
+          this.submitted = false;
+          this.addMemberForm.reset();
+          this.loading = false;
+        },
+        error => {
+          if (error.status === 403) {
+            throw error;
+          }
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Wystąpił błąd',
+            detail: error.error.message,
+          });
+          this.submitted = false;
+          this.addMemberForm.reset();
+          this.loading = false;
+        });
   }
 
   onEdit() {
@@ -87,7 +102,7 @@ export class ProjectMembersComponent implements OnInit {
   onSave() {
     for (const i in this.members) {
       if (this.members[i].role !== this.membersSnapshot[i].role) {
-        this.projectsService.setMemberRole(this.members[i], this.members[i].user.id , this.store.currentProject.id).subscribe();
+        this.projectsService.setMemberRole(this.members[i], this.members[i].user.id, this.store.currentProject.id).subscribe();
       }
     }
 
@@ -103,6 +118,16 @@ export class ProjectMembersComponent implements OnInit {
 
   onRemove(member: ProjectMemberDto) {
     this.projectsService.removeMember(member.user.id, this.store.currentProject.id)
-      .subscribe(() => this.members = this.members.filter(m => m.user.id !== member.user.id ));
+      .subscribe(() => this.members = this.members.filter(m => m.user.id !== member.user.id),
+        error => {
+          if (error.status === 403) {
+            throw error;
+          }
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Wystąpił błąd',
+            detail: error.error.message,
+          });
+        });
   }
 }
