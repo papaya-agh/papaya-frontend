@@ -1,7 +1,11 @@
 .controls {
     display: flex;
+    margin-top: 30px;
 }
 
 .controls > p-button {
     margin: 3px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
