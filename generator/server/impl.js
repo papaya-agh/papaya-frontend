@@ -4,14 +4,7 @@ const projects = [
   {id: 2, name: 'qwerty', description: 'ytritjghhe', initialCoefficient: 1.34},
   {id: 3, name: 'ooooo', description: 'avbngdfhe', initialCoefficient: 2.65}
 ];
-
-const sprints = [
-  {
-    id: 1, enrollmentPeriod: {start: '2019-02-04', end: '2019-02-11'},
-    durationPeriod: {start: '2019-02-12', end: '2019-02-19'},
-    dateClosed: '', timeBurned: 0, timePlanned: 0, sprintState: 'closed'
-  }
-];
+const sprints = [];
 
 const projectSprints = {
   1: {
@@ -57,6 +50,7 @@ module.exports = {
   getSprints: function (params, body, query, headers) {
     const projectId = params.projectId;
     const sprintStates = query.sprintStates;
+    return sprints;
 
     if (!Array.isArray(sprintStates)) {
       if (sprintStates == 'DECLARABLE') {
@@ -65,7 +59,6 @@ module.exports = {
         } else {
           return [];
         }
-
       }
     }
   },
