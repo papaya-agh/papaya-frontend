@@ -16,14 +16,14 @@
     <ng-template pTemplate="header">
       <tr>
         <th>Użytkownik</th>
-        <th>Uprawnienia</th>
-        <th>Akcja</th>
+        <th class="last-column">Uprawnienia</th>
+        <th class="action-column"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-member>
       <tr>
         <td>{{ member.user.firstName }} {{ member.user.lastName }} ({{ member.user.email }})</td>
-        <td>
+        <td class="last-column">
           <ng-template [ngIf]="editMode">
             <p-dropdown [disabled]="currentUserId == member.user.id" [options]="memberTypes" [(ngModel)]="member.role"
                         [hideTransitionOptions]="'0ms'"></p-dropdown>
@@ -32,9 +32,9 @@
             {{ memberTypeToNameMapping[member.role] }}
           </ng-template>
         </td>
-        <td>
-          <ng-template [ngIf]="currentUserId != member.user.id">
-            <p-button label="Usuń" (onClick)="onRemove(member)" [disabled]="editMode"></p-button>
+        <td class="action-column">
+          <ng-template [ngIf]="currentUserId != member.user.id && !editMode">
+            <p-button class="show-on-hover-content" label="Usuń" (onClick)="onRemove(member)"></p-button>
           </ng-template>
         </td>
       </tr>
