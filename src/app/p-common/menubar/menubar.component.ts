@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { StoreService } from '../store.service';
+import { UserRoleDto } from '../../declarations/models/user-role-dto';
 
 @Component({
   selector: 'app-menubar',
@@ -8,6 +9,9 @@ import { StoreService } from '../store.service';
   styleUrls: [ './menubar.component.css' ]
 })
 export class MenubarComponent implements OnInit {
+
+  @Input()
+  userRole: UserRoleDto;
 
   items: MenuItem[];
   currentProjectName: string;
@@ -40,7 +44,8 @@ export class MenubarComponent implements OnInit {
       {
         label: 'Excel',
         icon: 'pi pi-fw pi-table',
-        routerLink: [ '/excel' ]
+        routerLink: [ '/excel' ],
+        visible: this.userRole === 'ADMIN',
       },
       { separator: true },
     ];
