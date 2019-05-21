@@ -1,5 +1,5 @@
 <p-toast position="top-center"></p-toast>
-<app-menubar></app-menubar>
+<app-menubar [userRole]="this.storeService.currentProject?.userRole"></app-menubar>
 <div class="ui-g" id="papaya-box">
   <div class="ui-g-8 ui-g-nopad">
     <h5>Nowy sprint</h5>

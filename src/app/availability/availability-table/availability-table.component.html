@@ -1,5 +1,5 @@
 ﻿<p-toast position="top-center"></p-toast>
-<app-menubar></app-menubar>
+<app-menubar [userRole]="this.store.currentProject?.userRole"></app-menubar>
 <p-card header="Podawanie dostępności">
   <ng-template [ngIf]="declarableSprint">
 
