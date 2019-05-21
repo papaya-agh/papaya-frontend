@@ -5,3 +5,21 @@
 .controls > p-button {
     padding-right: 2px;
 }
+
+.action-column {
+    border-left: none !important;
+    width: 100px;
+}
+
+.last-column {
+    border-right: none !important;
+}
+
+.show-on-hover-content {
+    opacity: 0;
+    transition: opacity .35s ease;
+}
+
+tr:hover .show-on-hover-content {
+    opacity: 1;
+}
