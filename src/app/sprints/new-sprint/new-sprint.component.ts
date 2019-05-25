@@ -29,13 +29,15 @@ export class NewSprintComponent implements OnInit {
               private storeService: StoreService,
               private messageService: MessageService) {
     this.newSprint = {
-      id: undefined,
+      coefficient: undefined,
+      dateClosed: '',
       enrollmentPeriod: { start: '', end: '' },
       durationPeriod: { start: '', end: '' },
-      dateClosed: '',
-      timeBurned: 0,
-      timePlanned: 0,
-      sprintState: 'UPCOMING'
+      estimatedTimePlanned: 0,
+      finalTimePlanned: 0,
+      id: undefined,
+      sprintState: 'UPCOMING',
+      timeBurned: 0
     };
     this.projectId = this.storeService.getCurrentProjectId();
     this.sprintStateMap = new Map<SprintStateDto, string>();
