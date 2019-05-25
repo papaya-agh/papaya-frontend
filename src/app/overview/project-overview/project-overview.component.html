@@ -1,29 +1,30 @@
 <p-toast position="top-center"></p-toast>
 <app-menubar [userRole]="this.storeService.currentProject?.userRole"></app-menubar>
-<div class="ui-g" id="papaya-box">
-  <div class="ui-g-8 ui-g-nopad">
-    <h5>Bieżący projekt</h5>
+<p-card header="Bieżący projekt">
+  <div class="ui-g">
+    <div class="ui-g-8 ui-g-nopad">
+      <div class="ui-g-12">
+        <p>Nazwa: {{project.name}}</p>
+      </div>
 
-    <div class="ui-g-12">
-      <p>Nazwa: {{project.name}}</p>
+      <div class="ui-g-12">
+        <p>Współczynnik początkowy: {{project.initialCoefficient}}</p>
+      </div>
+
+      <div class="ui-g-12">
+        <p>Opis: {{project.description}}</p>
+      </div>
+
+      <div class="ui-g-12">
+        <p>Twoja rola: {{project.userRole}}</p>
+      </div>
+
     </div>
-
-    <div class="ui-g-12">
-      <p>Współczynnik początkowy: {{project.initialCoefficient}}</p>
+    <div class="ui-g-4 ui-g-nopad">
+      <div style="display: flex; justify-content: center">
+        <img src="../../../assets/papaya-logo.png" alt="papaya-logo"
+             style="margin-top: -50px; max-height: 221px;">
+      </div>
     </div>
-
-    <div class="ui-g-12">
-      <p>Opis: {{project.description}}</p>
-    </div>
-
-    <div class="ui-g-12">
-      <p>Twoja rola: {{project.userRole}}</p>
-    </div>
-
   </div>
-  <div class="ui-g-4 ui-g-nopad">
-    <div style="display: flex; justify-content: center">
-      <img src="../../../assets/papaya-logo.png" alt="papaya-logo">
-    </div>
-  </div>
-</div>
+</p-card>
