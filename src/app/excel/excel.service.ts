@@ -1,7 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { Worker } from './worker';
+import { Observable } from 'rxjs';
 import { SprintSummaryDto } from '../declarations/models/sprint-summary-dto';
 
 @Injectable({

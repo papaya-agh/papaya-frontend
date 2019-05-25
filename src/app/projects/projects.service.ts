@@ -37,9 +37,4 @@ export class ProjectsService {
   removeMember(userId: number, projectId: number): Observable<any> {
     return this.http.delete(`api/projects/${projectId}/members/${userId}`);
   }
-
-
-  getUsersFromProject(projectId: number): Observable<ProjectMemberDto[]> {
-    return this.http.get<ProjectMemberDto[]>(`api/projects/${projectId}/members`);
-  }
 }

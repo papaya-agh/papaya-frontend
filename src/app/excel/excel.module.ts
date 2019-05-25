@@ -6,6 +6,8 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { PCommonModule } from '../p-common/p-common.module';
+import { CardModule } from 'primeng/card';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [ExcelTableComponent],
@@ -15,7 +17,9 @@ import { PCommonModule } from '../p-common/p-common.module';
     TableModule,
     ButtonModule,
     FormsModule,
-    PCommonModule
+    PCommonModule,
+    CardModule,
+    ToastModule
   ]
 })
 export class ExcelModule { }
