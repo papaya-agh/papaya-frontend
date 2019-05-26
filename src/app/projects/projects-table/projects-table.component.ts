@@ -3,7 +3,6 @@ import { ProjectsService } from '../projects.service';
 import { ProjectDto } from '../../declarations/models/project-dto';
 import { Router } from '@angular/router';
 import { StoreService } from '../../p-common/store.service';
-import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-projects-table',
@@ -16,8 +15,7 @@ export class ProjectsTableComponent implements OnInit {
 
   constructor(private router: Router,
               private projectsService: ProjectsService,
-              private storeService: StoreService,
-              private messageService: MessageService) {
+              private storeService: StoreService) {
   }
 
   ngOnInit() {

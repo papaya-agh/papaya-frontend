@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://dummy.restapiexample.com/api/v1/'
+  keycloak: {
+    url: 'http://papaya-agh-keycloak.herokuapp.com/auth',
+    realm: 'papaya',
+    clientId: 'papaya-web'
+  }
 };
 
 /*

@@ -29,12 +29,12 @@ export class ProjectsService {
     return this.http.post<ProjectMemberDto>(`api/projects/${projectId}/members`, userIdentification);
   }
 
-  setMemberRole(user: ProjectMemberDto, userId: number, projectId: number): Observable<ProjectMemberDto> {
+  setMemberRole(user: ProjectMemberDto, userId: string, projectId: number): Observable<ProjectMemberDto> {
     const body: ProjectMemberDto = {role: user.role, user: null};
     return this.http.put(`api/projects/${projectId}/members/${userId}`, body);
   }
 
-  removeMember(userId: number, projectId: number): Observable<any> {
+  removeMember(userId: string, projectId: number): Observable<any> {
     return this.http.delete(`api/projects/${projectId}/members/${userId}`);
   }
 }
