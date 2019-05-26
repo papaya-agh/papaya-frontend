@@ -5,11 +5,11 @@ import { AvailabilityRoutingModule } from './availability-routing.module';
 import { AvailabilityTableComponent } from './availability-table/availability-table.component';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { PCommonModule } from '../p-common/p-common.module';
 import { ToastModule } from 'primeng/toast';
-import { SpinnerModule } from 'primeng/primeng';
+import { InputTextModule, KeyFilterModule, SpinnerModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [ AvailabilityTableComponent ],
@@ -23,6 +23,9 @@ import { SpinnerModule } from 'primeng/primeng';
     PCommonModule,
     ToastModule,
     SpinnerModule,
+    KeyFilterModule,
+    ReactiveFormsModule,
+    InputTextModule,
   ]
 })
 export class AvailabilityModule {
