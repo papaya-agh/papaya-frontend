@@ -4,7 +4,36 @@ const projects = [
   {id: 2, name: 'qwerty', description: 'ytritjghhe', initialCoefficient: 1.34},
   {id: 3, name: 'ooooo', description: 'avbngdfhe', initialCoefficient: 2.65}
 ];
-const sprints = [];
+
+const sprints = [
+  {
+    id: 1,
+    enrollmentPeriod: { start: '2019-02-04', end: '2019-02-11' },
+    durationPeriod: { start: '2019-05-15T22:53:12', end: '2019-05-15T22:53:19.45' },
+    dateClosed: '',
+    timeBurned: 0,
+    timePlanned: 0,
+    sprintState: 'DECLARABLE'
+  }
+];
+
+const availability = [
+  { userId: 1, availability: { timeAvailable: 23, timeRemaining: 2 } },
+  { userId: 2, availability: {timeAvailable: 33, timeRemaining: 0 }},
+  { userId: 3, availability: {timeAvailable: 17, timeRemaining: 3, notes: 'Kocham Front'} }
+];
+
+const users = [
+  { user: { id: 1, firstName: "Krzysztof", lastName: "Krawczyk" } },
+  { user: { id: 2, firstName: "Adam", lastName: "Malysz" } },
+  { user: { id: 3, firstName: "Robert", lastName: "Kubica" } },
+];
+
+const sprintSummary = {
+  membersAvailability: availability,
+  totalAvailableTime: 73,
+  sprintCoefficient: 1.23
+}
 
 const projectSprints = {
   1: {
@@ -50,7 +79,6 @@ module.exports = {
   getSprints: function (params, body, query, headers) {
     const projectId = params.projectId;
     const sprintStates = query.sprintStates;
-    return sprints;
 
     if (!Array.isArray(sprintStates)) {
       if (sprintStates == 'DECLARABLE') {
@@ -59,6 +87,9 @@ module.exports = {
         } else {
           return [];
         }
+
+      } else {
+        return [mockDeclarableSprint(1337)];
       }
     }
   },
@@ -70,7 +101,7 @@ module.exports = {
   },
 
   getUserAvailability: function (params, body, query, headers) {
-    return Object.assign({}, userAvailability, {userId: null});
+    return Object.assign({}, userAvailability, { userId: null });
   },
 
   updateUserAvailability: function (params, body, query, headers) {
@@ -133,9 +164,17 @@ module.exports = {
       }
     }
   },
+
+  getSprintSummary: function (params, body, query, headers) {
+    return sprintSummary;
+  },
+
+  getUsersFromProject: function (params, body, query, headers) {
+    return users;
+  },
 };
 
-function mockDeclarableSprint(sprintId) {
+function mockDeclarableSprint (sprintId) {
   const now = new Date();
   const enrollmentStart = new Date().setDate(now.getDate() - 2);
   const enrollmentEnd = new Date().setDate(now.getDate() + 2);
@@ -145,12 +184,13 @@ function mockDeclarableSprint(sprintId) {
   return {
     id: sprintId,
     enrollmentPeriod: {
-      start: enrollmentStart,
-      end: enrollmentEnd,
+      start: "2018-05-10",
+      end: "2018-05-17",
     },
     durationPeriod: {
-      start: durationStart,
-      end: durationEnd,
-    }
+      start: "2018-05-10",
+      end: "2018-05-17",
+    },
+    sprintState: 'DECLARABLE'
   }
 }

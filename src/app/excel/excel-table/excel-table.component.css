@@ -1,0 +1,27 @@
+#excel-table {
+    border: solid lightgrey;
+    background-color: whitesmoke;
+    margin: 10px 0 10px 0;
+    min-height: 300px;
+    position: relative;
+}
+
+.during {
+    text-align: center;
+    font-size: 21px;
+    margin: 8px;
+    color: #007ad9;
+    font-weight: 900;
+}
+
+.button {
+     margin-left: 8px
+}
+
+.bold {
+     font-weight: bold;
+}
+
+.gray-user {
+     color: gray;
+}
