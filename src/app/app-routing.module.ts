@@ -1,19 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { AuthGuard } from './auth/auth.guard';
-import { LogoutComponent } from './auth/logout/logout.component';
+import { AppAuthGuard } from './auth/app-auth-guard.service';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'projects', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent, canActivate: [ AuthGuard ] },
-  { path: 'overview', canActivate: [ AuthGuard ], loadChildren: './overview/overview.module#OverviewModule' },
-  { path: 'projects', canActivate: [ AuthGuard ], loadChildren: './projects/projects.module#ProjectsModule' },
-  { path: 'sprints', canActivate: [ AuthGuard ], loadChildren: './sprints/sprints.module#SprintsModule' },
-  { path: 'availability', canActivate: [ AuthGuard ], loadChildren: './availability/availability.module#AvailabilityModule' },
-  { path: 'excel', canActivate: [AuthGuard], loadChildren: './excel/excel.module#ExcelModule' }
+  { path: 'overview', canActivate: [ AppAuthGuard ], loadChildren: './overview/overview.module#OverviewModule' },
+  { path: 'projects', canActivate: [ AppAuthGuard ], loadChildren: './projects/projects.module#ProjectsModule' },
+  { path: 'sprints', canActivate: [ AppAuthGuard ], loadChildren: './sprints/sprints.module#SprintsModule' },
+  { path: 'availability', canActivate: [ AppAuthGuard ], loadChildren: './availability/availability.module#AvailabilityModule' },
+  { path: 'excel', canActivate: [ AppAuthGuard ], loadChildren: './excel/excel.module#ExcelModule' },
 ];
 
 @NgModule({

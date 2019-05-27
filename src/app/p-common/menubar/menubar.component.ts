@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { StoreService } from '../store.service';
 import { UserRoleDto } from '../../declarations/models/user-role-dto';
+import { KeycloakService } from 'keycloak-angular';
+import { of } from 'rxjs/internal/observable/of';
 
 @Component({
   selector: 'app-menubar',
@@ -16,7 +18,8 @@ export class MenubarComponent implements OnInit {
   items: MenuItem[];
   currentProjectName: string;
 
-  constructor(private storeService: StoreService) {
+  constructor(private storeService: StoreService,
+              private keycloakService: KeycloakService) {
     this.currentProjectName = this.storeService.getCurrentProjectName();
   }
 
@@ -51,4 +54,7 @@ export class MenubarComponent implements OnInit {
     ];
   }
 
+  logout() {
+    of(this.keycloakService.logout()).subscribe();
+  }
 }
