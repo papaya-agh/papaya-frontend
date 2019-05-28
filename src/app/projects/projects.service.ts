@@ -37,4 +37,24 @@ export class ProjectsService {
   removeMember(userId: string, projectId: number): Observable<any> {
     return this.http.delete(`api/projects/${projectId}/members/${userId}`);
   }
+
+  getJiraKey(): Observable<any> {
+    return this.http.get(`api/jira/key`);
+  }
+
+  getJiraConfig(projectId: number): Observable<any> {
+    return this.http.get(`api/projects/${projectId}/jira/config`);
+  }
+
+  setJiraConfig(projectId: number, code: string): Observable<any> {
+    return this.http.put(`api/projects/${projectId}/jira/secret`, code);
+  }
+
+  getJiraProjects(projectId: number): Observable<any> {
+    return this.http.get(`api/projects/${projectId}/jira/projects`);
+  }
+
+  setJiraProject(projectId: number, chosenProject: ProjectDto): Observable<any> {
+    return this.http.put(`api/projects/${projectId}/jira/projects`, chosenProject);
+  }
 }
