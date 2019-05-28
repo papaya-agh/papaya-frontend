@@ -12,12 +12,15 @@ export class SprintsService {
   constructor(private http: HttpClient) {
   }
 
-  getSprints(projectId: number, sprintStates?: string[]): Observable<SprintDto[]> {
+  getSprints(projectId: number, sprintStates?: string[], limit?: number): Observable<SprintDto[]> {
     let queryParameters = new HttpParams();
     if (sprintStates) {
       sprintStates.forEach((element) => {
         queryParameters = queryParameters.append('sprintStates', element as any);
       });
+    }
+    if (limit) {
+      queryParameters = queryParameters.append('limit', limit as any);
     }
 
     return this.http.get<SprintDto[]>(`api/projects/${projectId}/sprints`, { params: queryParameters });
