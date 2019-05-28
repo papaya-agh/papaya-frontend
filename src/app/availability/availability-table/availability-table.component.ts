@@ -53,7 +53,7 @@ export class AvailabilityTableComponent implements OnInit {
       this.router.navigate([ 'projects' ]);
     } else {
       this.createForm();
-      this.sprintsService.getSprints(this.currentProject.id, [ 'DECLARABLE' ]).subscribe(sprints => {
+      this.sprintsService.getSprints(this.currentProject.id, [ 'DECLARABLE' ], 1).subscribe(sprints => {
         if (sprints.length > 0) {
           this.declarableSprint = sprints[0];
           this.availabilityService.getUserAvailability(this.currentProject.id, this.declarableSprint.id)
@@ -78,9 +78,17 @@ export class AvailabilityTableComponent implements OnInit {
     this.availability = this.createAvailabilityFromForm();
     this.availabilityService.updateUserAvailability(this.currentProject.id, this.declarableSprint.id, this.availability)
       .subscribe(response => {
-        this.availability = response;
-        this.messageService.add({ severity: 'success', summary: 'Zapisano', detail: 'Twoja dostępność została poprawnie zapisana' });
-      });
+          this.availability = response;
+          setTimeout(() => this.messageService.add({
+            severity: 'success',
+            summary: 'Zapisano',
+            detail: 'Twoja dostępność została poprawnie zapisana'
+          }));
+          this.router.navigateByUrl('/overview');
+        },
+        error => {
+          this.messageService.add({ severity: 'error', summary: 'Błąd', detail: error.error.message });
+        });
   }
 
   setFormFields(availability: AvailabilityDto): void {
