@@ -1,24 +1,31 @@
+<app-menubar></app-menubar>
 <p-toast position="top-center"></p-toast>
 <div class="ui-g" id="papaya-box">
   <div class="ui-g-8 ui-g-nopad">
     <h5>Konfiguracja Jiry 3</h5>
 
     <div class="ui-g-12">
-      <p>Dostępne projekty:</p>
-      <p-table [value]="jiraProjects">
+      <h6>Dostępne boardy:</h6>
+      <p-table [value]="jiraBoards">
         <ng-template pTemplate="header">
           <tr>
-            <th>Nazwa</th>
-            <th>Opis</th>
+            <th>Nazwa projektu</th>
+            <th>Klucz projektu</th>
+            <th>Nazwa boardu</th>
+            <th>Typ boardu</th>
             <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-project>
+        <ng-template pTemplate="body" let-board>
           <tr>
-            <td>{{project.name}}</td>
-            <td>{{project.description}}</td>
+            <td>{{board.projectName}}</td>
+            <td>{{board.projectKey}}</td>
+            <td>{{board.boardName}}</td>
+            <td>{{board.boardType}}</td>
             <td>
-<!--              TODO: checkbox -->
+              <p-button icon="pi pi-arrow-right"
+                        (onClick)="handleClick(board)">
+              </p-button>
             </td>
           </tr>
         </ng-template>
@@ -26,11 +33,8 @@
     </div>
 
     <div class="ui-g-12">
-      <p-button label="Anuluj" icon="pi pi-arrow-left"
-                [routerLink]="['/projects']" class="mr-2">
-      </p-button>
-      <p-button label="Kontynuuj" icon="pi pi-plus"
-                (onClick)="handleClick()">
+      <p-button label="Cofnij" icon="pi pi-arrow-left"
+                [routerLink]="['/projects/jira-config']" class="mr-2">
       </p-button>
     </div>
   </div>

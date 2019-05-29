@@ -13,7 +13,6 @@ import { JiraConfigDto } from '../../declarations/models/jira-config-dto';
 export class JiraConfigComponent implements OnInit {
 
   jiraConfig: JiraConfigDto;
-  jiraConfigCode: string;
   projectId: number;
 
   constructor(private router: Router,
@@ -22,6 +21,8 @@ export class JiraConfigComponent implements OnInit {
               private messageService: MessageService) {
     this.projectId = this.storeService.getCurrentProjectId();
     this.jiraConfig = {
+      key: '',
+      secret: '',
       url: ''
     };
   }
@@ -34,12 +35,12 @@ export class JiraConfigComponent implements OnInit {
   }
 
   handleClick() {
-    if (!this.jiraConfigCode) {
+    if (!this.jiraConfig.secret) {
       this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Podaj kod!' });
       return;
     }
 
-    this.projectsService.setJiraConfig(this.projectId, this.jiraConfigCode)
+    this.projectsService.setJiraConfig(this.projectId, this.jiraConfig)
       .subscribe(response => {
           this.jiraConfig = response;
           this.router.navigateByUrl('/projects/jira-projects');

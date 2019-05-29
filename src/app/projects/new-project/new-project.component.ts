@@ -34,8 +34,8 @@ export class NewProjectComponent implements OnInit {
   }
 
   handleClick() {
-    if (!this.project.name) {
-      this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Podaj nazwę projektu!' });
+    if (!this.project.name || !this.project.jiraUrl) {
+      this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Podaj nazwę projektu i adres Jiry!' });
       return;
     }
 

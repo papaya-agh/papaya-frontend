@@ -1,22 +1,22 @@
+<app-menubar></app-menubar>
 <p-toast position="top-center"></p-toast>
 <div class="ui-g" id="papaya-box">
   <div class="ui-g-8 ui-g-nopad">
     <h5>Konfiguracja Jiry 2</h5>
 
     <div class="ui-g-12">
-      <p>Link:
-        <a href="{{jiraConfig.url}}">{{jiraConfig.url}}</a>
-      </p>
+      <p>Link:</p>
+      <a href="{{jiraConfig.url}}" target="_blank">{{jiraConfig.url}}</a>
     </div>
 
     <div class="ui-g-12">
       <p>Kod:</p>
-      <input class="papaya-input" type="text" pInputText [(ngModel)]="jiraConfigCode"/>
+      <input class="papaya-input" type="text" pInputText [(ngModel)]="jiraConfig.secret"/>
     </div>
 
     <div class="ui-g-12">
-      <p-button label="Anuluj" icon="pi pi-arrow-left"
-                [routerLink]="['/projects']" class="mr-2">
+      <p-button label="Cofnij" icon="pi pi-arrow-left"
+                [routerLink]="['/projects/jira-key']" class="mr-2">
       </p-button>
       <p-button label="Kontynuuj" icon="pi pi-plus"
                 (onClick)="handleClick()">

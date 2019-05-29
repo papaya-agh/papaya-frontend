@@ -3,22 +3,21 @@
 <p-card header="Bieżący projekt" *ngIf="project">
   <div class="ui-g">
     <div class="ui-g-8 ui-g-nopad">
-      <div class="ui-g-12">
+      <div class="ui-g-6">
+        <h5>Dane ogólne</h5>
         <p>Nazwa: {{project.name}}</p>
-      </div>
-
-      <div class="ui-g-12">
         <p>Współczynnik początkowy: {{project.initialCoefficient}}</p>
-      </div>
-
-      <div class="ui-g-12">
         <p>Opis: {{project.description}}</p>
-      </div>
-
-      <div class="ui-g-12">
         <p>Twoja rola: {{project.userRole}}</p>
       </div>
 
+      <div class="ui-g-6">
+        <h5>Dane Jirowe</h5>
+        <p>Nazwa projektu: {{project.jiraBoard.projectName}}</p>
+        <p>Klucz projektu: {{project.jiraBoard.projectKey}}</p>
+        <p>Nazwa boarda: {{project.jiraBoard.boardName}}</p>
+        <p>Typ boarda: {{project.jiraBoard.boardType}}</p>
+      </div>
     </div>
     <div class="ui-g-4 ui-g-nopad">
       <div style="display: flex; justify-content: center">

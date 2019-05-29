@@ -3,6 +3,7 @@ import { ProjectsService } from '../projects.service';
 import { ProjectDto } from '../../declarations/models/project-dto';
 import { Router } from '@angular/router';
 import { StoreService } from '../../p-common/store.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-projects-table',
@@ -15,7 +16,8 @@ export class ProjectsTableComponent implements OnInit {
 
   constructor(private router: Router,
               private projectsService: ProjectsService,
-              private storeService: StoreService) {
+              private storeService: StoreService,
+              private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -25,7 +27,16 @@ export class ProjectsTableComponent implements OnInit {
 
   handleClick(project) {
     this.storeService.setCurrentProject(project);
-    this.router.navigateByUrl('/overview');
+    if (!project.jiraBoard) {
+      setTimeout(() => this.messageService.add({
+        severity: 'info',
+        summary: 'Info',
+        detail: 'Skonfiguruj Jirę!'
+      }));
+      this.router.navigateByUrl('/projects/jira-key');
+    } else {
+      this.router.navigateByUrl('/overview');
+    }
   }
 
 }
