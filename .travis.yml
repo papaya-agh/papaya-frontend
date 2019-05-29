@@ -4,7 +4,7 @@ node_js:
 
 install:
   - npm ci
-  - npm i -g @angular/cli
+  - yes N | npm i -g @angular/cli
 
 script:
   - npm run generate.declarations
