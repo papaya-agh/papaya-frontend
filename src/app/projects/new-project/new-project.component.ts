@@ -43,7 +43,6 @@ export class NewProjectComponent implements OnInit {
       .subscribe(response => {
         this.project = response;
         this.storeService.setCurrentProject(this.project);
-        // https://papaya-test.atlassian.net
         this.router.navigateByUrl('/projects/jira-key');
       });
   }

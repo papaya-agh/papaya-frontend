@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectsService } from '../projects.service';
 import { MessageService } from 'primeng/api';
@@ -9,12 +9,15 @@ import { StoreService } from '../../p-common/store.service';
 @Component({
   selector: 'app-jira-key',
   templateUrl: './jira-key.component.html',
-  styleUrls: ['./jira-key.component.css']
+  styleUrls: [ './jira-key.component.css' ]
 })
 export class JiraKeyComponent implements OnInit {
 
   jiraConfig: JiraConfigDto;
-  projectId: number;
+  currentProject: ProjectDto;
+
+  @ViewChild('jiraKeyTextArea')
+  jiraKeyTextArea: ElementRef;
 
   constructor(private router: Router,
               private projectsService: ProjectsService,
@@ -25,10 +28,14 @@ export class JiraKeyComponent implements OnInit {
       secret: '',
       url: ''
     };
-    this.projectId = this.storeService.getCurrentProjectId();
+    this.currentProject = this.storeService.getCurrentProject();
   }
 
   ngOnInit() {
+    if (!this.currentProject) {
+      this.router.navigate([ '/projects' ]);
+      return;
+    }
     this.projectsService.getJiraKey()
       .subscribe(response => {
         this.jiraConfig = response;
@@ -41,13 +48,21 @@ export class JiraKeyComponent implements OnInit {
       return;
     }
 
-    this.projectsService.getJiraConfig(this.projectId)
+    this.projectsService.getJiraConfig(this.currentProject.id)
       .subscribe(response => {
           this.jiraConfig = response;
           this.router.navigateByUrl('/projects/jira-config');
         },
-        error => {
+        () => {
           this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Klucz nie został skonfigurowany!' });
         });
   }
+
+  copyJiraKeyToClipboard() {
+    this.jiraKeyTextArea.nativeElement.select();
+    document.execCommand('copy');
+    this.jiraKeyTextArea.nativeElement.setSelectionRange(0, 0);
+    this.messageService.add({ severity: 'success', summary: 'Skopiowano do schowka' });
+  }
+
 }

@@ -24,6 +24,10 @@ export class JiraProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.project) {
+      this.router.navigate([ '/projects' ]);
+      return;
+    }
     this.projectsService.getJiraProjects(this.project.id)
       .subscribe(response => {
         this.jiraBoards = response;
@@ -32,8 +36,7 @@ export class JiraProjectsComponent implements OnInit {
 
   handleClick(board) {
     this.projectsService.setJiraProject(this.project.id, board)
-      .subscribe(response => {
-        // this.jiraBoards = response;
+      .subscribe(() => {
         setTimeout(() => this.messageService.add({
           severity: 'success',
           summary: 'Sukces',
@@ -47,6 +50,5 @@ export class JiraProjectsComponent implements OnInit {
             setTimeout(() => this.router.navigateByUrl('/overview'));
           });
       });
-
   }
 }

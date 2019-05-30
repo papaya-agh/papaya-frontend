@@ -1,57 +1,58 @@
-<app-menubar></app-menubar>
 <p-toast position="top-center"></p-toast>
-<div class="ui-g" id="papaya-box">
-  <div class="ui-g-8 ui-g-nopad">
-    <h5>Nowy projekt</h5>
+<app-menubar></app-menubar>
 
-    <div class="ui-g-4">
-      <p>Nazwa:</p>
-      <input class="papaya-input" type="text" pInputText [(ngModel)]="project.name"/>
+<p-card header="Nowy projekt">
+  <div class="ui-g" id="papaya-box">
+    <div class="ui-g-8 ui-g-nopad">
+      <div class="ui-g-4">
+        <p>Nazwa:</p>
+        <input class="papaya-input" type="text" pInputText [(ngModel)]="project.name"/>
+      </div>
+
+      <div class="ui-g-8">
+        <p style="margin-bottom: 5px;">Współczynnik początkowy: {{project.initialCoefficient}}</p>
+        <p-slider [(ngModel)]="project.initialCoefficient" [style]="{'width':'80%'}"
+                  [min]="1" [max]="10" [step]="0.01">
+        </p-slider>
+      </div>
+
+      <div class="ui-g-12">
+        <p>Opis:</p>
+        <textarea [rows]="2" [cols]="65" pInputTextarea [(ngModel)]="project.description"></textarea>
+      </div>
+
+      <div class="ui-g-4">
+        <p class="text-secondary">Nazwa kanału:</p>
+        <input class="papaya-input" type="text" pInputText [(ngModel)]="project.channelName"/>
+      </div>
+
+      <div class="ui-g-8">
+        <p class="text-secondary">
+          <img class="webhook-icon" src="../../../assets/rocket-logo.png" alt="rocket-logo">
+          <img class="webhook-icon" src="../../../assets/slack-logo.png" alt="slack-logo">
+          Adres webhooka:
+        </p>
+        <input class="papaya-input" type="text" pInputText [(ngModel)]="project.webhookUrl"/>
+      </div>
+
+      <div class="ui-g-12">
+        <p>Adres Jiry:</p>
+        <input type="text" style="width: 86.7%" pInputText [(ngModel)]="project.jiraUrl"/>
+      </div>
+
+      <div class="ui-g-12">
+        <p-button label="Anuluj" icon="pi pi-arrow-left"
+                  [routerLink]="['/projects']" class="mr-2">
+        </p-button>
+        <p-button label="Stwórz" icon="pi pi-plus"
+                  (onClick)="handleClick()">
+        </p-button>
+      </div>
     </div>
-
-    <div class="ui-g-8">
-      <p class="first">Współczynnik początkowy: {{project.initialCoefficient}}</p>
-      <p-slider [(ngModel)]="project.initialCoefficient" [style]="{'width':'80%'}"
-                [min]="1" [max]="10" [step]="0.01">
-      </p-slider>
-    </div>
-
-    <div class="ui-g-12">
-      <p>Opis:</p>
-      <textarea [rows]="2" [cols]="65" pInputTextarea [(ngModel)]="project.description"></textarea>
-    </div>
-
-    <div class="ui-g-4">
-      <p class="text-secondary">Nazwa kanału:</p>
-      <input class="papaya-input" type="text" pInputText [(ngModel)]="project.channelName"/>
-    </div>
-
-    <div class="ui-g-8">
-      <p class="text-secondary">
-        <img class="webhook-icon" src="../../../assets/rocket-logo.png" alt="rocket-logo">
-        <img class="webhook-icon" src="../../../assets/slack-logo.png" alt="slack-logo">
-        Adres webhooka:
-      </p>
-      <input class="papaya-input" type="text" pInputText [(ngModel)]="project.webhookUrl"/>
-    </div>
-
-    <div class="ui-g-12">
-      <p>Adres Jiry:</p>
-      <input type="text" style="width: 86.7%" pInputText [(ngModel)]="project.jiraUrl"/>
-    </div>
-
-    <div class="ui-g-12">
-      <p-button label="Anuluj" icon="pi pi-arrow-left"
-                [routerLink]="['/projects']" class="mr-2">
-      </p-button>
-      <p-button label="Stwórz" icon="pi pi-plus"
-                (onClick)="handleClick()">
-      </p-button>
+    <div class="ui-g-4 ui-g-nopad">
+      <div style="display: flex; justify-content: center">
+        <img src="../../../assets/papaya-logo.png" alt="papaya-logo">
+      </div>
     </div>
   </div>
-  <div class="ui-g-4 ui-g-nopad">
-    <div style="display: flex; justify-content: center">
-      <img src="../../../assets/papaya-logo.png" alt="papaya-logo">
-    </div>
-  </div>
-</div>
+</p-card>
