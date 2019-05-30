@@ -15,12 +15,12 @@ export class MenubarComponent implements OnInit {
   @Input()
   userRole: UserRoleDto;
 
-  items: MenuItem[];
+  @Input()
   currentProjectName: string;
 
-  constructor(private storeService: StoreService,
-              private keycloakService: KeycloakService) {
-    this.currentProjectName = this.storeService.getCurrentProjectName();
+  items: MenuItem[];
+
+  constructor(private keycloakService: KeycloakService) {
   }
 
   ngOnInit() {
@@ -33,16 +33,18 @@ export class MenubarComponent implements OnInit {
           'background-position': 'center',
           'margin-left': '5px',
         },
-        routerLink: [ '/projects' ]
+        routerLink: [ '/projects' ],
       },
       {
         label: this.currentProjectName,
-        routerLink: [ '/overview' ]
+        routerLink: [ '/overview' ],
+        visible: !!this.currentProjectName,
       },
       {
         label: 'Dostępność',
         icon: 'pi pi-fw pi-user',
-        routerLink: [ '/availability' ]
+        routerLink: [ '/availability' ],
+        visible: !!this.userRole,
       },
       {
         label: 'Excel',

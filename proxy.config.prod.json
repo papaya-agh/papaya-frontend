@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "http://papaya-agh-web.herokuapp.com",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

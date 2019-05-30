@@ -1,6 +1,6 @@
 <p-toast position="top-center"></p-toast>
-<app-menubar [userRole]="this.storeService.currentProject?.userRole"></app-menubar>
-<p-card header="Bieżący projekt">
+<app-menubar [userRole]="project?.userRole" [currentProjectName]="project?.name"></app-menubar>
+<p-card header="Bieżący projekt" *ngIf="project">
   <div class="ui-g">
     <div class="ui-g-8 ui-g-nopad">
       <div class="ui-g-12">

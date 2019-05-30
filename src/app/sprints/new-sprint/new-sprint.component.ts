@@ -5,6 +5,7 @@ import { StoreService } from '../../p-common/store.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { SprintStateDto } from '../../declarations/models/sprint-state-dto';
+import { ProjectDto } from '../../declarations/models/project-dto';
 
 @Component({
   selector: 'app-new-sprint-form',
@@ -21,7 +22,7 @@ export class NewSprintComponent implements OnInit {
   newSprint: SprintDto;
   previousSprint: SprintDto;
   previousSprintDuration: number;
-  projectId: number;
+  currentProject: ProjectDto;
   sprintStateMap: Map<SprintStateDto, string>;
 
   constructor(private router: Router,
@@ -32,7 +33,7 @@ export class NewSprintComponent implements OnInit {
       enrollmentPeriod: { start: '', end: '' },
       durationPeriod: { start: '', end: '' },
     };
-    this.projectId = this.storeService.getCurrentProjectId();
+    this.currentProject = this.storeService.getCurrentProject();
     this.sprintStateMap = new Map<SprintStateDto, string>();
     this.sprintStateMap.set('UPCOMING', 'nadchodzący');
     this.sprintStateMap.set('DECLARABLE', 'zapisy');
@@ -43,7 +44,12 @@ export class NewSprintComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sprintsService.getSprints(this.projectId)
+    if (!this.currentProject) {
+      this.router.navigate([ '/projects' ]);
+      return;
+    }
+
+    this.sprintsService.getSprints(this.currentProject.id)
       .subscribe(response => {
           this.sprints = response;
           if (this.sprints.length !== 0) {
@@ -81,7 +87,7 @@ export class NewSprintComponent implements OnInit {
       this.newSprint.durationPeriod.end = this.formatDate(this.durationPeriodEndDate);
     }
 
-    this.sprintsService.addSprint(this.projectId, this.newSprint)
+    this.sprintsService.addSprint(this.currentProject.id, this.newSprint)
       .subscribe(
         response => {
           this.newSprint = response;
