@@ -30,7 +30,7 @@ export class SprintsService {
   getSprintSummary(projectId: number, sprintId: number, jiraSprintId?: number): Observable<SprintSummaryDto> {
     let queryParameters = new HttpParams();
     if (jiraSprintId) {
-      queryParameters = queryParameters.append('id', jiraSprintId as any);
+      queryParameters = queryParameters.append('jiraSprintId', jiraSprintId as any);
     }
     return this.http.get<SprintSummaryDto>(
       `api/projects/${projectId}/sprints/${sprintId}/summary`,

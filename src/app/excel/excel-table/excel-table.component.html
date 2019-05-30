@@ -54,25 +54,25 @@
     </div>
 
     <div class="ui-g-12">
-      <p>L5: {{sprintSummary.timeToAssign}}</p>
-      <p>L23: {{sprintSummary.totalDeclaredTime}}</p>
-      <p>L24: {{sprintSummary.totalNeededTime}}</p>
+      <p>L20: {{declarableSprint.estimatedTimePlanned}}</p>
+      <p>L21: {{declarableSprint.finalTimePlanned}}</p>
+      <p>L22: {{declarableSprint.timeBurned}}</p>
     </div>
 
     <p-button *ngIf="declarableSprint.sprintState === 'FINISHED'"
               label="Zamknij sprint" icon="pi pi-check"
               (click)="closeSprint()"
-              class="button mr-2">
+              class="mr-2">
     </p-button>
 
     <p-button *ngIf="declarableSprint.sprintState !== 'UPCOMING'"
               label="Synchronizuj z Jirą" icon="pi pi-refresh"
               (click)="synchronizeWithJira()"
-              class="button">
+              class="mb-2">
     </p-button>
 
     <ng-template [ngIf]="isSynchronized">
-      <h6>Dostępne boardy:</h6>
+      <h6>Dostępne sprinty:</h6>
       <p-table [value]="jiraSprints">
         <ng-template pTemplate="header">
           <tr>

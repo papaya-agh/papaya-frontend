@@ -119,7 +119,7 @@ export class ExcelTableComponent implements OnInit {
   chooseJiraSprint(jiraSprint: JiraSprintDto) {
     this.sprintsService.getSprintSummary(this.currentProject.id, this.declarableSprint.id, jiraSprint.id)
       .subscribe(response => {
-        this.sprintSummary = response;
+        this.declarableSprint = response.sprint;
         setTimeout(() => this.router.navigateByUrl('/excel'));
         this.isSynchronized = false;
         this.messageService.add({ severity: 'success', summary: 'Sukces!', detail: 'Synchronizacja udana!' });
