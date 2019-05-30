@@ -1,6 +1,6 @@
-﻿<p-toast></p-toast>
-<app-menubar [userRole]="this.store.currentProject?.userRole" [currentProjectName]="this.store.currentProject?.name"></app-menubar>
-
+﻿<app-menubar [userRole]="this.store.currentProject?.userRole"
+             [currentProjectName]="this.store.currentProject?.name"></app-menubar>
+<p-toast position="top-center"></p-toast>
 <p-card header="Podsumowanie dostępności">
   <ng-template [ngIf]="isLoaded && declarableSprint">
     <div class="ui-g" id="availability-table">
@@ -52,11 +52,51 @@
         </div>
       </div>
     </div>
+
+    <div class="ui-g-12">
+      <p>L20: {{declarableSprint.estimatedTimePlanned}}</p>
+      <p>L21: {{declarableSprint.finalTimePlanned}}</p>
+      <p>L22: {{declarableSprint.timeBurned}}</p>
+    </div>
+
     <p-button *ngIf="declarableSprint.sprintState === 'FINISHED'"
-              label="Zamknij sprint"
+              label="Zamknij sprint" icon="pi pi-check"
               (click)="closeSprint()"
-              class="button">
+              class="mr-2">
     </p-button>
+
+    <p-button *ngIf="declarableSprint.sprintState !== 'UPCOMING'"
+              label="Synchronizuj z Jirą" icon="pi pi-refresh"
+              (click)="synchronizeWithJira()"
+              class="mb-2">
+    </p-button>
+
+    <ng-template [ngIf]="isSynchronized">
+      <h6>Dostępne sprinty:</h6>
+      <p-table [value]="jiraSprints">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nazwa</th>
+            <th>Data rozpoczęcia</th>
+            <th>Stan</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-jiraSprint>
+          <tr>
+            <td>{{jiraSprint.name}}</td>
+            <td>{{jiraSprint.startDate}}</td>
+            <td>{{jiraSprint.state}}</td>
+            <td>
+              <p-button icon="pi pi-arrow-right"
+                        (onClick)="chooseJiraSprint(jiraSprint)">
+              </p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
+
   </ng-template>
   <ng-template [ngIf]="isLoaded && !declarableSprint">
     <div>
