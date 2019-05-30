@@ -13,12 +13,15 @@ export class SprintsService {
   constructor(private http: HttpClient) {
   }
 
-  getSprints(projectId: number, sprintStates?: string[], limit?: number): Observable<SprintDto[]> {
+  getSprints(projectId: number, sprintStates?: string[], direction?: string, limit?: number): Observable<SprintDto[]> {
     let queryParameters = new HttpParams();
     if (sprintStates) {
       sprintStates.forEach((element) => {
         queryParameters = queryParameters.append('sprintStates', element as any);
       });
+    }
+    if (direction) {
+      queryParameters = queryParameters.append('direction', direction as any);
     }
     if (limit) {
       queryParameters = queryParameters.append('limit', limit as any);

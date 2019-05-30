@@ -35,6 +35,9 @@ export class ExcelTableComponent implements OnInit {
   isSynchronized: boolean;
   sprintSummary: SprintSummaryDto;
 
+  allSprints: SprintDto[];
+  currentSprintInd: number = 0;
+
   sprintStateMap = {
     DECLARABLE: 'Trwa podawanie dostępności',
     FINISHED: 'Sprint zakończony',
@@ -64,42 +67,33 @@ export class ExcelTableComponent implements OnInit {
       this.router.navigate([ 'projects' ]);
       return;
     }
-    this.sprintsService.getSprints(this.currentProject.id, [ 'DECLARABLE', 'PADDING', 'IN_PROGRESS', 'FINISHED' ])
+    this.sprintsService.getSprints(this.currentProject.id, [ 'DECLARABLE', 'PADDING', 'IN_PROGRESS', 'FINISHED' ], 'ASC')
       .subscribe(sprints => {
         this.isLoaded = true;
         if (sprints.length === 0) {
           return;
         }
-        this.declarableSprint = sprints[0];
-        this.sprintStartDate = this.declarableSprint.durationPeriod.start;
-        this.sprintEndDate = this.declarableSprint.durationPeriod.end;
-        this.excelService.getSprintSummary(this.currentProject.id, this.declarableSprint.id)
-          .subscribe(summary => {
-            this.prevAverageSprintCoefficient = this.roundNumber(summary.prevAverageSprintCoefficient);
-            this.currentAverageSprintCoefficient = this.roundNumber(summary.currentAverageSprintCoefficient);
-            this.timeToAssign = this.formatNumber(summary.timeToAssign);
-            this.totalDeclaredTime = this.formatNumber(summary.totalDeclaredTime);
-            this.totalNeededTime = this.formatNumber(summary.totalNeededTime);
-
-            this.projectService.getMembers(this.currentProject.id).subscribe(members => {
-              summary.membersAvailability
-                .map((a: UserAvailabilityDto) => {
-                  const user = members.find((m: ProjectMemberDto) => m.user.id === a.userId);
-                  const worker: Worker = a.availability ?
-                    {
-                      timeAvailable: this.formatNumber(a.availability.timeAvailable),
-                      effectiveTimeAvailable: this.formatNumber(a.availability.effectiveTimeAvailable),
-                      timeRemaining: this.formatNumber(a.availability.timeRemaining),
-                      notes: a.availability.notes,
-                      name: this.createFullName(user),
-                    } :
-                    { timeAvailable: '', effectiveTimeAvailable: '', timeRemaining: '', notes: '', name: this.createFullName(user) };
-
-                  this.workers.push(worker);
-                });
-            });
-          });
+        this.allSprints = sprints;
+        this.setUpDataForSprintOfInd(0);
       });
+  }
+
+  prevSprint() {
+    if (this.currentSprintInd <= 0) {
+      return;
+    }
+
+    this.currentSprintInd++;
+    this.setUpDataForSprintOfInd(this.currentSprintInd);
+  }
+
+  nextSprint() {
+    if (this.currentSprintInd >= this.allSprints.length-1) {
+      return;
+    }
+
+    this.currentSprintInd--;
+    this.setUpDataForSprintOfInd(this.currentSprintInd);
   }
 
   closeSprint() {
@@ -111,6 +105,38 @@ export class ExcelTableComponent implements OnInit {
       .subscribe(sprint => {
         this.declarableSprint = sprint;
         this.messageService.add({ severity: 'success', summary: 'Sukces!', detail: 'Sprint został zamknięty' });
+      });
+  }
+
+  private setUpDataForSprintOfInd(ind: number) {
+    this.declarableSprint = this.allSprints[ind];
+    this.sprintStartDate = this.declarableSprint.durationPeriod.start;
+    this.sprintEndDate = this.declarableSprint.durationPeriod.end;
+    this.excelService.getSprintSummary(this.currentProject.id, this.declarableSprint.id)
+      .subscribe(summary => {
+        this.prevAverageSprintCoefficient = this.roundNumber(summary.prevAverageSprintCoefficient);
+        this.currentAverageSprintCoefficient = this.roundNumber(summary.currentAverageSprintCoefficient);
+        this.timeToAssign = this.formatNumber(summary.timeToAssign);
+        this.totalDeclaredTime = this.formatNumber(summary.totalDeclaredTime);
+        this.totalNeededTime = this.formatNumber(summary.totalNeededTime);
+        this.workers = [];
+        this.projectService.getMembers(this.currentProject.id).subscribe(members => {
+          summary.membersAvailability
+            .map((a: UserAvailabilityDto) => {
+              const user = members.find((m: ProjectMemberDto) => m.user.id === a.userId);
+              const worker: Worker = a.availability ?
+                {
+                  timeAvailable: this.formatNumber(a.availability.timeAvailable),
+                  effectiveTimeAvailable: this.formatNumber(a.availability.effectiveTimeAvailable),
+                  timeRemaining: this.formatNumber(a.availability.timeRemaining),
+                  notes: a.availability.notes,
+                  name: this.createFullName(user),
+                } :
+                { timeAvailable: '', effectiveTimeAvailable: '', timeRemaining: '', notes: '', name: this.createFullName(user) };
+
+              this.workers.push(worker);
+            });
+        });
       });
   }
 
