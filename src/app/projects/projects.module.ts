@@ -13,10 +13,14 @@ import { ProjectMembersComponent } from './project-members/project-members.compo
 import { CardModule } from 'primeng/card';
 import { BlockUIModule, DropdownModule } from 'primeng/primeng';
 import { ToastModule } from 'primeng/toast';
+import { JiraKeyComponent } from './jira-key/jira-key.component';
+import { JiraConfigComponent } from './jira-config/jira-config.component';
+import { JiraProjectsComponent } from './jira-projects/jira-projects.component';
 
 
 @NgModule({
-  declarations: [ ProjectsTableComponent, NewProjectComponent, ProjectMembersComponent, ],
+  declarations: [ ProjectsTableComponent, NewProjectComponent, ProjectMembersComponent,
+    JiraKeyComponent, JiraConfigComponent, JiraProjectsComponent, ],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

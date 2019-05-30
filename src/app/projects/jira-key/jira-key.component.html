@@ -1,0 +1,33 @@
+<app-menubar></app-menubar>
+<p-toast position="top-center"></p-toast>
+<div class="ui-g" id="papaya-box">
+  <div class="ui-g-8 ui-g-nopad">
+    <h5>Konfiguracja Jiry 1</h5>
+
+    <div class="ui-g-12">
+      <p>Klucz publiczny:</p>
+      <textarea [rows]="4" [cols]="65" pInputTextarea [(ngModel)]="jiraConfig.key"></textarea>
+    </div>
+
+    <div class="ui-g-12">
+      <p>Instrukcja:</p>
+      <a href="https://developer.atlassian.com/server/jira/platform/oauth/#step-1--configure-jira" target="_blank">
+        https://developer.atlassian.com/server/jira/platform/oauth/#step-1--configure-jira</a>
+    </div>
+
+    <div class="ui-g-12">
+      <p-button label="Cofnij" icon="pi pi-arrow-left"
+                [routerLink]="['/projects']" class="mr-2">
+      </p-button>
+      <p-button label="Kontynuuj" icon="pi pi-plus"
+                (onClick)="handleClick()">
+      </p-button>
+    </div>
+  </div>
+  <div class="ui-g-4 ui-g-nopad">
+    <div style="display: flex; justify-content: center">
+      <img src="../../../assets/papaya-logo.png" alt="papaya-logo">
+    </div>
+  </div>
+</div>
+

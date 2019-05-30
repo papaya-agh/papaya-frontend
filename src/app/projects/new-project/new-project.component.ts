@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ProjectsService } from '../projects.service';
 import { ProjectDto } from '../../declarations/models/project-dto';
 import { MessageService } from 'primeng/api';
+import { StoreService } from '../../p-common/store.service';
 
 @Component({
   selector: 'app-new-project',
@@ -15,12 +16,14 @@ export class NewProjectComponent implements OnInit {
 
   constructor(private router: Router,
               private projectsService: ProjectsService,
+              private storeService: StoreService,
               private messageService: MessageService) {
     this.project = {
       id: undefined,
       name: '',
       description: '',
       initialCoefficient: 1.55,
+      jiraUrl: '',
       webhookUrl: '',
       channelName: '',
       userRole: undefined
@@ -31,16 +34,17 @@ export class NewProjectComponent implements OnInit {
   }
 
   handleClick() {
-    if (!this.project.name) {
-      this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Podaj nazwę projektu!' });
+    if (!this.project.name || !this.project.jiraUrl) {
+      this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Podaj nazwę projektu i adres Jiry!' });
       return;
     }
 
     this.projectsService.addProject(this.project)
       .subscribe(response => {
         this.project = response;
-        setTimeout(() => this.messageService.add({ severity: 'success', summary: 'Sukces', detail: 'Projekt utworzony!' }));
-        this.router.navigateByUrl('/projects');
+        this.storeService.setCurrentProject(this.project);
+        // https://papaya-test.atlassian.net
+        this.router.navigateByUrl('/projects/jira-key');
       });
   }
 }
