@@ -47,11 +47,14 @@
 }
 
 .left {
-    margin-left: 0px;
-    margin-right: auto;
+    float: left;
 }
 
 .right {
-    margin-left: auto;
-    margin-right: 0px;
+    float: right;
+}
+
+.center {
+    width: 50%;
+    margin: 0 auto;
 }

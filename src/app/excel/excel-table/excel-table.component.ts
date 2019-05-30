@@ -78,8 +78,13 @@ export class ExcelTableComponent implements OnInit {
         }
         this.allSprints = sprints;
         this.currentSprintInd = 0;
+        let found = false;
         this.allSprints.forEach((v, i) => {
+          if (found) {
+            return;
+          }
           if (v.sprintState === 'DECLARABLE') {
+            found = true;
             this.currentSprintInd = i;
           }
         });
@@ -117,9 +122,6 @@ export class ExcelTableComponent implements OnInit {
 
   private setUpDataForSprintOfInd(ind: number) {
     this.declarableSprint = this.allSprints[ind];
-    console.log('dupa111 ' + ind);
-    console.log(this.allSprints);
-    console.log(this.declarableSprint);
     this.sprintStartDate = this.declarableSprint.durationPeriod.start;
     this.sprintEndDate = this.declarableSprint.durationPeriod.end;
     this.excelService.getSprintSummary(this.currentProject.id, this.declarableSprint.id)

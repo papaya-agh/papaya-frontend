@@ -5,25 +5,27 @@
   <ng-template [ngIf]="isLoaded && declarableSprint">
     <div class="ui-g" id="availability-table">
       <div class="ui-g-8">
-        <div class="parent-width">
-          <h5 class="parent-width">
-            <p-button icon="pi pi-arrow-left"
-                      class="left"
-                      (click)="prevSprint()">
-            </p-button>
-            Dostępność dla sprintu: <span class="bold">{{sprintStartDate | date: 'dd-MM-yyy'}}</span> - <span class="bold">{{sprintEndDate | date: 'dd-MM-yyyy'}}</span>
-            <p-button icon="pi pi-arrow-right"
-                      class="right"
-                      (click)="nextSprint()">
-            </p-button>
-          </h5>
+        <div>
+          <p-button icon="pi pi-arrow-left"
+                    class="left"
+                    (click)="prevSprint()">
+          </p-button>
+          <p-button icon="pi pi-arrow-right"
+                    class="right"
+                    (click)="nextSprint()">
+          </p-button>
+          <div class="center">
+            <h5>
+              Dostępność dla sprintu: <span class="bold">{{sprintStartDate | date: 'dd-MM-yyy'}}</span> - <span class="bold">{{sprintEndDate | date: 'dd-MM-yyyy'}}</span>
+            </h5>
+            <h5>
+              Liczba godzin do zaplanowania: <span class="bold">{{timeToAssign}}</span>
+            </h5>
+            <h5>
+              Współczynnik: <span class="bold">{{declarableSprint.coefficient}}</span>
+            </h5>
+          </div>
         </div>
-        <h5>
-          Ilość godzin do zaplanowania: <span class="bold">{{timeToAssign}}</span>
-        </h5>
-        <h5>
-          Współczynnik: <span class="bold">{{declarableSprint.coefficient}}</span>
-        </h5>
         <div *ngIf="sprintStateMap[declarableSprint.sprintState]"
              class="during">{{sprintStateMap[declarableSprint.sprintState]}}</div>
         <p-table [value]="workers">
@@ -32,7 +34,7 @@
             <th>Osoba</th>
             <th>Zadeklarowane godziny</th>
             <th>Efektywne godziny</th>
-            <th>Zaległe godziny</th>
+            <th>Zaległe<br /> godziny</th>
             <th>Notatki</th>
           </ng-template>
           <ng-template pTemplate="body" let-worker let-i="rowIndex">
@@ -108,12 +110,6 @@
           <span>{{prevAverageSprintCoefficient}}</span>
         </div>
       </div>
-    </div>
-
-    <div class="ui-g-12">
-      <p>L20: {{declarableSprint.estimatedTimePlanned}}</p>
-      <p>L21: {{declarableSprint.finalTimePlanned}}</p>
-      <p>L22: {{declarableSprint.timeBurned}}</p>
     </div>
 
     <p-button *ngIf="declarableSprint.sprintState === 'FINISHED'"
