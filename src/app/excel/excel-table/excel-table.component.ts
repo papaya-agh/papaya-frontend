@@ -19,9 +19,12 @@ import { SprintSummaryDto } from '../../declarations/models/sprint-summary-dto';
   styleUrls: [ './excel-table.component.css' ]
 })
 export class ExcelTableComponent implements OnInit {
-
-  actualRate: number;
-  hoursSum = 0;
+  prevAverageSprintCoefficient: string;
+  currentAverageSprintCoefficient: string;
+  timeToAssign: string;
+  totalDeclaredTime: string;
+  totalNeededTime: string;
+  
   workers: Worker[];
   sprintStartDate: string;
   sprintEndDate: string;
@@ -70,11 +73,13 @@ export class ExcelTableComponent implements OnInit {
         this.declarableSprint = sprints[0];
         this.sprintStartDate = this.declarableSprint.durationPeriod.start;
         this.sprintEndDate = this.declarableSprint.durationPeriod.end;
-
         this.excelService.getSprintSummary(this.currentProject.id, this.declarableSprint.id)
           .subscribe(summary => {
-            this.hoursSum = Math.floor(summary.totalDeclaredTime / 60) + Math.round((summary.totalDeclaredTime % 60) / 60 * 100) / 100;
-            this.actualRate = summary.prevAverageSprintCoefficient;
+            this.prevAverageSprintCoefficient = this.roundNumber(summary.prevAverageSprintCoefficient);
+            this.currentAverageSprintCoefficient = this.roundNumber(summary.currentAverageSprintCoefficient);
+            this.timeToAssign = this.formatNumber(summary.timeToAssign);
+            this.totalDeclaredTime = this.formatNumber(summary.totalDeclaredTime);
+            this.totalNeededTime = this.formatNumber(summary.totalNeededTime);
 
             this.projectService.getMembers(this.currentProject.id).subscribe(members => {
               summary.membersAvailability
@@ -83,11 +88,12 @@ export class ExcelTableComponent implements OnInit {
                   const worker: Worker = a.availability ?
                     {
                       timeAvailable: this.formatNumber(a.availability.timeAvailable),
+                      effectiveTimeAvailable: this.formatNumber(a.availability.effectiveTimeAvailable),
                       timeRemaining: this.formatNumber(a.availability.timeRemaining),
                       notes: a.availability.notes,
                       name: this.createFullName(user),
                     } :
-                    { timeAvailable: '', timeRemaining: '', notes: '', name: this.createFullName(user) };
+                    { timeAvailable: '', effectiveTimeAvailable: '', timeRemaining: '', notes: '', name: this.createFullName(user) };
 
                   this.workers.push(worker);
                 });
@@ -126,6 +132,10 @@ export class ExcelTableComponent implements OnInit {
       });
   }
 
+  private roundNumber(num: number): string {
+    return (Math.round(num * 100) / 100).toString();
+  }
+
   private formatNumber(num: number): string {
     return (Math.floor(num / 60) + Math.round((num % 60) / 60 * 100) / 100).toString();
   }
@@ -138,6 +148,7 @@ export class ExcelTableComponent implements OnInit {
 interface Worker {
   name: string;
   timeAvailable: string;
+  effectiveTimeAvailable: string;
   timeRemaining: string;
   notes?: string;
 }
