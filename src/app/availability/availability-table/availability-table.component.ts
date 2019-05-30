@@ -53,7 +53,7 @@ export class AvailabilityTableComponent implements OnInit {
       this.router.navigate([ 'projects' ]);
     } else {
       this.createForm();
-      this.sprintsService.getSprints(this.currentProject.id, [ 'DECLARABLE' ], 1).subscribe(sprints => {
+      this.sprintsService.getSprints(this.currentProject.id, [ 'DECLARABLE' ], 'ASC', 1).subscribe(sprints => {
         if (sprints.length > 0) {
           this.declarableSprint = sprints[0];
           this.availabilityService.getUserAvailability(this.currentProject.id, this.declarableSprint.id)

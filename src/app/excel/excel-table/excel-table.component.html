@@ -6,11 +6,20 @@
     <div class="ui-g" id="availability-table">
       <div class="ui-g-8">
         <div class="ui-g">
+          <p-button icon="pi pi-arrow-left"
+                    class="left"
+                    (click)="prevSprint()">
+          </p-button>
+          <p-button icon="pi pi-arrow-right"
+                    class="right"
+                    (click)="nextSprint()">
+          </p-button>
           <div class="ui-g-4">
             <h5>Nazwa sprintu:</h5>
           </div>
           <div class="ui-g-6">
-            <span>{{ declarableSprint.name }}</span>
+<!--            TODO kiedys -->
+<!--            <span>{{ declarableSprint.name }}</span>-->
           </div>
         </div>
         <div class="ui-g">
@@ -29,7 +38,8 @@
             <th>Lp.</th>
             <th>Osoba</th>
             <th>Zadeklarowane godziny</th>
-            <th>Zaległe godziny</th>
+            <th>Efektywne godziny</th>
+            <th>Zaległe<br /> godziny</th>
             <th>Notatki</th>
           </ng-template>
           <ng-template pTemplate="body" let-worker let-i="rowIndex">
@@ -39,6 +49,7 @@
                 {{worker.name}}
               </td>
               <td>{{worker.timeAvailable}}</td>
+              <td>{{worker.effectiveTimeAvailable}}</td>
               <td>{{worker.timeRemaining}}</td>
               <td>{{worker.notes}}</td>
             </tr>
@@ -49,27 +60,61 @@
     </div>
     <div id="availability-summary">
       <div class="ui-g">
-        <div class="ui-g-2">
-          <h5>Suma godzin</h5>
+        <div class="ui-g-2 normal">
+          <h5>Początkowy oszacowany czas</h5>
         </div>
-        <div class="ui-g-1">
-          <span>{{hoursSum}}</span>
+        <div class="ui-g-1 number-size text-center normal">
+          <span>{{declarableSprint.estimatedTimePlanned | TimeFormater}}</span>
         </div>
       </div>
       <div class="ui-g">
-        <div class="ui-g-2">
-          <h5>Aktualny współczynnik</h5>
+        <div class="ui-g-2 normal">
+          <h5>Ostateczny zaplanowany czas</h5>
         </div>
-        <div class="ui-g-1">
-          <span>{{actualRate}}</span>
+        <div class="ui-g-1 number-size text-center normal">
+          <span>{{declarableSprint.finalTimePlanned | TimeFormater}}</span>
         </div>
       </div>
-    </div>
-
-    <div class="ui-g-12">
-      <p>L20: {{declarableSprint.estimatedTimePlanned}}</p>
-      <p>L21: {{declarableSprint.finalTimePlanned}}</p>
-      <p>L22: {{declarableSprint.timeBurned}}</p>
+      <div class="ui-g">
+        <div class="ui-g-2 normal">
+          <h5>Wypracowane godziny</h5>
+        </div>
+        <div class="ui-g-1 number-size text-center normal">
+          <span>{{declarableSprint.timeBurned | TimeFormater}}</span>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-2 effective">
+          <h5>Suma godzin</h5>
+        </div>
+        <div class="ui-g-1 number-size text-center effective">
+          <span>{{totalDeclaredTime}}</span>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-2 effective">
+          <h5>Potrzebny efektywny czas</h5>
+        </div>
+        <div class="ui-g-1 number-size text-center effective">
+          <span>{{totalNeededTime}}</span>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-2 effective">
+          <h5>Aktualny współczynnik</h5>
+        </div>
+        <div class="ui-g-1 number-size text-center effective">
+          <span>{{currentAverageSprintCoefficient}}</span>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-2 historical">
+          <h5>Średni historyczny współczynnik</h5>
+        </div>
+        <div class="ui-g-1 number-size text-center historical">
+          <span>{{prevAverageSprintCoefficient}}</span>
+        </div>
+      </div>
     </div>
 
     <p-button *ngIf="declarableSprint.sprintState === 'FINISHED'"
