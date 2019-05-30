@@ -24,7 +24,7 @@ export class ExcelTableComponent implements OnInit {
   timeToAssign: string;
   totalDeclaredTime: string;
   totalNeededTime: string;
-  
+
   workers: Worker[];
   sprintStartDate: string;
   sprintEndDate: string;
@@ -36,7 +36,7 @@ export class ExcelTableComponent implements OnInit {
   sprintSummary: SprintSummaryDto;
 
   allSprints: SprintDto[];
-  currentSprintInd: number = 0;
+  currentSprintInd = 0;
 
   sprintStateMap = {
     DECLARABLE: 'Trwa podawanie dostępności',
@@ -44,6 +44,7 @@ export class ExcelTableComponent implements OnInit {
     IN_PROGRESS: 'Sprint rozpoczęty',
     CLOSED: 'Sprint zamknięty',
     PADDING: 'Oczekuje na rozpoczęcie',
+    UPCOMING: 'Nadchodzący'
   };
 
   get currentProject(): ProjectDto {
@@ -67,14 +68,22 @@ export class ExcelTableComponent implements OnInit {
       this.router.navigate([ 'projects' ]);
       return;
     }
-    this.sprintsService.getSprints(this.currentProject.id, [ 'DECLARABLE', 'PADDING', 'IN_PROGRESS', 'FINISHED' ], 'ASC')
+    this.sprintsService.getSprints(this.currentProject.id,
+      ['DECLARABLE', 'PADDING', 'IN_PROGRESS', 'FINISHED', 'UPCOMING', 'CLOSED'],
+      'ASC')
       .subscribe(sprints => {
         this.isLoaded = true;
         if (sprints.length === 0) {
           return;
         }
         this.allSprints = sprints;
-        this.setUpDataForSprintOfInd(0);
+        this.currentSprintInd = 0;
+        this.allSprints.forEach((v, i) => {
+          if (v.sprintState === 'DECLARABLE') {
+            this.currentSprintInd = i;
+          }
+        });
+        this.setUpDataForSprintOfInd(this.currentSprintInd);
       });
   }
 
@@ -83,22 +92,20 @@ export class ExcelTableComponent implements OnInit {
       return;
     }
 
-    this.currentSprintInd++;
-    this.setUpDataForSprintOfInd(this.currentSprintInd);
-  }
-
-  nextSprint() {
-    if (this.currentSprintInd >= this.allSprints.length-1) {
-      return;
-    }
-
     this.currentSprintInd--;
     this.setUpDataForSprintOfInd(this.currentSprintInd);
   }
 
+  nextSprint() {
+    if (this.currentSprintInd >= this.allSprints.length - 1) {
+      return;
+    }
+
+    this.currentSprintInd++;
+    this.setUpDataForSprintOfInd(this.currentSprintInd);
+  }
+
   closeSprint() {
-    this.declarableSprint.timeBurned = 18;
-    this.declarableSprint.finalTimePlanned = 102;
     this.declarableSprint.sprintState = 'CLOSED';
 
     this.sprintsService.updateSprint(this.currentProject.id, this.declarableSprint)
@@ -110,6 +117,9 @@ export class ExcelTableComponent implements OnInit {
 
   private setUpDataForSprintOfInd(ind: number) {
     this.declarableSprint = this.allSprints[ind];
+    console.log('dupa111 ' + ind);
+    console.log(this.allSprints);
+    console.log(this.declarableSprint);
     this.sprintStartDate = this.declarableSprint.durationPeriod.start;
     this.sprintEndDate = this.declarableSprint.durationPeriod.end;
     this.excelService.getSprintSummary(this.currentProject.id, this.declarableSprint.id)
