@@ -10,6 +10,8 @@ import { ProjectDto } from '../../declarations/models/project-dto';
 import { Router } from '@angular/router';
 import { ProjectMemberDto } from '../../declarations/models/project-member-dto';
 import { MessageService } from 'primeng/api';
+import { JiraSprintDto } from '../../declarations/models/jira-sprint-dto';
+import { SprintSummaryDto } from '../../declarations/models/sprint-summary-dto';
 
 @Component({
   selector: 'app-excel-table',
@@ -26,6 +28,9 @@ export class ExcelTableComponent implements OnInit {
   availability: AvailabilityDto;
   declarableSprint: SprintDto;
   isLoaded: boolean;
+  jiraSprints: JiraSprintDto[];
+  isSynchronized: boolean;
+  sprintSummary: SprintSummaryDto;
 
   sprintStateMap = {
     DECLARABLE: 'Trwa podawanie dostępności',
@@ -51,6 +56,7 @@ export class ExcelTableComponent implements OnInit {
   ngOnInit() {
     this.workers = [];
     this.isLoaded = false;
+    this.isSynchronized = false;
     if (!this.currentProject) {
       this.router.navigate([ 'projects' ]);
       return;
@@ -99,6 +105,24 @@ export class ExcelTableComponent implements OnInit {
       .subscribe(sprint => {
         this.declarableSprint = sprint;
         this.messageService.add({ severity: 'success', summary: 'Sukces!', detail: 'Sprint został zamknięty' });
+      });
+  }
+
+  synchronizeWithJira() {
+    this.sprintsService.getJiraSprints(this.currentProject.id, this.declarableSprint)
+      .subscribe(response => {
+        this.jiraSprints = response;
+        this.isSynchronized = true;
+      });
+  }
+
+  chooseJiraSprint(jiraSprint: JiraSprintDto) {
+    this.sprintsService.getSprintSummary(this.currentProject.id, this.declarableSprint.id, jiraSprint.id)
+      .subscribe(response => {
+        this.sprintSummary = response;
+        setTimeout(() => this.router.navigateByUrl('/excel'));
+        this.isSynchronized = false;
+        this.messageService.add({ severity: 'success', summary: 'Sukces!', detail: 'Synchronizacja udana!' });
       });
   }
 

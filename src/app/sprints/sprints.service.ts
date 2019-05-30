@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SprintDto } from '../declarations/models/sprint-dto';
 import { SprintSummaryDto } from '../declarations/models/sprint-summary-dto';
+import { JiraSprintDto } from '../declarations/models/jira-sprint-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +27,15 @@ export class SprintsService {
     return this.http.get<SprintDto[]>(`api/projects/${projectId}/sprints`, { params: queryParameters });
   }
 
-  getSprintSummary(projectId: number, sprintId: number): Observable<SprintSummaryDto> {
-    return this.http.get<SprintSummaryDto>(`api/projects/${projectId}/sprints/${sprintId}/summary`);
+  getSprintSummary(projectId: number, sprintId: number, jiraSprintId?: number): Observable<SprintSummaryDto> {
+    let queryParameters = new HttpParams();
+    if (jiraSprintId) {
+      queryParameters = queryParameters.append('id', jiraSprintId as any);
+    }
+    return this.http.get<SprintSummaryDto>(
+      `api/projects/${projectId}/sprints/${sprintId}/summary`,
+      { params: queryParameters }
+    );
   }
 
   addSprint(projectId: number, sprint: SprintDto): Observable<SprintDto> {
@@ -36,5 +44,9 @@ export class SprintsService {
 
   updateSprint(projectId: number, sprint: SprintDto): Observable<SprintDto> {
     return this.http.patch<SprintDto>(`api/projects/${projectId}/sprints/${sprint.id}`, sprint);
+  }
+
+  getJiraSprints(projectId: number, sprint: SprintDto): Observable<JiraSprintDto[]> {
+    return this.http.get<JiraSprintDto[]>(`api/projects/${projectId}/sprints/${sprint.id}/jira/sprints`);
   }
 }
