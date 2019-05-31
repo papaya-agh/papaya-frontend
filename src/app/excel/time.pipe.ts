@@ -5,6 +5,6 @@
 })
 export class TimeFormaterPipe implements PipeTransform {
   transform(value: number): string {
-    return (Math.floor(value / 60) + Math.round((value % 60) / 60 * 100) / 100).toString();;
+    return (Math.floor(value / 60) + Math.round((value % 60) / 60 * 100) / 100).toString();
   }
 }
