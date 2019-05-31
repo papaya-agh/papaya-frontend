@@ -8,9 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { PCommonModule } from '../p-common/p-common.module';
 import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
+import { TimeFormaterPipe } from './time.pipe';
 
 @NgModule({
-  declarations: [ExcelTableComponent],
+  declarations: [ExcelTableComponent, TimeFormaterPipe],
   imports: [
     CommonModule,
     ExcelRoutingModule,

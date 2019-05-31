@@ -16,7 +16,7 @@
           </p-button>
           <div class="center">
             <h5>
-              Dostępność dla sprintu: <span class="bold">{{sprintStartDate | date: 'dd-MM-yyy'}}</span> - <span class="bold">{{sprintEndDate | date: 'dd-MM-yyyy'}}</span>
+              Dostępność dla sprintu: <br /><span class="bold">{{sprintStartDate | date: 'dd-MM-yyy'}}</span> - <span class="bold">{{sprintEndDate | date: 'dd-MM-yyyy'}}</span>
             </h5>
             <h5>
               Liczba godzin do zaplanowania: <span class="bold">{{timeToAssign}}</span>
@@ -59,7 +59,7 @@
           <h5>Początkowy oszacowany czas</h5>
         </div>
         <div class="ui-g-1 number-size text-center normal">
-          <span>{{declarableSprint.estimatedTimePlanned}}</span>
+          <span>{{declarableSprint.estimatedTimePlanned | TimeFormater}}</span>
         </div>
       </div>
       <div class="ui-g">
@@ -67,7 +67,7 @@
           <h5>Ostateczny zaplanowany czas</h5>
         </div>
         <div class="ui-g-1 number-size text-center normal">
-          <span>{{declarableSprint.finalTimePlanned}}</span>
+          <span>{{declarableSprint.finalTimePlanned | TimeFormater}}</span>
         </div>
       </div>
       <div class="ui-g">
@@ -75,7 +75,7 @@
           <h5>Wypracowane godziny</h5>
         </div>
         <div class="ui-g-1 number-size text-center normal">
-          <span>{{declarableSprint.timeBurned}}</span>
+          <span>{{declarableSprint.timeBurned | TimeFormater}}</span>
         </div>
       </div>
       <div class="ui-g">

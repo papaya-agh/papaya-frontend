@@ -88,7 +88,8 @@ export class ExcelTableComponent implements OnInit {
             this.currentSprintInd = i;
           }
         });
-        this.setUpDataForSprintOfInd(this.currentSprintInd);
+        this.declarableSprint = this.allSprints[this.currentSprintInd];
+        this.setUpDataForSprintOfInd();
       });
   }
 
@@ -98,7 +99,8 @@ export class ExcelTableComponent implements OnInit {
     }
 
     this.currentSprintInd--;
-    this.setUpDataForSprintOfInd(this.currentSprintInd);
+    this.declarableSprint = this.allSprints[this.currentSprintInd];
+    this.setUpDataForSprintOfInd();
   }
 
   nextSprint() {
@@ -107,7 +109,8 @@ export class ExcelTableComponent implements OnInit {
     }
 
     this.currentSprintInd++;
-    this.setUpDataForSprintOfInd(this.currentSprintInd);
+    this.declarableSprint = this.allSprints[this.currentSprintInd];
+    this.setUpDataForSprintOfInd();
   }
 
   closeSprint() {
@@ -120,8 +123,7 @@ export class ExcelTableComponent implements OnInit {
       });
   }
 
-  private setUpDataForSprintOfInd(ind: number) {
-    this.declarableSprint = this.allSprints[ind];
+  private setUpDataForSprintOfInd() {
     this.sprintStartDate = this.declarableSprint.durationPeriod.start;
     this.sprintEndDate = this.declarableSprint.durationPeriod.end;
     this.excelService.getSprintSummary(this.currentProject.id, this.declarableSprint.id)
@@ -164,6 +166,7 @@ export class ExcelTableComponent implements OnInit {
     this.sprintsService.getSprintSummary(this.currentProject.id, this.declarableSprint.id, jiraSprint.id)
       .subscribe(response => {
         this.declarableSprint = response.sprint;
+        this.setUpDataForSprintOfInd();
         setTimeout(() => this.router.navigateByUrl('/excel'));
         this.isSynchronized = false;
         this.messageService.add({ severity: 'success', summary: 'Sukces!', detail: 'Synchronizacja udana!' });
