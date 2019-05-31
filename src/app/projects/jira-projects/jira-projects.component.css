@@ -1,0 +1,11 @@
+td {
+    transition: background .25s ease;
+}
+
+.highlight-on-hover-content:hover td {
+    background: #007ad9cc !important;
+}
+
+.clickable {
+    cursor: pointer;
+}

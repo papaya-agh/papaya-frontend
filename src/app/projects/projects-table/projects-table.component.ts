@@ -38,5 +38,4 @@ export class ProjectsTableComponent implements OnInit {
       this.router.navigateByUrl('/overview');
     }
   }
-
 }
