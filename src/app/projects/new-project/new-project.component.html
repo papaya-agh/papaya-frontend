@@ -6,43 +6,48 @@
     <div class="ui-g-8 ui-g-nopad">
       <div class="ui-g-4">
         <p>Nazwa:</p>
-        <input class="papaya-input" type="text" pInputText [(ngModel)]="project.name"/>
+        <input style="width: 95%" type="text" pInputText [(ngModel)]="project.name"/>
       </div>
 
       <div class="ui-g-8">
         <p style="margin-bottom: 8px;">Współczynnik początkowy:
-          <input pKeyFilter="num" type="text" style="width: 42.5%"
+          <input pKeyFilter="num" type="text" style="width: 20%; border: 1px solid lightgrey"
                  pInputText [(ngModel)]="project.initialCoefficient"/>
         </p>
-        <p-slider [(ngModel)]="project.initialCoefficient" [style]="{'width':'80%'}"
+        <p-slider [(ngModel)]="project.initialCoefficient" [style]="{'width':'100%'}"
                   [min]="0" [max]="10" [step]="0.01">
         </p-slider>
       </div>
 
       <div class="ui-g-12">
-        <p>Opis:</p>
-        <textarea style="width: 86.7%" [rows]="2"
+        <p class="text-secondary">Opis:</p>
+        <textarea style="width: 100%" [rows]="2"
                   pInputTextarea [(ngModel)]="project.description">
         </textarea>
       </div>
 
-      <div class="ui-g-4">
-        <p class="text-secondary">Nazwa kanału:</p>
-        <input class="papaya-input" type="text" pInputText [(ngModel)]="project.channelName"/>
-      </div>
-
-      <div class="ui-g-8">
-        <p class="text-secondary">
-          <img class="webhook-icon" src="../../../assets/rocket-logo.png" alt="rocket-logo">
-          <img class="webhook-icon" src="../../../assets/slack-logo.png" alt="slack-logo">
-          Adres webhooka:
-        </p>
-        <input class="papaya-input" type="text" pInputText [(ngModel)]="project.webhookUrl"/>
+      <div class="ui-g-12">
+        <p>Adres Jiry:</p>
+        <input type="text" style="width: 100%" pInputText [(ngModel)]="project.jiraUrl"/>
+        <hr/>
       </div>
 
       <div class="ui-g-12">
-        <p>Adres Jiry:</p>
-        <input type="text" style="width: 86.7%" pInputText [(ngModel)]="project.jiraUrl"/>
+        <p-panel [toggleable]="true" [collapsed]="true" [toggler]="'header'">
+          <p-header>
+            <img class="webhook-icon" src="../../../assets/rocket-logo.png" alt="rocket-logo">
+            <img class="webhook-icon" src="../../../assets/slack-logo.png" alt="slack-logo">
+            Konfiguracja powiadomień
+          </p-header>
+          <p class="text-secondary" style="margin-bottom: 10px;">
+            Nazwa kanału:
+            <input style="margin-left: 18.5px; width: 82%" type="text" pInputText [(ngModel)]="project.channelName"/>
+          </p>
+          <p class="text-secondary">
+            Adres webhooka:
+            <input style="width: 82%" type="text" pInputText [(ngModel)]="project.webhookUrl"/>
+          </p>
+        </p-panel>
       </div>
 
       <div class="ui-g-12">
