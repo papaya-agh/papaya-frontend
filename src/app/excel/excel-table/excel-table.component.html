@@ -5,10 +5,23 @@
   <ng-template [ngIf]="isLoaded && declarableSprint">
     <div class="ui-g" id="availability-table">
       <div class="ui-g-8">
-        <h5>
-          Dostępność dla sprintu: <span class="bold">{{sprintStartDate | date: 'dd-MM-yyy'}}</span> - <span
-          class="bold">{{sprintEndDate | date: 'dd-MM-yyyy'}}</span>
-        </h5>
+        <div class="ui-g">
+          <div class="ui-g-4">
+            <h5>Nazwa sprintu:</h5>
+          </div>
+          <div class="ui-g-6">
+            <span>{{ declarableSprint.name }}</span>
+          </div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-4">
+            <h5>Czas trwania:</h5>
+          </div>
+          <div class="ui-g-6">
+            <h5><span class="bold">{{sprintStartDate | date: 'dd-MM-yyy'}}</span> -
+              <span class="bold">{{sprintEndDate | date: 'dd-MM-yyyy'}}</span></h5>
+          </div>
+        </div>
         <div *ngIf="sprintStateMap[declarableSprint.sprintState]"
              class="during">{{sprintStateMap[declarableSprint.sprintState]}}</div>
         <p-table [value]="workers">

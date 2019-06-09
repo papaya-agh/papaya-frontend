@@ -1,10 +1,21 @@
 <p-toast position="top-center"></p-toast>
 <app-menubar [userRole]="this.storeService.currentProject?.userRole"
              [currentProjectName]="this.storeService.currentProject?.name"></app-menubar>
-<p-card>
+<p-card header="Nowy sprint">
   <div class="ui-g">
     <div class="ui-g-8 ui-g-nopad">
-      <h5>Nowy sprint</h5>
+
+      <div class="ui-g-12">
+        <p>Nazwa:</p>
+        <input style="width: 90%" type="text" pInputText [(ngModel)]="newSprint.name"/>
+      </div>
+
+      <div class="ui-g-12">
+        <p>Wiadomość dla zespołu:</p>
+        <textarea style="width: 90%; margin-bottom: 20px" [rows]="2"
+                  pInputTextarea [(ngModel)]="newSprint.notificationMessage">
+        </textarea>
+      </div>
 
       <div class="ui-g-6">
         <p class="text-secondary">Data rozpoczęcia zapisów:</p>
