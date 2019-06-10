@@ -9,9 +9,10 @@ import { PCommonModule } from '../p-common/p-common.module';
 import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
 import { TimeFormaterPipe } from './time.pipe';
+import { WorkersPipe } from './workers.pipe';
 
 @NgModule({
-  declarations: [ExcelTableComponent, TimeFormaterPipe],
+  declarations: [ExcelTableComponent, TimeFormaterPipe, WorkersPipe],
   imports: [
     CommonModule,
     ExcelRoutingModule,
