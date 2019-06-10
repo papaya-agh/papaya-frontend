@@ -1,0 +1,22 @@
+.effective {
+    background-color: #fce5cd;
+}
+
+.normal {
+    background-color: #d9ead3;
+}
+
+.historical {
+    background-color: #f4cccc;
+}
+
+.stats-block-wrapper > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-value {
+    width: 40px;
+    text-align: right;
+}
+

@@ -3,15 +3,16 @@ import { ExcelService } from '../excel.service';
 import { SprintsService } from '../../sprints/sprints.service';
 import { ProjectsService } from '../../projects/projects.service';
 import { StoreService } from '../../p-common/store.service';
-import { AvailabilityDto } from '../../declarations/models/availability-dto';
-import { UserAvailabilityDto } from '../../declarations/models/user-availability-dto';
 import { SprintDto } from '../../declarations/models/sprint-dto';
 import { ProjectDto } from '../../declarations/models/project-dto';
 import { Router } from '@angular/router';
-import { ProjectMemberDto } from '../../declarations/models/project-member-dto';
 import { MessageService } from 'primeng/api';
 import { JiraSprintDto } from '../../declarations/models/jira-sprint-dto';
 import { SprintSummaryDto } from '../../declarations/models/sprint-summary-dto';
+import { catchError, concatMap, filter, flatMap, map, skipWhile, take, tap } from 'rxjs/operators';
+import { from, Observable, of, zip } from 'rxjs';
+import { SprintStateDto } from '../../declarations/models/sprint-state-dto';
+import { Resources } from '../../p-common/resources';
 
 @Component({
   selector: 'app-excel-table',
@@ -19,33 +20,28 @@ import { SprintSummaryDto } from '../../declarations/models/sprint-summary-dto';
   styleUrls: [ './excel-table.component.css' ]
 })
 export class ExcelTableComponent implements OnInit {
-  prevAverageSprintCoefficient: string;
-  currentAverageSprintCoefficient: string;
-  timeToAssign: string;
-  totalDeclaredTime: string;
-  totalNeededTime: string;
 
-  workers: Worker[];
-  sprintStartDate: string;
-  sprintEndDate: string;
-  availability: AvailabilityDto;
-  declarableSprint: SprintDto;
-  isLoaded: boolean;
+  currentSprint: SprintDto;
+
+  sprintStateMap = Resources.SPRINT_STATE_MAP;
+
+  isSprintLoaded = false;
+
+  isLoading = true;
+
+  showSprintSelectMenu = false;
+
   jiraSprints: JiraSprintDto[];
-  isSynchronized: boolean;
+
   sprintSummary: SprintSummaryDto;
 
-  allSprints: SprintDto[];
-  currentSprintInd = 0;
+  sprintNavigationStatus: SprintNavigationStatus = { prevAvailable: false, nextAvailable: false };
 
-  sprintStateMap = {
-    DECLARABLE: 'Trwa podawanie dostępności',
-    FINISHED: 'Sprint zakończony',
-    IN_PROGRESS: 'Sprint rozpoczęty',
-    CLOSED: 'Sprint zamknięty',
-    PADDING: 'Oczekuje na rozpoczęcie',
-    UPCOMING: 'Nadchodzący'
-  };
+  projectMembersById = {};
+
+  static mapToSprintNavigationStatus(sprints: SprintDto[]): SprintNavigationStatus {
+    return { prevAvailable: !!sprints[0], nextAvailable: !!sprints[1] };
+  }
 
   get currentProject(): ProjectDto {
     return this.store.currentProject;
@@ -61,136 +57,123 @@ export class ExcelTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.workers = [];
-    this.isLoaded = false;
-    this.isSynchronized = false;
     if (!this.currentProject) {
       this.router.navigate([ 'projects' ]);
       return;
     }
-    this.sprintsService.getSprints(this.currentProject.id,
-      ['DECLARABLE', 'PADDING', 'IN_PROGRESS', 'FINISHED', 'UPCOMING', 'CLOSED'],
-      'ASC')
-      .subscribe(sprints => {
-        this.isLoaded = true;
-        if (sprints.length === 0) {
-          return;
-        }
-        this.allSprints = sprints;
-        this.currentSprintInd = 0;
-        let found = false;
-        this.allSprints.forEach((v, i) => {
-          if (found) {
-            return;
-          }
-          if (v.sprintState === 'DECLARABLE') {
-            found = true;
-            this.currentSprintInd = i;
-          }
-        });
-        this.declarableSprint = this.allSprints[this.currentSprintInd];
-        this.setUpDataForSprintOfInd();
-      });
+    this.selectSprintIfAvailable(this.getFirstSprint());
   }
 
-  prevSprint() {
-    if (this.currentSprintInd <= 0) {
-      return;
-    }
-
-    this.currentSprintInd--;
-    this.declarableSprint = this.allSprints[this.currentSprintInd];
-    this.setUpDataForSprintOfInd();
+  selectSprintIfAvailable(source: Observable<SprintDto>) {
+    this.isLoading = true;
+    source.pipe(
+      tap(() => this.isSprintLoaded = true),
+      filter(sprint => !!sprint),
+      tap(sprint => this.currentSprint = sprint),
+      flatMap(() => this.getNextAndPrevAvailability()),
+      tap(status => this.sprintNavigationStatus = status),
+      flatMap(() => this.getCurrentSprintSummary()),
+      tap(summary => this.sprintSummary = summary),
+      tap(() => this.isLoading = false),
+    ).subscribe();
   }
 
-  nextSprint() {
-    if (this.currentSprintInd >= this.allSprints.length - 1) {
-      return;
-    }
+  getNextAndPrevAvailability(): Observable<SprintNavigationStatus> {
+    return zip(this.getPreviousSprint(), this.getNextSprint()).pipe(
+      map(ExcelTableComponent.mapToSprintNavigationStatus),
+    );
+  }
 
-    this.currentSprintInd++;
-    this.declarableSprint = this.allSprints[this.currentSprintInd];
-    this.setUpDataForSprintOfInd();
+  getPreviousSprint() {
+    return this.sprintsService.getPreviousSprint(this.currentProject.id, this.currentSprint.id).pipe(
+      catchError(() => of(null))
+    );
+  }
+
+  getNextSprint() {
+    return this.sprintsService.getFollowingSprint(this.currentProject.id, this.currentSprint.id).pipe(
+      catchError(() => of(null))
+    );
+  }
+
+  getFirstSprint() {
+    return from([
+      this.getFirstSprintWithState([ 'IN_PROGRESS' ], 'ASC'),
+      this.getFirstSprintWithState([ 'DECLARABLE', 'PADDING', 'FINISHED', 'UPCOMING' ], 'ASC'),
+      this.getFirstSprintWithState([ 'CLOSED' ], 'DESC'),
+      of(undefined),
+    ]).pipe(
+      concatMap(_ => _),
+      skipWhile(res => res === null),
+      take(1)
+    );
+  }
+
+  getFirstSprintWithState(states: SprintStateDto[], direction: 'ASC' | 'DESC'): Observable<SprintDto> {
+    return this.sprintsService.getSprints(this.currentProject.id,
+      {
+        direction,
+        limit: 1,
+        sprintStates: states,
+      }).pipe(
+      map(val => val.length > 0 ? val[0] : null)
+    );
   }
 
   closeSprint() {
-    this.declarableSprint.sprintState = 'CLOSED';
+    this.currentSprint.sprintState = 'CLOSED';
+    const updateSprint$ = this.sprintsService.updateSprint(this.currentProject.id, this.currentSprint).pipe(
+      tap(() => this.showMessage('Sukces!', 'Sprint został zamknięty'))
+    );
 
-    this.sprintsService.updateSprint(this.currentProject.id, this.declarableSprint)
-      .subscribe(sprint => {
-        this.declarableSprint = sprint;
-        this.messageService.add({ severity: 'success', summary: 'Sukces!', detail: 'Sprint został zamknięty' });
-      });
+    this.selectSprintIfAvailable(updateSprint$);
   }
 
-  private setUpDataForSprintOfInd() {
-    this.sprintStartDate = this.declarableSprint.durationPeriod.start;
-    this.sprintEndDate = this.declarableSprint.durationPeriod.end;
-    this.excelService.getSprintSummary(this.currentProject.id, this.declarableSprint.id)
-      .subscribe(summary => {
-        this.prevAverageSprintCoefficient = this.roundNumber(summary.prevAverageSprintCoefficient);
-        this.currentAverageSprintCoefficient = this.roundNumber(summary.currentAverageSprintCoefficient);
-        this.timeToAssign = this.formatNumber(summary.timeToAssign);
-        this.totalDeclaredTime = this.formatNumber(summary.totalDeclaredTime);
-        this.totalNeededTime = this.formatNumber(summary.totalNeededTime);
-        this.workers = [];
-        this.projectService.getMembers(this.currentProject.id).subscribe(members => {
-          summary.membersAvailability
-            .map((a: UserAvailabilityDto) => {
-              const user = members.find((m: ProjectMemberDto) => m.user.id === a.userId);
-              const worker: Worker = a.availability ?
-                {
-                  timeAvailable: this.formatNumber(a.availability.timeAvailable),
-                  effectiveTimeAvailable: this.formatNumber(a.availability.effectiveTimeAvailable),
-                  timeRemaining: this.formatNumber(a.availability.timeRemaining),
-                  notes: a.availability.notes,
-                  name: this.createFullName(user),
-                } :
-                { timeAvailable: '', effectiveTimeAvailable: '', timeRemaining: '', notes: '', name: this.createFullName(user) };
-
-              this.workers.push(worker);
-            });
-        });
-      });
+  getCurrentSprintSummary() {
+    return this.projectService.getMembers(this.currentProject.id).pipe(
+      tap(members => members.forEach(member => this.projectMembersById[member.user.id] = member)),
+      flatMap(() => this.excelService.getSprintSummary(this.currentProject.id, this.currentSprint.id)),
+    );
   }
 
   synchronizeWithJira() {
-    this.sprintsService.getJiraSprints(this.currentProject.id, this.declarableSprint)
+    this.sprintsService.getJiraSprints(this.currentProject.id, this.currentSprint)
       .subscribe(response => {
         this.jiraSprints = response;
-        this.isSynchronized = true;
+        this.showSprintSelectMenu = true;
       });
   }
 
   chooseJiraSprint(jiraSprint: JiraSprintDto) {
-    this.sprintsService.getSprintSummary(this.currentProject.id, this.declarableSprint.id, jiraSprint.id)
-      .subscribe(response => {
-        this.declarableSprint = response.sprint;
-        this.setUpDataForSprintOfInd();
-        setTimeout(() => this.router.navigateByUrl('/excel'));
-        this.isSynchronized = false;
-        this.messageService.add({ severity: 'success', summary: 'Sukces!', detail: 'Synchronizacja udana!' });
-      });
+    const chooseSprint$ = this.sprintsService.getSprintSummary(this.currentProject.id, this.currentSprint.id, jiraSprint.id).pipe(
+      map(response => response.sprint),
+      tap(() => this.showSprintSelectMenu = false),
+      tap(() => this.showMessage('Sukces!', 'Synchronizacja udana!'))
+    );
+    this.selectSprintIfAvailable(chooseSprint$);
   }
 
-  private roundNumber(num: number): string {
-    return (Math.round(num * 100) / 100).toString();
+  onNextClick() {
+    // if (!this.sprintNavigationStatus.nextAvailable) {
+    //   return;
+    // }
+    this.selectSprintIfAvailable(this.getNextSprint());
   }
 
-  private formatNumber(num: number): string {
-    return (Math.floor(num / 60) + Math.round((num % 60) / 60 * 100) / 100).toString();
+  onPrevClick() {
+    // if (!this.sprintNavigationStatus.prevAvailable) {
+    //   return;
+    // }
+    this.selectSprintIfAvailable(this.getPreviousSprint());
   }
 
-  private createFullName(user: ProjectMemberDto): string {
-    return user.user.firstName + ' ' + user.user.lastName;
+  showMessage(summary: string, detail: string, messageSeverity?: string) {
+    const severity = messageSeverity ? messageSeverity : 'success';
+    this.messageService.add({ severity, summary, detail });
   }
 }
 
-interface Worker {
-  name: string;
-  timeAvailable: string;
-  effectiveTimeAvailable: string;
-  timeRemaining: string;
-  notes?: string;
+interface SprintNavigationStatus {
+  prevAvailable: boolean;
+  nextAvailable: boolean;
 }
-
