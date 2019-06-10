@@ -6,7 +6,7 @@ import { SprintsRoutingModule } from './sprints-routing.module';
 import { NewSprintComponent } from './new-sprint/new-sprint.component';
 import { PCommonModule } from '../p-common/p-common.module';
 import { ButtonModule } from 'primeng/button';
-import { CalendarModule, InputTextModule } from 'primeng/primeng';
+import { CalendarModule, InputTextareaModule, InputTextModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 
@@ -23,6 +23,7 @@ import { ToastModule } from 'primeng/toast';
     TableModule,
     InputTextModule,
     ToastModule,
+    InputTextareaModule,
   ]
 })
 export class SprintsModule {

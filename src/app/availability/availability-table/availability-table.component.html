@@ -1,9 +1,26 @@
 ﻿<p-toast position="top-center"></p-toast>
-<app-menubar [userRole]="this.store.currentProject?.userRole" [currentProjectName]="this.store.currentProject?.name"></app-menubar>
+<app-menubar [userRole]="this.store.currentProject?.userRole"
+             [currentProjectName]="this.store.currentProject?.name"></app-menubar>
 <p-card header="Podawanie dostępności">
   <ng-template [ngIf]="declarableSprint && dataLoaded">
     <div *ngIf="availability">
       <form [formGroup]="availabilityForm" (ngSubmit)="onSubmit()">
+        <div class="ui-g">
+          <div class="ui-g-4">
+            <h5>Nazwa sprintu:</h5>
+          </div>
+          <div class="ui-g-4">
+            <span>{{ declarableSprint.name }}</span>
+          </div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-4">
+            <h5>Wiadomość:</h5>
+          </div>
+          <div class="ui-g-4">
+            <span>{{ declarableSprint.notificationMessage }}</span>
+          </div>
+        </div>
         <div class="ui-g">
           <div class="ui-g-4">
             <h5>Data rozpoczęcia:</h5>
