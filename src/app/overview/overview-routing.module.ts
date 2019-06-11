@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { ProjectOverviewComponent } from './project-overview/project-overview.component';
 
 const routes: Routes = [
-  { path: '#/', component: ProjectOverviewComponent, pathMatch: 'full' },
+  { path: '', component: ProjectOverviewComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

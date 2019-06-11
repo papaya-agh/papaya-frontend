@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NewSprintComponent } from './new-sprint/new-sprint.component';
 
 const routes: Routes = [
-  { path: '#/new-sprint', component: NewSprintComponent },
+  { path: 'new-sprint', component: NewSprintComponent },
 ];
 
 @NgModule({
