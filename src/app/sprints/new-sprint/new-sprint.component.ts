@@ -45,7 +45,7 @@ export class NewSprintComponent implements OnInit {
 
   ngOnInit() {
     if (!this.currentProject) {
-      this.router.navigate([ '/projects' ]);
+      this.router.navigate([ '/#/projects' ]);
       return;
     }
 
@@ -92,7 +92,7 @@ export class NewSprintComponent implements OnInit {
         response => {
           this.newSprint = response;
           setTimeout(() => this.messageService.add({ severity: 'success', summary: 'Sukces', detail: 'Sprint utworzony!' }));
-          this.router.navigateByUrl('/overview');
+          this.router.navigateByUrl('/#/overview');
         },
         error => {
           this.messageService.add({ severity: 'error', summary: 'Błąd', detail: error.error.message });

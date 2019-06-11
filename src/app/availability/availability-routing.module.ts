@@ -4,7 +4,7 @@ import { AvailabilityTableComponent } from './availability-table/availability-ta
 
 
 const routes: Routes = [
-  { path: '', component: AvailabilityTableComponent, pathMatch: 'full' },
+  { path: '#/', component: AvailabilityTableComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
