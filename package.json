@@ -6,10 +6,11 @@
     "start": "ng serve --proxy-config proxy.config.json",
     "start.prod": "ng serve --proxy-config proxy.config.prod.json",
     "build": "ng build",
+    "war": "cd ./dist/frontend && jar cvf ../papaya-frontend.war .",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "preinstall": "npm install -g http-server",
+    "heroku-prebuild": "npm install -g http-server",
     "heroku-postbuild": "npm run generate.declarations && ng build && mv dist/frontend/* .",
     "mock.server": "node ./generator/server/server.js",
     "generate.declarations": "node ./generator/generate.js"
