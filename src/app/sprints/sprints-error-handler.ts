@@ -12,7 +12,7 @@ export class SprintsErrorHandler implements ErrorHandler {
     console.log(error);
     const router = this.injector.get(Router);
     if (error.status === 500) {
-      this.zone.run(() => router.navigate([ '/#/sprints/new-sprint' ]));
+      this.zone.run(() => router.navigate([ '/sprints/new-sprint' ]));
     }
     throw error;
   }
