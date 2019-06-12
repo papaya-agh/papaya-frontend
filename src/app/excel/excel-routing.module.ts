@@ -4,7 +4,7 @@ import { ExcelTableComponent } from './excel-table/excel-table.component';
 
 
 const routes: Routes = [
-    { path: '', component: ExcelTableComponent, pathMatch: 'full' },
+  { path: '', component: ExcelTableComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
