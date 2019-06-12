@@ -8,9 +8,13 @@ import { FormsModule } from '@angular/forms';
 import { PCommonModule } from '../p-common/p-common.module';
 import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
+import { TimeFormaterPipe } from './time.pipe';
+import { WorkersPipe } from './workers.pipe';
+import { AvailabilitySummaryComponent } from './excel-table/availability-summary/availability-summary.component';
+import { ProgressSpinnerModule } from 'primeng/primeng';
 
 @NgModule({
-  declarations: [ExcelTableComponent],
+  declarations: [ExcelTableComponent, TimeFormaterPipe, WorkersPipe, AvailabilitySummaryComponent],
   imports: [
     CommonModule,
     ExcelRoutingModule,
@@ -19,7 +23,8 @@ import { ToastModule } from 'primeng/toast';
     FormsModule,
     PCommonModule,
     CardModule,
-    ToastModule
+    ToastModule,
+    ProgressSpinnerModule
   ]
 })
 export class ExcelModule { }

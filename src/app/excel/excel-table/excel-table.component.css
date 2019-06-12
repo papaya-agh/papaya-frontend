@@ -1,9 +1,17 @@
-#excel-table {
-    border: solid lightgrey;
-    background-color: whitesmoke;
-    margin: 10px 0 10px 0;
-    min-height: 300px;
-    position: relative;
+.overlay {
+    position: absolute;
+    z-index: 1002;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    height: 90%;
+    top: 10%;
+    left: 0;
+}
+
+.spinner-wrapper {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
 }
 
 .during {
@@ -14,14 +22,42 @@
     font-weight: 900;
 }
 
-.button {
-     margin-left: 8px
-}
-
 .bold {
      font-weight: bold;
 }
 
 .gray-user {
      color: gray;
+}
+
+.text-center {
+    padding: 7px;
+}
+
+.padding {
+    padding-left: 5px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.center {
+    text-align: center;
+}
+
+td {
+    transition: background .25s ease;
+}
+
+.highlight-on-hover-content:hover td {
+    background: #007ad9cc !important;
+}
+
+.clickable {
+    cursor: pointer;
 }

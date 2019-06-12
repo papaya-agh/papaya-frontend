@@ -1,0 +1,32 @@
+<div *ngIf="currentSprint && sprintSummary">
+  <div class="ui-g stats-block-wrapper">
+    <div class="ui-g-4 normal">
+      <div>Początkowy oszacowany czas</div>
+      <div class="stat-value">{{currentSprint.estimatedTimePlanned | TimeFormater}}</div>
+    </div>
+    <div class="ui-g-4 normal">
+      <div>Ostateczny zaplanowany czas</div>
+      <div class="stat-value">{{currentSprint.finalTimePlanned | TimeFormater}}</div>
+    </div>
+    <div class="ui-g-4 normal">
+      <div>Wypracowane godziny</div>
+      <div class="stat-value">{{currentSprint.timeBurned | TimeFormater}}</div>
+    </div>
+    <div class="ui-g-4 effective">
+      <div>Suma godzin</div>
+      <div class="stat-value">{{formatNumber(sprintSummary.totalDeclaredTime)}}</div>
+    </div>
+    <div class="ui-g-4 effective">
+      <div>Potrzebny efektywny czas</div>
+      <div class="stat-value">{{formatNumber(sprintSummary.totalNeededTime)}}</div>
+    </div>
+    <div class="ui-g-4 effective">
+      <div>Aktualny współczynnik</div>
+      <div class="stat-value">{{roundNumber(sprintSummary.currentAverageSprintCoefficient)}}</div>
+    </div>
+    <div class="ui-g-4 historical">
+      <div>Średni historyczny współczynnik</div>
+      <div class="stat-value">{{roundNumber(sprintSummary.prevAverageSprintCoefficient)}}</div>
+    </div>
+  </div>
+</div>
