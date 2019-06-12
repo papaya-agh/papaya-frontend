@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { SprintStateDto } from '../../declarations/models/sprint-state-dto';
 import { ProjectDto } from '../../declarations/models/project-dto';
+import { Resources } from '../../p-common/resources';
 
 @Component({
   selector: 'app-new-sprint-form',
@@ -23,7 +24,7 @@ export class NewSprintComponent implements OnInit {
   previousSprint: SprintDto;
   previousSprintDuration: number;
   currentProject: ProjectDto;
-  sprintStateMap: Map<SprintStateDto, string>;
+  sprintStateMap = Resources.SPRINT_STATE_MAP;
 
   constructor(private router: Router,
               private sprintsService: SprintsService,
@@ -34,13 +35,6 @@ export class NewSprintComponent implements OnInit {
       durationPeriod: { start: '', end: '' },
     };
     this.currentProject = this.storeService.getCurrentProject();
-    this.sprintStateMap = new Map<SprintStateDto, string>();
-    this.sprintStateMap.set('UPCOMING', 'nadchodzący');
-    this.sprintStateMap.set('DECLARABLE', 'zapisy');
-    this.sprintStateMap.set('PADDING', 'planowanie');
-    this.sprintStateMap.set('IN_PROGRESS', 'w trakcie');
-    this.sprintStateMap.set('FINISHED', 'zakończony');
-    this.sprintStateMap.set('CLOSED', 'zamknięty');
   }
 
   ngOnInit() {
@@ -66,7 +60,7 @@ export class NewSprintComponent implements OnInit {
             this.durationPeriodStartDate = new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);
             this.durationPeriodEndDate = new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000);
           }
-          this.sprints = this.sprints.reverse().filter(value => value.sprintState !== 'CLOSED').slice(0, 10);
+          this.sprints = this.sprints.reverse().slice(0, 10);
         }
       );
   }

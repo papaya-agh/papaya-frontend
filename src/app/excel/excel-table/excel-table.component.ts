@@ -121,6 +121,10 @@ export class ExcelTableComponent implements OnInit {
   }
 
   closeSprint() {
+    if (this.currentSprint.timeBurned === null) {
+      this.showMessage('Info', 'Zalecana jest synchronizacja z Jirą!', 'info');
+      return;
+    }
     this.currentSprint.sprintState = 'CLOSED';
     const updateSprint$ = this.sprintsService.updateSprint(this.currentProject.id, this.currentSprint).pipe(
       tap(() => this.showMessage('Sukces!', 'Sprint został zamknięty'))
