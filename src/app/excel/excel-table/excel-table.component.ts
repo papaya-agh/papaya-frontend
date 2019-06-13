@@ -120,6 +120,14 @@ export class ExcelTableComponent implements OnInit {
     );
   }
 
+  openSprint() {
+    this.currentSprint.sprintState = 'IN_PROGRESS';
+    const updateSprint$ = this.sprintsService.updateSprint(this.currentProject.id, this.currentSprint).pipe(
+      tap(() => this.showMessage('Sukces!', 'Sprint został otwarty'))
+    );
+    this.selectSprintIfAvailable(updateSprint$);
+  }
+
   closeSprint() {
     if (this.currentSprint.timeBurned === null) {
       this.showMessage('Info', 'Zalecana jest synchronizacja z Jirą!', 'info');
@@ -129,7 +137,6 @@ export class ExcelTableComponent implements OnInit {
     const updateSprint$ = this.sprintsService.updateSprint(this.currentProject.id, this.currentSprint).pipe(
       tap(() => this.showMessage('Sukces!', 'Sprint został zamknięty'))
     );
-
     this.selectSprintIfAvailable(updateSprint$);
   }
 
@@ -158,16 +165,10 @@ export class ExcelTableComponent implements OnInit {
   }
 
   onNextClick() {
-    // if (!this.sprintNavigationStatus.nextAvailable) {
-    //   return;
-    // }
     this.selectSprintIfAvailable(this.getNextSprint());
   }
 
   onPrevClick() {
-    // if (!this.sprintNavigationStatus.prevAvailable) {
-    //   return;
-    // }
     this.selectSprintIfAvailable(this.getPreviousSprint());
   }
 
