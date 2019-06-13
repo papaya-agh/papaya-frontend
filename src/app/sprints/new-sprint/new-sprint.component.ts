@@ -60,7 +60,7 @@ export class NewSprintComponent implements OnInit {
             this.durationPeriodStartDate = new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);
             this.durationPeriodEndDate = new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000);
           }
-          this.sprints = this.sprints.reverse().slice(0, 10);
+          this.sprints = this.sprints.reverse();
         }
       );
   }

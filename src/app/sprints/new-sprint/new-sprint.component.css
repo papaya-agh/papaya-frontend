@@ -3,12 +3,18 @@
 }
 
 .action-column {
-    border-left: none !important;
-    width: 100px;
+    border-right: none !important;
+    width: 50px;
+    padding-right: 0px;
 }
 
-.last-column {
-    border-right: none !important;
+.name-column {
+    border-left: none !important;
+    width: 75px;
+}
+
+.date-column {
+    width: 70px;
 }
 
 .show-on-hover-content {

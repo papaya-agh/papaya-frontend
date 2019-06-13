@@ -63,24 +63,27 @@
     </div>
     <div class="ui-g-5 ui-g-nopad">
       <h5>Sprinty w projekcie</h5>
-      <p-table [value]="sprints" [resizableColumns]="true">
+      <p-table [value]="sprints" [resizableColumns]="true" [scrollable]="true" scrollHeight="300px">
         <ng-template pTemplate="header">
           <tr>
-            <th style="width:25%">Nazwa</th>
-            <th style="width:30%">Czas</th>
-            <th class="last-column" style="width:30%">Stan</th>
-            <th class="action-column" style="width:15%; padding-left: 0px"></th>
+            <th class="action-column"></th>
+            <th class="name-column">Nazwa</th>
+            <th class="date-column">Zapisy</th>
+            <th class="date-column">Sprint</th>
+            <th>Stan</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-sprint>
           <tr>
-            <td>{{sprint.name }}</td>
-            <td>{{sprint.durationPeriod.start | date: 'dd-MM'}}
-              - {{sprint.durationPeriod.end | date: 'dd-MM'}}</td>
-            <td class="last-column">{{sprintStateMap.get(sprint.sprintState)}}</td>
             <td class="action-column">
               <p-button class="show-on-hover-content" icon="pi pi-trash" (onClick)="deleteSprint(sprint)"></p-button>
             </td>
+            <td class="name-column">{{sprint.name }}</td>
+            <td class="date-column">{{sprint.enrollmentPeriod.start | date: 'dd-MM'}}
+              - {{sprint.enrollmentPeriod.end | date: 'dd-MM'}}</td>
+            <td class="date-column">{{sprint.enrollmentPeriod.start | date: 'dd-MM'}}
+              - {{sprint.enrollmentPeriod.end | date: 'dd-MM'}}</td>
+            <td>{{sprintStateMap[sprint.sprintState]}}</td>
           </tr>
         </ng-template>
       </p-table>
