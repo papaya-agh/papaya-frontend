@@ -3,16 +3,16 @@
              [currentProjectName]="this.storeService.currentProject?.name"></app-menubar>
 <p-card header="Nowy sprint">
   <div class="ui-g">
-    <div class="ui-g-7 ui-g-nopad">
+    <div class="ui-g-11 ui-g-nopad">
 
       <div class="ui-g-12">
         <p>Nazwa:</p>
-        <input style="width: 90%" type="text" pInputText [(ngModel)]="newSprint.name"/>
+        <input style="width: 100%" type="text" pInputText [(ngModel)]="newSprint.name"/>
       </div>
 
       <div class="ui-g-12">
         <p>Wiadomość dla zespołu:</p>
-        <textarea style="width: 90%; margin-bottom: 20px" [rows]="2"
+        <textarea style="width: 100%; margin-bottom: 20px" [rows]="2"
                   pInputTextarea [(ngModel)]="newSprint.notificationMessage">
         </textarea>
       </div>
@@ -59,17 +59,18 @@
         <p-button label="Stwórz" icon="pi pi-plus"
                   (onClick)="createSprint()">
         </p-button>
+        <hr/>
       </div>
     </div>
-    <div class="ui-g-5 ui-g-nopad">
+    <div class="ui-g-11 ui-g-nopad">
       <h5>Sprinty w projekcie</h5>
       <p-table [value]="sprints" [resizableColumns]="true" [scrollable]="true" scrollHeight="300px">
         <ng-template pTemplate="header">
           <tr>
             <th class="action-column"></th>
             <th class="name-column">Nazwa</th>
-            <th class="date-column">Zapisy</th>
-            <th class="date-column">Sprint</th>
+            <th>Zapisy</th>
+            <th>Sprint</th>
             <th>Stan</th>
           </tr>
         </ng-template>
@@ -79,10 +80,10 @@
               <p-button class="show-on-hover-content" icon="pi pi-trash" (onClick)="deleteSprint(sprint)"></p-button>
             </td>
             <td class="name-column">{{sprint.name }}</td>
-            <td class="date-column">{{sprint.enrollmentPeriod.start | date: 'dd-MM'}}
-              - {{sprint.enrollmentPeriod.end | date: 'dd-MM'}}</td>
-            <td class="date-column">{{sprint.enrollmentPeriod.start | date: 'dd-MM'}}
-              - {{sprint.enrollmentPeriod.end | date: 'dd-MM'}}</td>
+            <td>{{sprint.enrollmentPeriod.start | date: 'dd-MM-yyyy HH:mm'}}
+              - {{sprint.enrollmentPeriod.end | date: 'dd-MM-yyyy HH:mm'}}</td>
+            <td>{{sprint.enrollmentPeriod.start | date: 'dd-MM-yyyy HH:mm'}}
+              - {{sprint.enrollmentPeriod.end | date: 'dd-MM-yyyy HH:mm'}}</td>
             <td>{{sprintStateMap[sprint.sprintState]}}</td>
           </tr>
         </ng-template>

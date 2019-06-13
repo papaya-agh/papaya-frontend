@@ -10,11 +10,6 @@
 
 .name-column {
     border-left: none !important;
-    width: 75px;
-}
-
-.date-column {
-    width: 70px;
 }
 
 .show-on-hover-content {
