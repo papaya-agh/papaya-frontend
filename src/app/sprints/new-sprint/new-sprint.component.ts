@@ -4,9 +4,7 @@ import { SprintsService } from '../sprints.service';
 import { StoreService } from '../../p-common/store.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { SprintStateDto } from '../../declarations/models/sprint-state-dto';
 import { ProjectDto } from '../../declarations/models/project-dto';
-import { Resources } from '../../p-common/resources';
 
 @Component({
   selector: 'app-new-sprint-form',
@@ -24,7 +22,6 @@ export class NewSprintComponent implements OnInit {
   previousSprint: SprintDto;
   previousSprintDuration: number;
   currentProject: ProjectDto;
-  sprintStateMap = Resources.SPRINT_STATE_MAP;
 
   constructor(private router: Router,
               private sprintsService: SprintsService,
@@ -60,7 +57,7 @@ export class NewSprintComponent implements OnInit {
             this.durationPeriodStartDate = new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);
             this.durationPeriodEndDate = new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000);
           }
-          this.sprints = this.sprints.reverse().slice(0, 10);
+          this.sprints = this.sprints.reverse();
         }
       );
   }
@@ -69,7 +66,7 @@ export class NewSprintComponent implements OnInit {
     return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
   }
 
-  handleClick() {
+  createSprint() {
     if (!this.enrollmentPeriodStartDate || !this.enrollmentPeriodEndDate ||
       !this.durationPeriodStartDate || !this.durationPeriodEndDate) {
       this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Podaj wszystkie daty!' });

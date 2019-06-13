@@ -1,0 +1,41 @@
+<p-toast position="top-center"></p-toast>
+<app-menubar [userRole]="this.storeService.currentProject?.userRole"
+             [currentProjectName]="this.storeService.currentProject?.name"></app-menubar>
+
+<p-card header="Sprinty w projekcie">
+  <div class="ui-g">
+    <div class="ui-g-10">
+      <p-table [value]="sprints" [resizableColumns]="true" [scrollable]="true" scrollHeight="400px">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="action-column"></th>
+            <th class="name-column">Nazwa</th>
+            <th>Zapisy</th>
+            <th>Sprint</th>
+            <th>Stan</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-sprint>
+          <tr>
+            <td class="action-column">
+              <p-button class="show-on-hover-content" icon="pi pi-trash" (onClick)="deleteSprint(sprint)"></p-button>
+            </td>
+            <td class="name-column">{{sprint.name }}</td>
+            <td>{{sprint.enrollmentPeriod.start | date: 'dd-MM-yyyy HH:mm'}}
+              - {{sprint.enrollmentPeriod.end | date: 'dd-MM-yyyy HH:mm'}}</td>
+            <td>{{sprint.enrollmentPeriod.start | date: 'dd-MM-yyyy HH:mm'}}
+              - {{sprint.enrollmentPeriod.end | date: 'dd-MM-yyyy HH:mm'}}</td>
+            <td>{{sprintStateMap[sprint.sprintState]}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="ui-g-2 controls">
+      <p-button label="Nowy sprint"
+                icon="pi pi-plus" [routerLink]="['/sprints/new-sprint']">
+      </p-button>
+    </div>
+  </div>
+</p-card>
+
