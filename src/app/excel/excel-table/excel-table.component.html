@@ -3,111 +3,111 @@
 <p-toast position="top-center"></p-toast>
 <p-card header="Podsumowanie dostępności">
   <ng-template [ngIf]="currentSprint && sprintSummary">
-      <div class="overlay" *ngIf="isLoading">
-        <div class="spinner-wrapper">
-          <p-progressSpinner></p-progressSpinner>
-        </div>
+    <div class="overlay" *ngIf="isLoading">
+      <div class="spinner-wrapper">
+        <p-progressSpinner></p-progressSpinner>
       </div>
+    </div>
 
     <div class="ui-g">
+      <div class="ui-g-12">
         <div class="ui-g-12">
-          <div class="ui-g-12">
-            <div class="ui-g-1">
-              <p-button icon="pi pi-arrow-left"
-                        class="left"
-                        (onClick)="onPrevClick()"
-                        [disabled]="!sprintNavigationStatus.prevAvailable || isLoading">
-              </p-button>
-            </div>
+          <div class="ui-g-1">
+            <p-button icon="pi pi-arrow-left"
+                      class="left"
+                      (onClick)="onPrevClick()"
+                      [disabled]="!sprintNavigationStatus.prevAvailable || isLoading">
+            </p-button>
+          </div>
 
-            <div class="ui-g-10 d-flex justify-content-center">
-              <div class="ui-g" style="width: 100%;">
-                <div class="ui-g-6">
-                  <h5>Nazwa sprintu:</h5>
-                </div>
-                <div class="ui-g-6">
-                  <span> {{ currentSprint.name }}</span>
-                </div>
-                <div class="ui-g-6">
-                  <h5>Czas trwania:</h5>
-                </div>
-                <div class="ui-g-6">
-                  <h5><span class="bold">{{currentSprint.durationPeriod.start | date: 'dd-MM-yyy'}}</span> -
-                    <span class="bold">{{currentSprint.durationPeriod.end | date: 'dd-MM-yyyy'}}</span></h5>
-                </div>
+          <div class="ui-g-10 d-flex justify-content-center">
+            <div class="ui-g" style="width: 100%;">
+              <div class="ui-g-4 ui-g-offset-1">
+                <h5>Nazwa sprintu:</h5>
+              </div>
+              <div class="ui-g-6">
+                <span> {{ currentSprint.name }}</span>
+              </div>
+              <div class="ui-g-4 ui-g-offset-1">
+                <h5>Czas trwania:</h5>
+              </div>
+              <div class="ui-g-6">
+                <h5><span class="bold">{{currentSprint.durationPeriod.start | date: 'dd-MM-yyyy HH:mm'}}</span> -
+                  <span class="bold">{{currentSprint.durationPeriod.end | date: 'dd-MM-yyyy HH:mm'}}</span></h5>
               </div>
             </div>
-
-            <div class="ui-g-1">
-              <p-button icon="pi pi-arrow-right"
-                        class="right"
-                        (onClick)="onNextClick()"
-                        [disabled]="!sprintNavigationStatus.nextAvailable || isLoading">
-              </p-button>
-            </div>
           </div>
-          <div *ngIf="sprintStateMap[currentSprint.sprintState]"
-               class="during">{{sprintStateMap[currentSprint.sprintState]}}</div>
-          <p-table [value]="(sprintSummary.membersAvailability | workers: projectMembersById)">
-            <ng-template pTemplate="header">
-              <tr>
-                <th>Osoba</th>
-                <th>Zadeklarowane godziny</th>
-                <th>Efektywne godziny</th>
-                <th>Zaległe godziny</th>
-                <th>Notatki</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-worker>
-              <tr>
-                <td [ngClass]="{'gray-user': worker.timeAvailable==''}">
-                  {{worker.name}}
-                </td>
-                <td>{{worker.timeAvailable}}</td>
-                <td>{{worker.effectiveTimeAvailable}}</td>
-                <td>{{worker.timeRemaining}}</td>
-                <td>{{worker.notes}}</td>
-              </tr>
-            </ng-template>
-          </p-table>
-          <hr>
+
+          <div class="ui-g-1">
+            <p-button icon="pi pi-arrow-right"
+                      class="right"
+                      (onClick)="onNextClick()"
+                      [disabled]="!sprintNavigationStatus.nextAvailable || isLoading">
+            </p-button>
+          </div>
         </div>
-      </div>
-
-      <app-availability-summary [currentSprint]="currentSprint"
-                                [sprintSummary]="sprintSummary"></app-availability-summary>
-
-      <p-button *ngIf="currentSprint.sprintState === 'FINISHED'"
-                label="Zamknij sprint" icon="pi pi-check"
-                (click)="closeSprint()"
-                class="mr-2">
-      </p-button>
-
-      <p-button *ngIf="currentSprint.sprintState !== 'UPCOMING'"
-                label="Synchronizuj z Jirą" icon="pi pi-refresh"
-                (click)="synchronizeWithJira()"
-                class="mb-2">
-      </p-button>
-
-      <ng-template [ngIf]="showSprintSelectMenu">
-        <h6>Dostępne sprinty:</h6>
-        <p-table [value]="jiraSprints">
+        <div *ngIf="sprintStateMap[currentSprint.sprintState]"
+             class="during">{{sprintStateMap[currentSprint.sprintState]}}</div>
+        <p-table [value]="(sprintSummary.membersAvailability | workers: projectMembersById)">
           <ng-template pTemplate="header">
             <tr>
-              <th>Nazwa</th>
-              <th>Data rozpoczęcia</th>
-              <th>Stan</th>
+              <th>Osoba</th>
+              <th>Zadeklarowane godziny</th>
+              <th>Efektywne godziny</th>
+              <th>Zaległe godziny</th>
+              <th>Notatki</th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-jiraSprint>
-            <tr class="highlight-on-hover-content clickable" (click)="chooseJiraSprint(jiraSprint)">
-              <td>{{jiraSprint.name}}</td>
-              <td>{{jiraSprint.startDate}}</td>
-              <td>{{jiraSprint.state}}</td>
+          <ng-template pTemplate="body" let-worker>
+            <tr>
+              <td [ngClass]="{'gray-user': worker.timeAvailable==''}">
+                {{worker.name}}
+              </td>
+              <td>{{worker.timeAvailable}}</td>
+              <td>{{worker.effectiveTimeAvailable}}</td>
+              <td>{{worker.timeRemaining}}</td>
+              <td>{{worker.notes}}</td>
             </tr>
           </ng-template>
         </p-table>
-      </ng-template>
+        <hr>
+      </div>
+    </div>
+
+    <app-availability-summary [currentSprint]="currentSprint"
+                              [sprintSummary]="sprintSummary"></app-availability-summary>
+
+    <p-button *ngIf="currentSprint.sprintState === 'FINISHED'"
+              label="Zamknij sprint" icon="pi pi-check"
+              (click)="closeSprint()"
+              class="mr-2">
+    </p-button>
+
+    <p-button *ngIf="currentSprint.sprintState === 'IN_PROGRESS' || currentSprint.sprintState === 'FINISHED'"
+              label="Synchronizuj z Jirą" icon="pi pi-refresh"
+              (click)="synchronizeWithJira()"
+              class="mb-2">
+    </p-button>
+
+    <ng-template [ngIf]="showSprintSelectMenu">
+      <h6>Dostępne sprinty:</h6>
+      <p-table [value]="jiraSprints">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nazwa</th>
+            <th>Data rozpoczęcia</th>
+            <th>Stan</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-jiraSprint>
+          <tr class="highlight-on-hover-content clickable" (click)="chooseJiraSprint(jiraSprint)">
+            <td>{{jiraSprint.name}}</td>
+            <td>{{jiraSprint.startDate}}</td>
+            <td>{{jiraSprint.state}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
   </ng-template>
   <ng-template [ngIf]="isSprintLoaded && !currentSprint">
     <div>
