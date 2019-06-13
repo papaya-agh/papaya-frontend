@@ -23,8 +23,8 @@
             <td class="name-column">{{sprint.name }}</td>
             <td>{{sprint.enrollmentPeriod.start | date: 'dd-MM-yyyy HH:mm'}}
               - {{sprint.enrollmentPeriod.end | date: 'dd-MM-yyyy HH:mm'}}</td>
-            <td>{{sprint.enrollmentPeriod.start | date: 'dd-MM-yyyy HH:mm'}}
-              - {{sprint.enrollmentPeriod.end | date: 'dd-MM-yyyy HH:mm'}}</td>
+            <td>{{sprint.durationPeriod.start | date: 'dd-MM-yyyy HH:mm'}}
+              - {{sprint.durationPeriod.end | date: 'dd-MM-yyyy HH:mm'}}</td>
             <td>{{sprintStateMap[sprint.sprintState]}}</td>
           </tr>
         </ng-template>

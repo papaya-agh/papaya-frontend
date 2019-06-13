@@ -1,12 +1,3 @@
-.controls {
-    display: flex;
-    justify-content: center;
-}
-
-.controls > p-button {
-    /*padding-right: 2px;*/
-}
-
 .action-column {
     border-left: none !important;
     width: 60px;
