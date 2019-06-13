@@ -3,7 +3,7 @@
              [currentProjectName]="this.storeService.currentProject?.name"></app-menubar>
 <p-card header="Nowy sprint">
   <div class="ui-g">
-    <div class="ui-g-8 ui-g-nopad">
+    <div class="ui-g-7 ui-g-nopad">
 
       <div class="ui-g-12">
         <p>Nazwa:</p>
@@ -57,25 +57,30 @@
 
       <div class="ui-g-12 controls">
         <p-button label="Stwórz" icon="pi pi-plus"
-                  (onClick)="handleClick()">
+                  (onClick)="createSprint()">
         </p-button>
       </div>
     </div>
-    <div class="ui-g-4 ui-g-nopad">
+    <div class="ui-g-5 ui-g-nopad">
       <h5>Sprinty w projekcie</h5>
-      <p-table [value]="sprints">
+      <p-table [value]="sprints" [resizableColumns]="true">
         <ng-template pTemplate="header">
           <tr>
-            <th>Od</th>
-            <th>Do</th>
-            <th>Stan</th>
+            <th style="width:25%">Nazwa</th>
+            <th style="width:30%">Czas</th>
+            <th class="last-column" style="width:30%">Stan</th>
+            <th class="action-column" style="width:15%; padding-left: 0px"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-sprint>
           <tr>
-            <td>{{sprint.durationPeriod.start | date: 'dd-MM-yyyy HH:mm'}}</td>
-            <td>{{sprint.durationPeriod.end | date: 'dd-MM-yyyy HH:mm'}}</td>
-            <td>{{sprintStateMap[sprint.sprintState]}}</td>
+            <td>{{sprint.name }}</td>
+            <td>{{sprint.durationPeriod.start | date: 'dd-MM'}}
+              - {{sprint.durationPeriod.end | date: 'dd-MM'}}</td>
+            <td class="last-column">{{sprintStateMap.get(sprint.sprintState)}}</td>
+            <td class="action-column">
+              <p-button class="show-on-hover-content" icon="pi pi-trash" (onClick)="deleteSprint(sprint)"></p-button>
+            </td>
           </tr>
         </ng-template>
       </p-table>

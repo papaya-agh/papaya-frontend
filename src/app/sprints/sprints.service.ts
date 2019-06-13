@@ -68,6 +68,10 @@ export class SprintsService {
     return this.http.post<SprintDto>('api/projects/' + projectId + '/sprints', sprint);
   }
 
+  deleteSprint(projectId: number, sprint: SprintDto): Observable<SprintDto> {
+    return this.http.delete<SprintDto>(`api/projects/${projectId}/sprints/${sprint.id}`);
+  }
+
   updateSprint(projectId: number, sprint: SprintDto): Observable<SprintDto> {
     return this.http.patch<SprintDto>(`api/projects/${projectId}/sprints/${sprint.id}`, sprint);
   }

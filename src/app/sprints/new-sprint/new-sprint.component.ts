@@ -69,7 +69,7 @@ export class NewSprintComponent implements OnInit {
     return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
   }
 
-  handleClick() {
+  createSprint() {
     if (!this.enrollmentPeriodStartDate || !this.enrollmentPeriodEndDate ||
       !this.durationPeriodStartDate || !this.durationPeriodEndDate) {
       this.messageService.add({ severity: 'error', summary: 'Błąd', detail: 'Podaj wszystkie daty!' });
@@ -86,6 +86,18 @@ export class NewSprintComponent implements OnInit {
         response => {
           this.newSprint = response;
           setTimeout(() => this.messageService.add({ severity: 'success', summary: 'Sukces', detail: 'Sprint utworzony!' }));
+          this.router.navigateByUrl('/overview');
+        },
+        error => {
+          this.messageService.add({ severity: 'error', summary: 'Błąd', detail: error.error.message });
+        });
+  }
+
+  deleteSprint(sprint) {
+    this.sprintsService.deleteSprint(this.currentProject.id, sprint)
+      .subscribe(
+        _ => {
+          setTimeout(() => this.messageService.add({ severity: 'success', summary: 'Sukces', detail: 'Sprint usunięty!' }));
           this.router.navigateByUrl('/overview');
         },
         error => {
