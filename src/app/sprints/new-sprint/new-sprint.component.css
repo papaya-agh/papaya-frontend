@@ -1,22 +1,3 @@
 .controls {
     margin-top: 30px;
 }
-
-.action-column {
-    border-right: none !important;
-    width: 50px;
-    padding-right: 0px;
-}
-
-.name-column {
-    border-left: none !important;
-}
-
-.show-on-hover-content {
-    opacity: 0;
-    transition: opacity .35s ease;
-}
-
-tr:hover .show-on-hover-content {
-    opacity: 1;
-}

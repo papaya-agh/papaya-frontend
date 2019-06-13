@@ -9,9 +9,10 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule, InputTextareaModule, InputTextModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { SprintsTableComponent } from './sprints-table/sprints-table.component';
 
 @NgModule({
-  declarations: [ NewSprintComponent ],
+  declarations: [ NewSprintComponent, SprintsTableComponent ],
   imports: [
     CommonModule,
     SprintsRoutingModule,

@@ -4,9 +4,7 @@ import { SprintsService } from '../sprints.service';
 import { StoreService } from '../../p-common/store.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { SprintStateDto } from '../../declarations/models/sprint-state-dto';
 import { ProjectDto } from '../../declarations/models/project-dto';
-import { Resources } from '../../p-common/resources';
 
 @Component({
   selector: 'app-new-sprint-form',
@@ -24,7 +22,6 @@ export class NewSprintComponent implements OnInit {
   previousSprint: SprintDto;
   previousSprintDuration: number;
   currentProject: ProjectDto;
-  sprintStateMap = Resources.SPRINT_STATE_MAP;
 
   constructor(private router: Router,
               private sprintsService: SprintsService,
@@ -86,18 +83,6 @@ export class NewSprintComponent implements OnInit {
         response => {
           this.newSprint = response;
           setTimeout(() => this.messageService.add({ severity: 'success', summary: 'Sukces', detail: 'Sprint utworzony!' }));
-          this.router.navigateByUrl('/overview');
-        },
-        error => {
-          this.messageService.add({ severity: 'error', summary: 'Błąd', detail: error.error.message });
-        });
-  }
-
-  deleteSprint(sprint) {
-    this.sprintsService.deleteSprint(this.currentProject.id, sprint)
-      .subscribe(
-        _ => {
-          setTimeout(() => this.messageService.add({ severity: 'success', summary: 'Sukces', detail: 'Sprint usunięty!' }));
           this.router.navigateByUrl('/overview');
         },
         error => {
