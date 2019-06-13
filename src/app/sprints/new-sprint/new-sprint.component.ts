@@ -5,6 +5,7 @@ import { StoreService } from '../../p-common/store.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ProjectDto } from '../../declarations/models/project-dto';
+import { max } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-sprint-form',
@@ -17,10 +18,10 @@ export class NewSprintComponent implements OnInit {
   durationPeriodStartDate: Date;
   durationPeriodEndDate: Date;
 
-  sprints: SprintDto[];
   newSprint: SprintDto;
   previousSprint: SprintDto;
   previousSprintDuration: number;
+  previousSprintEnrollment: number;
   currentProject: ProjectDto;
 
   constructor(private router: Router,
@@ -40,24 +41,29 @@ export class NewSprintComponent implements OnInit {
       return;
     }
 
-    this.sprintsService.getSprints(this.currentProject.id)
+    this.sprintsService.getSprints(this.currentProject.id, { limit: 1, direction: 'DESC' })
       .subscribe(response => {
-          this.sprints = response;
-          if (this.sprints.length !== 0) {
-            this.previousSprint = this.sprints.reverse()[0];
-            this.durationPeriodStartDate = new Date(this.previousSprint.durationPeriod.end);
-            this.durationPeriodEndDate = new Date(this.previousSprint.durationPeriod.start);
-            this.previousSprintDuration = this.durationPeriodStartDate.getTime() - this.durationPeriodEndDate.getTime();
+          this.previousSprint = response[0];
+          if (this.previousSprint) {
+            this.previousSprintDuration = new Date(this.previousSprint.durationPeriod.end).getTime()
+              - new Date(this.previousSprint.durationPeriod.start).getTime();
+            this.previousSprintEnrollment = new Date(this.previousSprint.enrollmentPeriod.end).getTime()
+              - new Date(this.previousSprint.enrollmentPeriod.start).getTime();
+
+            if (new Date(this.previousSprint.durationPeriod.end) < new Date()) {
+              this.enrollmentPeriodStartDate = new Date(new Date().getTime());
+            } else {
+              this.enrollmentPeriodStartDate = new Date(new Date(this.previousSprint.durationPeriod.end).getTime());
+            }
+            this.enrollmentPeriodEndDate = new Date(this.enrollmentPeriodStartDate.getTime() + this.previousSprintEnrollment);
+            this.durationPeriodStartDate = new Date(this.enrollmentPeriodEndDate.getTime() + 1000);
             this.durationPeriodEndDate = new Date(this.durationPeriodStartDate.getTime() + this.previousSprintDuration);
-            this.enrollmentPeriodEndDate = new Date(this.durationPeriodStartDate.getTime() - 24 * 60 * 60 * 1000);
-            this.enrollmentPeriodStartDate = new Date(this.durationPeriodStartDate.getTime() - 3 * 24 * 60 * 60 * 1000);
           } else {
             this.enrollmentPeriodStartDate = new Date(new Date().getTime());
             this.enrollmentPeriodEndDate = new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000);
             this.durationPeriodStartDate = new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);
             this.durationPeriodEndDate = new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000);
           }
-          this.sprints = this.sprints.reverse();
         }
       );
   }
