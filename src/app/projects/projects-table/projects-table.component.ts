@@ -8,11 +8,13 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-projects-table',
   templateUrl: './projects-table.component.html',
-  styleUrls: [ './projects-table.component.css' ]
+  styleUrls: ['./projects-table.component.css']
 })
 export class ProjectsTableComponent implements OnInit {
 
   projects: ProjectDto[];
+
+  isLoading = true;
 
   constructor(private router: Router,
               private projectsService: ProjectsService,
@@ -22,7 +24,10 @@ export class ProjectsTableComponent implements OnInit {
 
   ngOnInit() {
     this.projectsService.getProjects()
-      .subscribe(response => this.projects = response);
+      .subscribe(response => {
+        this.isLoading = false;
+        this.projects = response;
+      });
   }
 
   handleClick(project) {
