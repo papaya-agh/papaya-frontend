@@ -158,16 +158,10 @@ export class ExcelTableComponent implements OnInit {
   }
 
   onNextClick() {
-    // if (!this.sprintNavigationStatus.nextAvailable) {
-    //   return;
-    // }
     this.selectSprintIfAvailable(this.getNextSprint());
   }
 
   onPrevClick() {
-    // if (!this.sprintNavigationStatus.prevAvailable) {
-    //   return;
-    // }
     this.selectSprintIfAvailable(this.getPreviousSprint());
   }
 
