@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/papaya-agh/papaya-frontend.svg?branch=master)](https://travis-ci.com/papaya-agh/papaya-frontend)
+---
 # tl;dr
 najpierw install angulara
 
