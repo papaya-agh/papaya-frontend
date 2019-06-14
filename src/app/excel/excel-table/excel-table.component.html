@@ -26,7 +26,7 @@
                 <h5>Nazwa sprintu:</h5>
               </div>
               <div class="ui-g-6">
-                <span> {{ currentSprint.name }}</span>
+                <h5><span>{{currentSprint.name}}</span></h5>
               </div>
               <div class="ui-g-4 ui-g-offset-1">
                 <h5>Czas trwania:</h5>
@@ -77,13 +77,19 @@
     <app-availability-summary [currentSprint]="currentSprint"
                               [sprintSummary]="sprintSummary"></app-availability-summary>
 
-    <p-button *ngIf="currentSprint.sprintState === 'FINISHED'"
+    <p-button *ngIf="currentSprint.sprintState === 'DECLARABLE' || currentSprint.sprintState === 'PADDING'"
+              label="Otwórz sprint" icon="pi pi-clock"
+              (click)="openSprint()"
+              class="mr-2">
+    </p-button>
+
+    <p-button *ngIf="currentSprint.sprintState === 'IN_PROGRESS' || currentSprint.sprintState === 'FINISHED'"
               label="Zamknij sprint" icon="pi pi-check"
               (click)="closeSprint()"
               class="mr-2">
     </p-button>
 
-    <p-button *ngIf="currentSprint.sprintState === 'IN_PROGRESS' || currentSprint.sprintState === 'FINISHED'"
+    <p-button *ngIf="currentSprint.sprintState !== 'UPCOMING' && currentSprint.sprintState !== 'CLOSED'"
               label="Synchronizuj z Jirą" icon="pi pi-refresh"
               (click)="synchronizeWithJira()"
               class="mb-2">
