@@ -5,6 +5,7 @@ import { SprintDto } from '../declarations/models/sprint-dto';
 import { SprintSummaryDto } from '../declarations/models/sprint-summary-dto';
 import { JiraSprintDto } from '../declarations/models/jira-sprint-dto';
 import { SprintStateDto } from '../declarations/models/sprint-state-dto';
+import { CoefficientGraphDto } from '../declarations/models/coefficient-graph-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,10 @@ export class SprintsService {
 
   getJiraSprints(projectId: number, sprint: SprintDto): Observable<JiraSprintDto[]> {
     return this.http.get<JiraSprintDto[]>(`api/projects/${projectId}/sprints/${sprint.id}/jira/sprints`);
+  }
+
+  getChartData(projectId: number): Observable<CoefficientGraphDto> {
+    return this.http.get<CoefficientGraphDto>(`api/projects/${projectId}/coefficient-graph`);
   }
 }
 

@@ -52,6 +52,12 @@ export class MenubarComponent implements OnInit {
         routerLink: [ '/excel' ],
         visible: this.userRole === 'ADMIN',
       },
+      {
+        label: 'Statystyki',
+        icon: 'pi pi-fw pi-chart-bar',
+        routerLink: [ '/excel/charts' ],
+        visible: this.userRole === 'ADMIN',
+      },
       { separator: true },
     ];
   }

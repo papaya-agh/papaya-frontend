@@ -12,9 +12,10 @@ import { TimeFormaterPipe } from './time.pipe';
 import { WorkersPipe } from './workers.pipe';
 import { AvailabilitySummaryComponent } from './excel-table/availability-summary/availability-summary.component';
 import { ProgressSpinnerModule } from 'primeng/primeng';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
-  declarations: [ExcelTableComponent, TimeFormaterPipe, WorkersPipe, AvailabilitySummaryComponent],
+  declarations: [ExcelTableComponent, TimeFormaterPipe, WorkersPipe, AvailabilitySummaryComponent, ChartComponent],
   imports: [
     CommonModule,
     ExcelRoutingModule,
