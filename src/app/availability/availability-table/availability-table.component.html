@@ -52,6 +52,7 @@
           <div class="ui-g-4">
             <input type="text" pInputText [pKeyFilter]="timeRegexp" pValidateOnly="true" placeholder="0:00"
                    style="margin-right: .5em" formControlName="timeAvailable" class="form-control"
+                   onFocus="this.select()"
                    [ngClass]="{ 'is-invalid': (f.timeAvailable.dirty || submitted) && f.timeAvailable.errors }">
           </div>
         </div>
@@ -62,6 +63,7 @@
           <div class="ui-g-4">
             <input type="text" name="cc" pInputText [pKeyFilter]="timeRegexp" pValidateOnly="true" placeholder="0:00"
                    style="margin-right: .5em" formControlName="timeRemaining" class="form-control"
+                   onFocus="this.select()"
                    [ngClass]="{ 'is-invalid': (f.timeRemaining.dirty || submitted) && f.timeRemaining.errors }">
           </div>
         </div>
