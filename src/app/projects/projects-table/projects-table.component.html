@@ -2,6 +2,11 @@
 <app-menubar></app-menubar>
 
 <p-card header="Dostępne projekty">
+  <div class="overlay" *ngIf="isLoading">
+    <div class="spinner-wrapper">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </div>
   <div class="ui-g">
     <div class="ui-g-10">
       <p-table [value]="projects">
