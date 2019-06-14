@@ -47,8 +47,8 @@ export class MenubarComponent implements OnInit {
         visible: !!this.userRole,
       },
       {
-        label: 'Excel',
-        icon: 'pi pi-fw pi-table',
+        label: 'Podsumowanie',
+        icon: 'pi pi-fw pi-list',
         routerLink: [ '/excel' ],
         visible: this.userRole === 'ADMIN',
       },
