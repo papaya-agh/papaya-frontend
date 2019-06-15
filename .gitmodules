@@ -1,4 +1,4 @@
 [submodule "papaya-interface"]
 	path = papaya-interface
 	url = https://github.com/papaya-agh/papaya-interface.git
-	branch = master
+	branch = 1.0.0
